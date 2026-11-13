@@ -1,0 +1,98 @@
+{
+  "entities": [
+    {
+      "dataset": "competitions.csv",
+      "key": [
+        "comp_id"
+      ]
+    },
+    {
+      "dataset": "matches.csv",
+      "key": [
+        "match_id"
+      ]
+    },
+    {
+      "dataset": "teams.csv",
+      "key": [
+        "comp_id",
+        "team_id"
+      ]
+    },
+    {
+      "dataset": "playing_eleven.csv",
+      "candidate_key": [
+        "match_id",
+        "team_id",
+        "player_id"
+      ],
+      "key_status": "not unique; repeated player rows can have different batting_order values"
+    },
+    {
+      "dataset": "competition_team_player_mapping.csv",
+      "key": [
+        "comp_id",
+        "team_id",
+        "player_id"
+      ]
+    },
+    {
+      "dataset": "ball_by_ball.csv",
+      "key": [
+        "match_id",
+        "innings",
+        "innings_ball_num"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "from": "matches.csv.comp_id",
+      "to": "competitions.csv.comp_id",
+      "cardinality": "many-to-one",
+      "observed_validation": "all match competition IDs map"
+    },
+    {
+      "from": "ball_by_ball.csv.match_id",
+      "to": "matches.csv.match_id",
+      "cardinality": "many-to-one",
+      "observed_validation": "all delivery match IDs map; 16 matches have no delivery records"
+    },
+    {
+      "from": "teams.csv.comp_id",
+      "to": "competitions.csv.comp_id",
+      "cardinality": "many-to-one",
+      "observed_validation": "all team competition IDs map"
+    },
+    {
+      "from": "playing_eleven.csv.match_id",
+      "to": "matches.csv.match_id",
+      "cardinality": "many-to-one",
+      "observed_validation": "all lineup match IDs map"
+    },
+    {
+      "from": "competition_team_player_mapping.csv.comp_id",
+      "to": "competitions.csv.comp_id",
+      "cardinality": "many-to-one",
+      "observed_validation": "all player-mapping competition IDs map"
+    },
+    {
+      "from": "ball_by_ball.csv.(comp_id, batting_team_id/bowling_team_id)",
+      "to": "teams.csv.(comp_id, team_id)",
+      "cardinality": "many-to-one per role",
+      "observed_validation": "all observed competition/team pairs map"
+    },
+    {
+      "from": "ball_by_ball.csv.(comp_id, striker_id/bowler_id)",
+      "to": "competition_team_player_mapping.csv.(comp_id, player_id)",
+      "cardinality": "many-to-one per role",
+      "observed_validation": "all observed competition/player pairs map"
+    }
+  ],
+  "limits": [
+    "A foreign-key match confirms identifier coverage, not that player/team semantics are correct.",
+    "The playing_eleven candidate key is not unique and must not be used to drop records.",
+    "Sixteen match rows have no corresponding delivery rows.",
+    "No relationship is asserted between the player-map table and lineup table beyond identifier checks."
+  ]
+}

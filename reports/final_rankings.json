@@ -1,0 +1,3742 @@
+{
+  "status": "provisional",
+  "methodology_version": "pressure-spi-v1-provisional",
+  "ranking_run_id": "9f00984a3cdd119a3b48",
+  "created_at_utc": "2026-11-13T10:09:37.217157+00:00",
+  "input_sha256": {
+    "ball_by_ball.csv": "01e2b4379edfbab6a6e456d304cb3c70f554cb312ef93d9588f3f32a82cb396e",
+    "competition_team_player_mapping.csv": "1ded4e42a933618572d6e2c3a521c3257eb1844fab4456d567d77cbb2d3bbb12",
+    "competitions.csv": "507ceb7189f972d4e4f299ddcfc97f3c3247af1913f6291106f161fa8353fd9b",
+    "matches.csv": "bb100ab84b8b9a15160c1f2315cf675210131a30e779ec5079fd5403dcf56eef",
+    "playing_eleven.csv": "7517c73722a28d5d61c808ccf0cbed315a8780586d02e946eb9a7f5daf011c27",
+    "teams.csv": "a65e5922a9b3bf49247b24fc9471782e700efb31f8dcc5042923238b87c50a5d"
+  },
+  "ranking_file_sha256": {
+    "batters": "6992f80d3d2737c95b26a405c8f70e9717d6cd9925da74ea8e15354ba8b1c630",
+    "bowlers": "bf7a3dd80dca6ede5a71a094b606923842893971b4ec68885b1347a187c7ad14"
+  },
+  "methodology_note": "Exploratory rankings based on a transparent, unvalidated pressure heuristic. Do not treat as official/final until the pressure model, weights, eligibility, and source-field semantics are reviewed.",
+  "source_outputs": {
+    "batters": "reports/top_10_batters.csv",
+    "bowlers": "reports/top_10_bowlers.csv",
+    "full_batters": "reports/full_batter_ranking.csv",
+    "full_bowlers": "reports/full_bowler_ranking.csv",
+    "batter_metrics": "reports/all_batter_metrics.csv",
+    "bowler_metrics": "reports/all_bowler_metrics.csv"
+  },
+  "eligibility": {
+    "min_matches": 3,
+    "min_pressure_opportunities": 12,
+    "rationale": "At least three distinct matches containing pressure exposure and twelve pressure balls (two overs) are provisional minimum exposure guards; thresholds are sensitivity-tested."
+  },
+  "weights": {
+    "performance": 0.6,
+    "consistency": 0.2,
+    "reliability": 0.2
+  },
+  "eligible_counts": {
+    "batter": 272,
+    "bowler": 336
+  },
+  "top_10_counts": {
+    "batter": 10,
+    "bowler": 10
+  },
+  "ranking_validation": {
+    "batter": {
+      "eligible_players": 272,
+      "selected_players": 10,
+      "exactly_ten": true,
+      "unique_player_ids": true,
+      "ranks_are_sequential": true,
+      "ten_players_available": true
+    },
+    "bowler": {
+      "eligible_players": 336,
+      "selected_players": 10,
+      "exactly_ten": true,
+      "unique_player_ids": true,
+      "ranks_are_sequential": true,
+      "ten_players_available": true
+    }
+  },
+  "sensitivity": {
+    "batter": [
+      {
+        "scenario": "performance_heavy",
+        "eligible_players": 272,
+        "top_10_overlap_jaccard": 0.8181818181818182,
+        "top_10_player_ids": [
+          4708,
+          1077,
+          8,
+          8301,
+          6460,
+          4773,
+          20702,
+          152,
+          7897,
+          45749
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 8,
+            "baseline_rank": 2,
+            "scenario_rank": 3,
+            "baseline_spi": 88.49244794116582,
+            "scenario_spi": 90.47402094325913,
+            "spi_delta": 1.981573002093313,
+            "rank_delta": -1
+          },
+          {
+            "player_id": 152,
+            "baseline_rank": 10,
+            "scenario_rank": 8,
+            "baseline_spi": 86.27261415140498,
+            "scenario_spi": 88.30290055802665,
+            "spi_delta": 2.03028640662167,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 1077,
+            "baseline_rank": 3,
+            "scenario_rank": 2,
+            "baseline_spi": 88.37362365844972,
+            "scenario_spi": 90.62646596526127,
+            "spi_delta": 2.2528423068115586,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 4708,
+            "baseline_rank": 1,
+            "scenario_rank": 1,
+            "baseline_spi": 90.23848293823126,
+            "scenario_spi": 92.30066775526987,
+            "spi_delta": 2.062184817038613,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 4773,
+            "baseline_rank": 8,
+            "scenario_rank": 6,
+            "baseline_spi": 86.89490811494643,
+            "scenario_spi": 89.09200428640415,
+            "spi_delta": 2.1970961714577157,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 6460,
+            "baseline_rank": 7,
+            "scenario_rank": 5,
+            "baseline_spi": 86.95480137432789,
+            "scenario_spi": 89.34029234631087,
+            "spi_delta": 2.385490971982989,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 6651,
+            "baseline_rank": 6,
+            "scenario_rank": 11,
+            "baseline_spi": 86.99022592217042,
+            "scenario_spi": 88.02323520537031,
+            "spi_delta": 1.0330092831998883,
+            "rank_delta": -5
+          },
+          {
+            "player_id": 7897,
+            "baseline_rank": 9,
+            "scenario_rank": 9,
+            "baseline_spi": 86.69248804712196,
+            "scenario_spi": 88.26540621602155,
+            "spi_delta": 1.5729181688995908,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 8301,
+            "baseline_rank": 4,
+            "scenario_rank": 4,
+            "baseline_spi": 87.49971014565797,
+            "scenario_spi": 90.38195552374978,
+            "spi_delta": 2.8822453780918096,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 20702,
+            "baseline_rank": 5,
+            "scenario_rank": 7,
+            "baseline_spi": 87.27922977488055,
+            "scenario_spi": 88.86516143906121,
+            "spi_delta": 1.585931664180663,
+            "rank_delta": -2
+          },
+          {
+            "player_id": 45749,
+            "baseline_rank": 16,
+            "scenario_rank": 10,
+            "baseline_spi": 85.592712416962,
+            "scenario_spi": 88.12162327332767,
+            "spi_delta": 2.5289108563656697,
+            "rank_delta": 6
+          }
+        ],
+        "pressure_event_count": 23870,
+        "pressure_opportunity_count": 22645,
+        "weights": {
+          "performance": 0.7,
+          "consistency": 0.15,
+          "reliability": 0.15
+        }
+      },
+      {
+        "scenario": "balanced",
+        "eligible_players": 272,
+        "top_10_overlap_jaccard": 0.8181818181818182,
+        "top_10_player_ids": [
+          4708,
+          8,
+          1077,
+          6651,
+          20702,
+          7897,
+          4773,
+          8301,
+          6460,
+          6396
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 8,
+            "baseline_rank": 2,
+            "scenario_rank": 2,
+            "baseline_spi": 88.49244794116582,
+            "scenario_spi": 86.51087493907251,
+            "spi_delta": -1.981573002093313,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 152,
+            "baseline_rank": 10,
+            "scenario_rank": 11,
+            "baseline_spi": 86.27261415140498,
+            "scenario_spi": 84.2423277447833,
+            "spi_delta": -2.030286406621684,
+            "rank_delta": -1
+          },
+          {
+            "player_id": 1077,
+            "baseline_rank": 3,
+            "scenario_rank": 3,
+            "baseline_spi": 88.37362365844972,
+            "scenario_spi": 86.12078135163814,
+            "spi_delta": -2.252842306811573,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 4708,
+            "baseline_rank": 1,
+            "scenario_rank": 1,
+            "baseline_spi": 90.23848293823126,
+            "scenario_spi": 88.17629812119264,
+            "spi_delta": -2.062184817038613,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 4773,
+            "baseline_rank": 8,
+            "scenario_rank": 7,
+            "baseline_spi": 86.89490811494643,
+            "scenario_spi": 84.6978119434887,
+            "spi_delta": -2.19709617145773,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 6396,
+            "baseline_rank": 13,
+            "scenario_rank": 10,
+            "baseline_spi": 85.81421819006962,
+            "scenario_spi": 84.46386411875851,
+            "spi_delta": -1.3503540713111164,
+            "rank_delta": 3
+          },
+          {
+            "player_id": 6460,
+            "baseline_rank": 7,
+            "scenario_rank": 9,
+            "baseline_spi": 86.95480137432789,
+            "scenario_spi": 84.56931040234488,
+            "spi_delta": -2.3854909719830033,
+            "rank_delta": -2
+          },
+          {
+            "player_id": 6651,
+            "baseline_rank": 6,
+            "scenario_rank": 4,
+            "baseline_spi": 86.99022592217042,
+            "scenario_spi": 85.95721663897052,
+            "spi_delta": -1.0330092831999025,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 7897,
+            "baseline_rank": 9,
+            "scenario_rank": 6,
+            "baseline_spi": 86.69248804712196,
+            "scenario_spi": 85.11956987822236,
+            "spi_delta": -1.5729181688995908,
+            "rank_delta": 3
+          },
+          {
+            "player_id": 8301,
+            "baseline_rank": 4,
+            "scenario_rank": 8,
+            "baseline_spi": 87.49971014565797,
+            "scenario_spi": 84.61746476756618,
+            "spi_delta": -2.8822453780917954,
+            "rank_delta": -4
+          },
+          {
+            "player_id": 20702,
+            "baseline_rank": 5,
+            "scenario_rank": 5,
+            "baseline_spi": 87.27922977488055,
+            "scenario_spi": 85.69329811069987,
+            "spi_delta": -1.585931664180677,
+            "rank_delta": 0
+          }
+        ],
+        "pressure_event_count": 23870,
+        "pressure_opportunity_count": 22645,
+        "weights": {
+          "performance": 0.5,
+          "consistency": 0.25,
+          "reliability": 0.25
+        }
+      },
+      {
+        "scenario": "consistency_heavy",
+        "eligible_players": 272,
+        "top_10_overlap_jaccard": 0.6666666666666666,
+        "top_10_player_ids": [
+          6651,
+          22187,
+          4708,
+          8301,
+          20702,
+          8,
+          1077,
+          45749,
+          7897,
+          4773
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 8,
+            "baseline_rank": 2,
+            "scenario_rank": 6,
+            "baseline_spi": 88.49244794116582,
+            "scenario_spi": 82.00817730399534,
+            "spi_delta": -6.484270637170482,
+            "rank_delta": -4
+          },
+          {
+            "player_id": 152,
+            "baseline_rank": 10,
+            "scenario_rank": 20,
+            "baseline_spi": 86.27261415140498,
+            "scenario_spi": 79.15788005496469,
+            "spi_delta": -7.114734096440287,
+            "rank_delta": -10
+          },
+          {
+            "player_id": 1077,
+            "baseline_rank": 3,
+            "scenario_rank": 7,
+            "baseline_spi": 88.37362365844972,
+            "scenario_spi": 81.71006640547184,
+            "spi_delta": -6.663557252977881,
+            "rank_delta": -4
+          },
+          {
+            "player_id": 4708,
+            "baseline_rank": 1,
+            "scenario_rank": 3,
+            "baseline_spi": 90.23848293823126,
+            "scenario_spi": 84.14620450479654,
+            "spi_delta": -6.092278433434714,
+            "rank_delta": -2
+          },
+          {
+            "player_id": 4773,
+            "baseline_rank": 8,
+            "scenario_rank": 10,
+            "baseline_spi": 86.89490811494643,
+            "scenario_spi": 81.08933583542485,
+            "spi_delta": -5.805572279521584,
+            "rank_delta": -2
+          },
+          {
+            "player_id": 6460,
+            "baseline_rank": 7,
+            "scenario_rank": 16,
+            "baseline_spi": 86.95480137432789,
+            "scenario_spi": 79.97306010406525,
+            "spi_delta": -6.981741270262631,
+            "rank_delta": -9
+          },
+          {
+            "player_id": 6651,
+            "baseline_rank": 6,
+            "scenario_rank": 1,
+            "baseline_spi": 86.99022592217042,
+            "scenario_spi": 86.08264140036482,
+            "spi_delta": -0.9075845218056031,
+            "rank_delta": 5
+          },
+          {
+            "player_id": 7897,
+            "baseline_rank": 9,
+            "scenario_rank": 9,
+            "baseline_spi": 86.69248804712196,
+            "scenario_spi": 81.54002039742356,
+            "spi_delta": -5.152467649698394,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 8301,
+            "baseline_rank": 4,
+            "scenario_rank": 4,
+            "baseline_spi": 87.49971014565797,
+            "scenario_spi": 83.09354013562752,
+            "spi_delta": -4.406170010030451,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 20702,
+            "baseline_rank": 5,
+            "scenario_rank": 5,
+            "baseline_spi": 87.27922977488055,
+            "scenario_spi": 82.41238798246015,
+            "spi_delta": -4.866841792420402,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 22187,
+            "baseline_rank": 14,
+            "scenario_rank": 2,
+            "baseline_spi": 85.71114120878319,
+            "scenario_spi": 84.92495522962739,
+            "spi_delta": -0.7861859791558032,
+            "rank_delta": 12
+          },
+          {
+            "player_id": 45749,
+            "baseline_rank": 16,
+            "scenario_rank": 8,
+            "baseline_spi": 85.592712416962,
+            "scenario_spi": 81.59548434603079,
+            "spi_delta": -3.9972280709312145,
+            "rank_delta": 8
+          }
+        ],
+        "pressure_event_count": 23870,
+        "pressure_opportunity_count": 22645,
+        "weights": {
+          "performance": 0.4,
+          "consistency": 0.4,
+          "reliability": 0.2
+        }
+      },
+      {
+        "scenario": "reliability_heavy",
+        "eligible_players": 272,
+        "top_10_overlap_jaccard": 0.42857142857142855,
+        "top_10_player_ids": [
+          4708,
+          8,
+          1077,
+          20702,
+          4722,
+          7897,
+          6396,
+          152,
+          4986,
+          6726
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 8,
+            "baseline_rank": 2,
+            "scenario_rank": 2,
+            "baseline_spi": 88.49244794116582,
+            "scenario_spi": 87.05042656996304,
+            "spi_delta": -1.4420213712027845,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 152,
+            "baseline_rank": 10,
+            "scenario_rank": 8,
+            "baseline_spi": 86.27261415140498,
+            "scenario_spi": 85.26620262135856,
+            "spi_delta": -1.006411530046421,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 1077,
+            "baseline_rank": 3,
+            "scenario_rank": 3,
+            "baseline_spi": 88.37362365844972,
+            "scenario_spi": 86.02581168418133,
+            "spi_delta": -2.3478119742683816,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 4708,
+            "baseline_rank": 1,
+            "scenario_rank": 1,
+            "baseline_spi": 90.23848293823126,
+            "scenario_spi": 88.08202210351149,
+            "spi_delta": -2.1564608347197662,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 4722,
+            "baseline_rank": 12,
+            "scenario_rank": 5,
+            "baseline_spi": 85.96360994953622,
+            "scenario_spi": 85.75163514116639,
+            "spi_delta": -0.21197480836983118,
+            "rank_delta": 7
+          },
+          {
+            "player_id": 4773,
+            "baseline_rank": 8,
+            "scenario_rank": 14,
+            "baseline_spi": 86.89490811494643,
+            "scenario_spi": 83.91209570863712,
+            "spi_delta": -2.982812406309307,
+            "rank_delta": -6
+          },
+          {
+            "player_id": 4986,
+            "baseline_rank": 18,
+            "scenario_rank": 9,
+            "baseline_spi": 84.45921220231814,
+            "scenario_spi": 84.54112753222566,
+            "spi_delta": 0.08191532990751682,
+            "rank_delta": 9
+          },
+          {
+            "player_id": 6396,
+            "baseline_rank": 13,
+            "scenario_rank": 7,
+            "baseline_spi": 85.81421819006962,
+            "scenario_spi": 85.53027496847619,
+            "spi_delta": -0.2839432215934323,
+            "rank_delta": 6
+          },
+          {
+            "player_id": 6460,
+            "baseline_rank": 7,
+            "scenario_rank": 11,
+            "baseline_spi": 86.95480137432789,
+            "scenario_spi": 84.39457875665852,
+            "spi_delta": -2.5602226176693677,
+            "rank_delta": -4
+          },
+          {
+            "player_id": 6651,
+            "baseline_rank": 6,
+            "scenario_rank": 15,
+            "baseline_spi": 86.99022592217042,
+            "scenario_spi": 83.76577331117642,
+            "spi_delta": -3.224452610994007,
+            "rank_delta": -9
+          },
+          {
+            "player_id": 6726,
+            "baseline_rank": 20,
+            "scenario_rank": 10,
+            "baseline_spi": 83.99889896372459,
+            "scenario_spi": 84.44661125381828,
+            "spi_delta": 0.4477122900936905,
+            "rank_delta": 10
+          },
+          {
+            "player_id": 7897,
+            "baseline_rank": 9,
+            "scenario_rank": 6,
+            "baseline_spi": 86.69248804712196,
+            "scenario_spi": 85.55328302122196,
+            "spi_delta": -1.1392050258999973,
+            "rank_delta": 3
+          },
+          {
+            "player_id": 8301,
+            "baseline_rank": 4,
+            "scenario_rank": 25,
+            "baseline_spi": 87.49971014565797,
+            "scenario_spi": 80.37689864332123,
+            "spi_delta": -7.122811502336745,
+            "rank_delta": -21
+          },
+          {
+            "player_id": 20702,
+            "baseline_rank": 5,
+            "scenario_rank": 4,
+            "baseline_spi": 87.27922977488055,
+            "scenario_spi": 85.80234491057826,
+            "spi_delta": -1.476884864302292,
+            "rank_delta": 1
+          }
+        ],
+        "pressure_event_count": 23870,
+        "pressure_opportunity_count": 22645,
+        "weights": {
+          "performance": 0.4,
+          "consistency": 0.2,
+          "reliability": 0.4
+        }
+      },
+      {
+        "scenario": "reliability_removed",
+        "eligible_players": 272,
+        "top_10_overlap_jaccard": 0.42857142857142855,
+        "top_10_player_ids": [
+          8301,
+          22187,
+          4708,
+          45749,
+          6651,
+          20894,
+          1077,
+          3024,
+          4773,
+          8
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 8,
+            "baseline_rank": 2,
+            "scenario_rank": 10,
+            "baseline_spi": 88.49244794116582,
+            "scenario_spi": 88.31340165307597,
+            "spi_delta": -0.17904628808985024,
+            "rank_delta": -8
+          },
+          {
+            "player_id": 152,
+            "baseline_rank": 10,
+            "scenario_rank": 22,
+            "baseline_spi": 86.27261415140498,
+            "scenario_spi": 85.50034215734134,
+            "spi_delta": -0.7722719940636438,
+            "rank_delta": -12
+          },
+          {
+            "player_id": 1077,
+            "baseline_rank": 3,
+            "scenario_rank": 7,
+            "baseline_spi": 88.37362365844972,
+            "scenario_spi": 89.05554631947362,
+            "spi_delta": 0.6819226610239042,
+            "rank_delta": -4
+          },
+          {
+            "player_id": 3024,
+            "baseline_rank": 32,
+            "scenario_rank": 8,
+            "baseline_spi": 81.79199803188484,
+            "scenario_spi": 88.95874753985603,
+            "spi_delta": 7.16674950797119,
+            "rank_delta": 24
+          },
+          {
+            "player_id": 4708,
+            "baseline_rank": 1,
+            "scenario_rank": 3,
+            "baseline_spi": 90.23848293823126,
+            "scenario_spi": 90.87187416459236,
+            "spi_delta": 0.6333912263610983,
+            "rank_delta": -2
+          },
+          {
+            "player_id": 4773,
+            "baseline_rank": 8,
+            "scenario_rank": 9,
+            "baseline_spi": 86.89490811494643,
+            "scenario_spi": 88.42632745137534,
+            "spi_delta": 1.531419336428911,
+            "rank_delta": -1
+          },
+          {
+            "player_id": 6460,
+            "baseline_rank": 7,
+            "scenario_rank": 13,
+            "baseline_spi": 86.95480137432789,
+            "scenario_spi": 87.76958867443159,
+            "spi_delta": 0.8147873001037027,
+            "rank_delta": -6
+          },
+          {
+            "player_id": 6651,
+            "baseline_rank": 6,
+            "scenario_rank": 5,
+            "baseline_spi": 86.99022592217042,
+            "scenario_spi": 89.98778240271302,
+            "spi_delta": 2.997556480542599,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 7897,
+            "baseline_rank": 9,
+            "scenario_rank": 15,
+            "baseline_spi": 86.69248804712196,
+            "scenario_spi": 86.54357616059735,
+            "spi_delta": -0.1489118865246013,
+            "rank_delta": -6
+          },
+          {
+            "player_id": 8301,
+            "baseline_rank": 4,
+            "scenario_rank": 1,
+            "baseline_spi": 87.49971014565797,
+            "scenario_spi": 93.5209791454871,
+            "spi_delta": 6.021268999829132,
+            "rank_delta": 3
+          },
+          {
+            "player_id": 20702,
+            "baseline_rank": 5,
+            "scenario_rank": 14,
+            "baseline_spi": 87.27922977488055,
+            "scenario_spi": 87.53940419107775,
+            "spi_delta": 0.26017441619720216,
+            "rank_delta": -9
+          },
+          {
+            "player_id": 20894,
+            "baseline_rank": 17,
+            "scenario_rank": 6,
+            "baseline_spi": 84.6826362133318,
+            "scenario_spi": 89.78186669523616,
+            "spi_delta": 5.099230481904357,
+            "rank_delta": 11
+          },
+          {
+            "player_id": 22187,
+            "baseline_rank": 14,
+            "scenario_rank": 2,
+            "baseline_spi": 85.71114120878319,
+            "scenario_spi": 93.33295636172527,
+            "spi_delta": 7.621815152942077,
+            "rank_delta": 12
+          },
+          {
+            "player_id": 45749,
+            "baseline_rank": 16,
+            "scenario_rank": 4,
+            "baseline_spi": 85.592712416962,
+            "scenario_spi": 90.71182075376065,
+            "spi_delta": 5.1191083367986465,
+            "rank_delta": 12
+          }
+        ],
+        "pressure_event_count": 23870,
+        "pressure_opportunity_count": 22645,
+        "weights": {
+          "performance": 0.75,
+          "consistency": 0.25,
+          "reliability": 0.0
+        }
+      },
+      {
+        "scenario": "lower_exposure",
+        "eligible_players": 346,
+        "top_10_overlap_jaccard": 1.0,
+        "top_10_player_ids": [
+          4708,
+          8,
+          1077,
+          20702,
+          6651,
+          7897,
+          4773,
+          8301,
+          6460,
+          152
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 8,
+            "baseline_rank": 2,
+            "scenario_rank": 2,
+            "baseline_spi": 88.49244794116582,
+            "scenario_spi": 89.28788120505722,
+            "spi_delta": 0.7954332638913968,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 152,
+            "baseline_rank": 10,
+            "scenario_rank": 10,
+            "baseline_spi": 86.27261415140498,
+            "scenario_spi": 87.35701783160806,
+            "spi_delta": 1.0844036802030814,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 1077,
+            "baseline_rank": 3,
+            "scenario_rank": 3,
+            "baseline_spi": 88.37362365844972,
+            "scenario_spi": 89.00249019604956,
+            "spi_delta": 0.6288665375998477,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 4708,
+            "baseline_rank": 1,
+            "scenario_rank": 1,
+            "baseline_spi": 90.23848293823126,
+            "scenario_spi": 90.64638237871067,
+            "spi_delta": 0.4078994404794116,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 4773,
+            "baseline_rank": 8,
+            "scenario_rank": 7,
+            "baseline_spi": 86.89490811494643,
+            "scenario_spi": 87.8037517630815,
+            "spi_delta": 0.9088436481350612,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 6460,
+            "baseline_rank": 7,
+            "scenario_rank": 9,
+            "baseline_spi": 86.95480137432789,
+            "scenario_spi": 87.73756640466245,
+            "spi_delta": 0.7827650303345592,
+            "rank_delta": -2
+          },
+          {
+            "player_id": 6651,
+            "baseline_rank": 6,
+            "scenario_rank": 5,
+            "baseline_spi": 86.99022592217042,
+            "scenario_spi": 88.41354837548175,
+            "spi_delta": 1.4233224533113287,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 7897,
+            "baseline_rank": 9,
+            "scenario_rank": 6,
+            "baseline_spi": 86.69248804712196,
+            "scenario_spi": 87.93983834818374,
+            "spi_delta": 1.2473503010617861,
+            "rank_delta": 3
+          },
+          {
+            "player_id": 8301,
+            "baseline_rank": 4,
+            "scenario_rank": 8,
+            "baseline_spi": 87.49971014565797,
+            "scenario_spi": 87.7823948421744,
+            "spi_delta": 0.28268469651642647,
+            "rank_delta": -4
+          },
+          {
+            "player_id": 20702,
+            "baseline_rank": 5,
+            "scenario_rank": 4,
+            "baseline_spi": 87.27922977488055,
+            "scenario_spi": 88.45618075687027,
+            "spi_delta": 1.1769509819897195,
+            "rank_delta": 1
+          }
+        ],
+        "pressure_event_count": 23870,
+        "pressure_opportunity_count": 22645,
+        "min_matches": 2,
+        "min_pressure_opportunities": 6
+      },
+      {
+        "scenario": "higher_exposure",
+        "eligible_players": 192,
+        "top_10_overlap_jaccard": 0.6666666666666666,
+        "top_10_player_ids": [
+          4708,
+          1077,
+          8,
+          20702,
+          6460,
+          4773,
+          7897,
+          152,
+          8101,
+          4722
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 8,
+            "baseline_rank": 2,
+            "scenario_rank": 3,
+            "baseline_spi": 88.49244794116582,
+            "scenario_spi": 87.65241027287475,
+            "spi_delta": -0.8400376682910746,
+            "rank_delta": -1
+          },
+          {
+            "player_id": 152,
+            "baseline_rank": 10,
+            "scenario_rank": 8,
+            "baseline_spi": 86.27261415140498,
+            "scenario_spi": 85.2016960472067,
+            "spi_delta": -1.0709181041982845,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 1077,
+            "baseline_rank": 3,
+            "scenario_rank": 2,
+            "baseline_spi": 88.37362365844972,
+            "scenario_spi": 87.67884467597531,
+            "spi_delta": -0.6947789824744035,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 4708,
+            "baseline_rank": 1,
+            "scenario_rank": 1,
+            "baseline_spi": 90.23848293823126,
+            "scenario_spi": 89.75256780802681,
+            "spi_delta": -0.48591513020444665,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 4722,
+            "baseline_rank": 12,
+            "scenario_rank": 10,
+            "baseline_spi": 85.96360994953622,
+            "scenario_spi": 84.81902416653091,
+            "spi_delta": -1.1445857830053114,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 4773,
+            "baseline_rank": 8,
+            "scenario_rank": 6,
+            "baseline_spi": 86.89490811494643,
+            "scenario_spi": 85.9611689885171,
+            "spi_delta": -0.9337391264293302,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 6460,
+            "baseline_rank": 7,
+            "scenario_rank": 5,
+            "baseline_spi": 86.95480137432789,
+            "scenario_spi": 86.12548459805713,
+            "spi_delta": -0.8293167762707583,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 6651,
+            "baseline_rank": 6,
+            "scenario_rank": null,
+            "baseline_spi": 86.99022592217042,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 7897,
+            "baseline_rank": 9,
+            "scenario_rank": 7,
+            "baseline_spi": 86.69248804712196,
+            "scenario_spi": 85.5028938859997,
+            "spi_delta": -1.1895941611222582,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 8101,
+            "baseline_rank": 11,
+            "scenario_rank": 9,
+            "baseline_spi": 85.97508537023147,
+            "scenario_spi": 84.83697549071859,
+            "spi_delta": -1.1381098795128821,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 8301,
+            "baseline_rank": 4,
+            "scenario_rank": null,
+            "baseline_spi": 87.49971014565797,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 20702,
+            "baseline_rank": 5,
+            "scenario_rank": 4,
+            "baseline_spi": 87.27922977488055,
+            "scenario_spi": 86.13985395693078,
+            "spi_delta": -1.1393758179497695,
+            "rank_delta": 1
+          }
+        ],
+        "pressure_event_count": 23870,
+        "pressure_opportunity_count": 22645,
+        "min_matches": 5,
+        "min_pressure_opportunities": 24
+      },
+      {
+        "scenario": "pressure_threshold_40",
+        "eligible_players": 314,
+        "top_10_overlap_jaccard": 0.17647058823529413,
+        "top_10_player_ids": [
+          2984,
+          143,
+          7260,
+          6460,
+          1077,
+          2756,
+          332,
+          7897,
+          2463,
+          2436
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 8,
+            "baseline_rank": 2,
+            "scenario_rank": 69,
+            "baseline_spi": 88.49244794116582,
+            "scenario_spi": 80.3474031551577,
+            "spi_delta": -8.145044786008114,
+            "rank_delta": -67
+          },
+          {
+            "player_id": 143,
+            "baseline_rank": 15,
+            "scenario_rank": 2,
+            "baseline_spi": 85.67722882155653,
+            "scenario_spi": 90.29710900423619,
+            "spi_delta": 4.619880182679665,
+            "rank_delta": 13
+          },
+          {
+            "player_id": 152,
+            "baseline_rank": 10,
+            "scenario_rank": 126,
+            "baseline_spi": 86.27261415140498,
+            "scenario_spi": 73.92883167675234,
+            "spi_delta": -12.343782474652642,
+            "rank_delta": -116
+          },
+          {
+            "player_id": 332,
+            "baseline_rank": 67,
+            "scenario_rank": 7,
+            "baseline_spi": 76.50540578260534,
+            "scenario_spi": 88.87350005521184,
+            "spi_delta": 12.368094272606498,
+            "rank_delta": 60
+          },
+          {
+            "player_id": 1077,
+            "baseline_rank": 3,
+            "scenario_rank": 5,
+            "baseline_spi": 88.37362365844972,
+            "scenario_spi": 89.11603250361611,
+            "spi_delta": 0.7424088451663948,
+            "rank_delta": -2
+          },
+          {
+            "player_id": 2436,
+            "baseline_rank": 29,
+            "scenario_rank": 10,
+            "baseline_spi": 82.27695121568247,
+            "scenario_spi": 88.0271141943988,
+            "spi_delta": 5.750162978716332,
+            "rank_delta": 19
+          },
+          {
+            "player_id": 2463,
+            "baseline_rank": 103,
+            "scenario_rank": 9,
+            "baseline_spi": 71.61748944196847,
+            "scenario_spi": 88.20006438545498,
+            "spi_delta": 16.582574943486506,
+            "rank_delta": 94
+          },
+          {
+            "player_id": 2756,
+            "baseline_rank": 88,
+            "scenario_rank": 6,
+            "baseline_spi": 73.38577282275533,
+            "scenario_spi": 88.9624890003958,
+            "spi_delta": 15.576716177640478,
+            "rank_delta": 82
+          },
+          {
+            "player_id": 2984,
+            "baseline_rank": 27,
+            "scenario_rank": 1,
+            "baseline_spi": 83.1334241572896,
+            "scenario_spi": 90.64278531618538,
+            "spi_delta": 7.509361158895786,
+            "rank_delta": 26
+          },
+          {
+            "player_id": 4708,
+            "baseline_rank": 1,
+            "scenario_rank": 15,
+            "baseline_spi": 90.23848293823126,
+            "scenario_spi": 87.22299110141381,
+            "spi_delta": -3.0154918368174464,
+            "rank_delta": -14
+          },
+          {
+            "player_id": 4773,
+            "baseline_rank": 8,
+            "scenario_rank": 26,
+            "baseline_spi": 86.89490811494643,
+            "scenario_spi": 85.67141848457865,
+            "spi_delta": -1.22348963036778,
+            "rank_delta": -18
+          },
+          {
+            "player_id": 6460,
+            "baseline_rank": 7,
+            "scenario_rank": 4,
+            "baseline_spi": 86.95480137432789,
+            "scenario_spi": 89.28485581415192,
+            "spi_delta": 2.330054439824039,
+            "rank_delta": 3
+          },
+          {
+            "player_id": 6651,
+            "baseline_rank": 6,
+            "scenario_rank": 53,
+            "baseline_spi": 86.99022592217042,
+            "scenario_spi": 81.89669506507437,
+            "spi_delta": -5.093530857096056,
+            "rank_delta": -47
+          },
+          {
+            "player_id": 7260,
+            "baseline_rank": 30,
+            "scenario_rank": 3,
+            "baseline_spi": 82.20343893801281,
+            "scenario_spi": 90.03832483664615,
+            "spi_delta": 7.834885898633345,
+            "rank_delta": 27
+          },
+          {
+            "player_id": 7897,
+            "baseline_rank": 9,
+            "scenario_rank": 8,
+            "baseline_spi": 86.69248804712196,
+            "scenario_spi": 88.79789657359329,
+            "spi_delta": 2.1054085264713365,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 8301,
+            "baseline_rank": 4,
+            "scenario_rank": 21,
+            "baseline_spi": 87.49971014565797,
+            "scenario_spi": 86.73418131371503,
+            "spi_delta": -0.7655288319429445,
+            "rank_delta": -17
+          },
+          {
+            "player_id": 20702,
+            "baseline_rank": 5,
+            "scenario_rank": 24,
+            "baseline_spi": 87.27922977488055,
+            "scenario_spi": 85.90626796295678,
+            "spi_delta": -1.3729618119237728,
+            "rank_delta": -19
+          }
+        ],
+        "pressure_event_count": 55326,
+        "pressure_opportunity_count": 52647,
+        "pressure_threshold": 40.0
+      },
+      {
+        "scenario": "pressure_threshold_60",
+        "eligible_players": 186,
+        "top_10_overlap_jaccard": 0.17647058823529413,
+        "top_10_player_ids": [
+          8,
+          4708,
+          6651,
+          2984,
+          3605,
+          2436,
+          4101,
+          6726,
+          4986,
+          4722
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 8,
+            "baseline_rank": 2,
+            "scenario_rank": 1,
+            "baseline_spi": 88.49244794116582,
+            "scenario_spi": 88.68614296180625,
+            "spi_delta": 0.1936950206404333,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 152,
+            "baseline_rank": 10,
+            "scenario_rank": 14,
+            "baseline_spi": 86.27261415140498,
+            "scenario_spi": 83.56383166394397,
+            "spi_delta": -2.708782487461008,
+            "rank_delta": -4
+          },
+          {
+            "player_id": 1077,
+            "baseline_rank": 3,
+            "scenario_rank": 28,
+            "baseline_spi": 88.37362365844972,
+            "scenario_spi": 79.18967395501687,
+            "spi_delta": -9.183949703432845,
+            "rank_delta": -25
+          },
+          {
+            "player_id": 2436,
+            "baseline_rank": 29,
+            "scenario_rank": 6,
+            "baseline_spi": 82.27695121568247,
+            "scenario_spi": 86.02202277247552,
+            "spi_delta": 3.74507155679305,
+            "rank_delta": 23
+          },
+          {
+            "player_id": 2984,
+            "baseline_rank": 27,
+            "scenario_rank": 4,
+            "baseline_spi": 83.1334241572896,
+            "scenario_spi": 86.39647913784228,
+            "spi_delta": 3.263054980552681,
+            "rank_delta": 23
+          },
+          {
+            "player_id": 3605,
+            "baseline_rank": 33,
+            "scenario_rank": 5,
+            "baseline_spi": 81.60998855055942,
+            "scenario_spi": 86.245158534043,
+            "spi_delta": 4.6351699834835784,
+            "rank_delta": 28
+          },
+          {
+            "player_id": 4101,
+            "baseline_rank": 107,
+            "scenario_rank": 7,
+            "baseline_spi": 70.97791547323585,
+            "scenario_spi": 85.49269299116212,
+            "spi_delta": 14.514777517926262,
+            "rank_delta": 100
+          },
+          {
+            "player_id": 4708,
+            "baseline_rank": 1,
+            "scenario_rank": 2,
+            "baseline_spi": 90.23848293823126,
+            "scenario_spi": 87.98657712533968,
+            "spi_delta": -2.2519058128915788,
+            "rank_delta": -1
+          },
+          {
+            "player_id": 4722,
+            "baseline_rank": 12,
+            "scenario_rank": 10,
+            "baseline_spi": 85.96360994953622,
+            "scenario_spi": 84.65916919119007,
+            "spi_delta": -1.3044407583461464,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 4773,
+            "baseline_rank": 8,
+            "scenario_rank": 48,
+            "baseline_spi": 86.89490811494643,
+            "scenario_spi": 71.28890153946668,
+            "spi_delta": -15.606006575479753,
+            "rank_delta": -40
+          },
+          {
+            "player_id": 4986,
+            "baseline_rank": 18,
+            "scenario_rank": 9,
+            "baseline_spi": 84.45921220231814,
+            "scenario_spi": 84.74150239903906,
+            "spi_delta": 0.2822901967209219,
+            "rank_delta": 9
+          },
+          {
+            "player_id": 6460,
+            "baseline_rank": 7,
+            "scenario_rank": 29,
+            "baseline_spi": 86.95480137432789,
+            "scenario_spi": 78.1350980355974,
+            "spi_delta": -8.819703338730491,
+            "rank_delta": -22
+          },
+          {
+            "player_id": 6651,
+            "baseline_rank": 6,
+            "scenario_rank": 3,
+            "baseline_spi": 86.99022592217042,
+            "scenario_spi": 86.45072962111729,
+            "spi_delta": -0.5394963010531342,
+            "rank_delta": 3
+          },
+          {
+            "player_id": 6726,
+            "baseline_rank": 20,
+            "scenario_rank": 8,
+            "baseline_spi": 83.99889896372459,
+            "scenario_spi": 85.04519013570871,
+            "spi_delta": 1.046291171984123,
+            "rank_delta": 12
+          },
+          {
+            "player_id": 7897,
+            "baseline_rank": 9,
+            "scenario_rank": 167,
+            "baseline_spi": 86.69248804712196,
+            "scenario_spi": 34.59300454045082,
+            "spi_delta": -52.099483506671135,
+            "rank_delta": -158
+          },
+          {
+            "player_id": 8301,
+            "baseline_rank": 4,
+            "scenario_rank": 87,
+            "baseline_spi": 87.49971014565797,
+            "scenario_spi": 58.46982535691416,
+            "spi_delta": -29.029884788743814,
+            "rank_delta": -83
+          },
+          {
+            "player_id": 20702,
+            "baseline_rank": 5,
+            "scenario_rank": 130,
+            "baseline_spi": 87.27922977488055,
+            "scenario_spi": 46.21819453073458,
+            "spi_delta": -41.06103524414597,
+            "rank_delta": -125
+          }
+        ],
+        "pressure_event_count": 9360,
+        "pressure_opportunity_count": 8842,
+        "pressure_threshold": 60.0
+      },
+      {
+        "scenario": "equal_pressure_component_weights",
+        "eligible_players": 310,
+        "top_10_overlap_jaccard": 0.3333333333333333,
+        "top_10_player_ids": [
+          8101,
+          1077,
+          4708,
+          20702,
+          143,
+          2436,
+          3926,
+          7897,
+          6460,
+          3125
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 8,
+            "baseline_rank": 2,
+            "scenario_rank": 18,
+            "baseline_spi": 88.49244794116582,
+            "scenario_spi": 86.55262055277151,
+            "spi_delta": -1.9398273883943062,
+            "rank_delta": -16
+          },
+          {
+            "player_id": 143,
+            "baseline_rank": 15,
+            "scenario_rank": 5,
+            "baseline_spi": 85.67722882155653,
+            "scenario_spi": 88.6632602512599,
+            "spi_delta": 2.986031429703374,
+            "rank_delta": 10
+          },
+          {
+            "player_id": 152,
+            "baseline_rank": 10,
+            "scenario_rank": 42,
+            "baseline_spi": 86.27261415140498,
+            "scenario_spi": 83.42529830222695,
+            "spi_delta": -2.847315849178031,
+            "rank_delta": -32
+          },
+          {
+            "player_id": 1077,
+            "baseline_rank": 3,
+            "scenario_rank": 2,
+            "baseline_spi": 88.37362365844972,
+            "scenario_spi": 89.35409207941007,
+            "spi_delta": 0.9804684209603494,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 2436,
+            "baseline_rank": 29,
+            "scenario_rank": 6,
+            "baseline_spi": 82.27695121568247,
+            "scenario_spi": 88.3566276419882,
+            "spi_delta": 6.079676426305724,
+            "rank_delta": 23
+          },
+          {
+            "player_id": 3125,
+            "baseline_rank": 63,
+            "scenario_rank": 10,
+            "baseline_spi": 76.93428504985333,
+            "scenario_spi": 87.54989527321816,
+            "spi_delta": 10.615610223364826,
+            "rank_delta": 53
+          },
+          {
+            "player_id": 3926,
+            "baseline_rank": 38,
+            "scenario_rank": 7,
+            "baseline_spi": 80.38295209673964,
+            "scenario_spi": 87.65535204002077,
+            "spi_delta": 7.27239994328113,
+            "rank_delta": 31
+          },
+          {
+            "player_id": 4708,
+            "baseline_rank": 1,
+            "scenario_rank": 3,
+            "baseline_spi": 90.23848293823126,
+            "scenario_spi": 89.28851951738169,
+            "spi_delta": -0.9499634208495706,
+            "rank_delta": -2
+          },
+          {
+            "player_id": 4773,
+            "baseline_rank": 8,
+            "scenario_rank": 11,
+            "baseline_spi": 86.89490811494643,
+            "scenario_spi": 87.53635149270303,
+            "spi_delta": 0.6414433777566018,
+            "rank_delta": -3
+          },
+          {
+            "player_id": 6460,
+            "baseline_rank": 7,
+            "scenario_rank": 9,
+            "baseline_spi": 86.95480137432789,
+            "scenario_spi": 87.64363764438055,
+            "spi_delta": 0.6888362700526613,
+            "rank_delta": -2
+          },
+          {
+            "player_id": 6651,
+            "baseline_rank": 6,
+            "scenario_rank": 86,
+            "baseline_spi": 86.99022592217042,
+            "scenario_spi": 77.09708058591728,
+            "spi_delta": -9.893145336253141,
+            "rank_delta": -80
+          },
+          {
+            "player_id": 7897,
+            "baseline_rank": 9,
+            "scenario_rank": 8,
+            "baseline_spi": 86.69248804712196,
+            "scenario_spi": 87.64816892167411,
+            "spi_delta": 0.9556808745521579,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 8101,
+            "baseline_rank": 11,
+            "scenario_rank": 1,
+            "baseline_spi": 85.97508537023147,
+            "scenario_spi": 89.44853857537127,
+            "spi_delta": 3.473453205139805,
+            "rank_delta": 10
+          },
+          {
+            "player_id": 8301,
+            "baseline_rank": 4,
+            "scenario_rank": 56,
+            "baseline_spi": 87.49971014565797,
+            "scenario_spi": 80.76173356678756,
+            "spi_delta": -6.737976578870416,
+            "rank_delta": -52
+          },
+          {
+            "player_id": 20702,
+            "baseline_rank": 5,
+            "scenario_rank": 4,
+            "baseline_spi": 87.27922977488055,
+            "scenario_spi": 88.85539687696775,
+            "spi_delta": 1.5761671020871972,
+            "rank_delta": 1
+          }
+        ],
+        "pressure_event_count": 23870,
+        "pressure_opportunity_count": 22645,
+        "pressure_weights": {
+          "batting": {
+            "run_rate": 0.25,
+            "wickets": 0.25,
+            "time": 0.25,
+            "closeness": 0.25
+          },
+          "bowling": {
+            "run_rate": 0.25,
+            "wickets": 0.25,
+            "time": 0.25,
+            "closeness": 0.25
+          }
+        }
+      },
+      {
+        "scenario": "closeness_removed",
+        "eligible_players": 237,
+        "top_10_overlap_jaccard": 0.42857142857142855,
+        "top_10_player_ids": [
+          4708,
+          20702,
+          8,
+          6651,
+          152,
+          1077,
+          6396,
+          8101,
+          6726,
+          796
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 8,
+            "baseline_rank": 2,
+            "scenario_rank": 3,
+            "baseline_spi": 88.49244794116582,
+            "scenario_spi": 89.24419759565929,
+            "spi_delta": 0.7517496544934659,
+            "rank_delta": -1
+          },
+          {
+            "player_id": 152,
+            "baseline_rank": 10,
+            "scenario_rank": 5,
+            "baseline_spi": 86.27261415140498,
+            "scenario_spi": 88.58091310739906,
+            "spi_delta": 2.3082989559940756,
+            "rank_delta": 5
+          },
+          {
+            "player_id": 796,
+            "baseline_rank": 26,
+            "scenario_rank": 10,
+            "baseline_spi": 83.3512454350228,
+            "scenario_spi": 85.79110430948671,
+            "spi_delta": 2.4398588744639085,
+            "rank_delta": 16
+          },
+          {
+            "player_id": 1077,
+            "baseline_rank": 3,
+            "scenario_rank": 6,
+            "baseline_spi": 88.37362365844972,
+            "scenario_spi": 87.91376489112955,
+            "spi_delta": -0.4598587673201706,
+            "rank_delta": -3
+          },
+          {
+            "player_id": 4708,
+            "baseline_rank": 1,
+            "scenario_rank": 1,
+            "baseline_spi": 90.23848293823126,
+            "scenario_spi": 90.4573421139526,
+            "spi_delta": 0.21885917572134872,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 4773,
+            "baseline_rank": 8,
+            "scenario_rank": 11,
+            "baseline_spi": 86.89490811494643,
+            "scenario_spi": 85.43184522608908,
+            "spi_delta": -1.4630628888573511,
+            "rank_delta": -3
+          },
+          {
+            "player_id": 6396,
+            "baseline_rank": 13,
+            "scenario_rank": 7,
+            "baseline_spi": 85.81421819006962,
+            "scenario_spi": 87.9085510493224,
+            "spi_delta": 2.0943328592527735,
+            "rank_delta": 6
+          },
+          {
+            "player_id": 6460,
+            "baseline_rank": 7,
+            "scenario_rank": 15,
+            "baseline_spi": 86.95480137432789,
+            "scenario_spi": 84.36222696041028,
+            "spi_delta": -2.5925744139176032,
+            "rank_delta": -8
+          },
+          {
+            "player_id": 6651,
+            "baseline_rank": 6,
+            "scenario_rank": 4,
+            "baseline_spi": 86.99022592217042,
+            "scenario_spi": 89.10466223544614,
+            "spi_delta": 2.114436313275718,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 6726,
+            "baseline_rank": 20,
+            "scenario_rank": 9,
+            "baseline_spi": 83.99889896372459,
+            "scenario_spi": 86.45698534028212,
+            "spi_delta": 2.4580863765575316,
+            "rank_delta": 11
+          },
+          {
+            "player_id": 7897,
+            "baseline_rank": 9,
+            "scenario_rank": 32,
+            "baseline_spi": 86.69248804712196,
+            "scenario_spi": 81.92417873729678,
+            "spi_delta": -4.76830930982517,
+            "rank_delta": -23
+          },
+          {
+            "player_id": 8101,
+            "baseline_rank": 11,
+            "scenario_rank": 8,
+            "baseline_spi": 85.97508537023147,
+            "scenario_spi": 87.4317913475395,
+            "spi_delta": 1.456705977308033,
+            "rank_delta": 3
+          },
+          {
+            "player_id": 8301,
+            "baseline_rank": 4,
+            "scenario_rank": 21,
+            "baseline_spi": 87.49971014565797,
+            "scenario_spi": 83.60708051970762,
+            "spi_delta": -3.892629625950349,
+            "rank_delta": -17
+          },
+          {
+            "player_id": 20702,
+            "baseline_rank": 5,
+            "scenario_rank": 2,
+            "baseline_spi": 87.27922977488055,
+            "scenario_spi": 89.24869089736544,
+            "spi_delta": 1.969461122484887,
+            "rank_delta": 3
+          }
+        ],
+        "pressure_event_count": 16915,
+        "pressure_opportunity_count": 16063,
+        "pressure_weights": {
+          "batting": {
+            "run_rate": 0.43749999999999994,
+            "wickets": 0.3125,
+            "time": 0.25,
+            "closeness": 0.0
+          },
+          "bowling": {
+            "run_rate": 0.39999999999999997,
+            "wickets": 0.3333333333333333,
+            "time": 0.26666666666666666,
+            "closeness": 0.0
+          }
+        }
+      }
+    ],
+    "bowler": [
+      {
+        "scenario": "performance_heavy",
+        "eligible_players": 336,
+        "top_10_overlap_jaccard": 0.8181818181818182,
+        "top_10_player_ids": [
+          25138,
+          56817,
+          3077,
+          25132,
+          32862,
+          48616,
+          23,
+          4716,
+          286,
+          2490
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 23,
+            "baseline_rank": 6,
+            "scenario_rank": 7,
+            "baseline_spi": 70.71945609743129,
+            "scenario_spi": 69.85820501515293,
+            "spi_delta": -0.8612510822783577,
+            "rank_delta": -1
+          },
+          {
+            "player_id": 286,
+            "baseline_rank": 11,
+            "scenario_rank": 9,
+            "baseline_spi": 65.27613472329544,
+            "scenario_spi": 64.91665268132238,
+            "spi_delta": -0.35948204197306666,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 2490,
+            "baseline_rank": 9,
+            "scenario_rank": 10,
+            "baseline_spi": 66.77774747470094,
+            "scenario_spi": 64.67034966610672,
+            "spi_delta": -2.1073978085942286,
+            "rank_delta": -1
+          },
+          {
+            "player_id": 3077,
+            "baseline_rank": 3,
+            "scenario_rank": 3,
+            "baseline_spi": 77.64452183770703,
+            "scenario_spi": 80.52502765815652,
+            "spi_delta": 2.8805058204494856,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 4716,
+            "baseline_rank": 7,
+            "scenario_rank": 8,
+            "baseline_spi": 69.8192909698171,
+            "scenario_spi": 69.54730736630457,
+            "spi_delta": -0.27198360351253825,
+            "rank_delta": -1
+          },
+          {
+            "player_id": 8530,
+            "baseline_rank": 10,
+            "scenario_rank": 13,
+            "baseline_spi": 66.2021624839939,
+            "scenario_spi": 64.08511997743157,
+            "spi_delta": -2.1170425065623277,
+            "rank_delta": -3
+          },
+          {
+            "player_id": 25132,
+            "baseline_rank": 4,
+            "scenario_rank": 4,
+            "baseline_spi": 72.75627359669299,
+            "scenario_spi": 73.0642138597138,
+            "spi_delta": 0.3079402630208108,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 25138,
+            "baseline_rank": 1,
+            "scenario_rank": 1,
+            "baseline_spi": 82.16641566981151,
+            "scenario_spi": 84.47999298219432,
+            "spi_delta": 2.3135773123828045,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 32862,
+            "baseline_rank": 5,
+            "scenario_rank": 5,
+            "baseline_spi": 71.6877029986523,
+            "scenario_spi": 71.61363748272097,
+            "spi_delta": -0.07406551593132349,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 48616,
+            "baseline_rank": 8,
+            "scenario_rank": 6,
+            "baseline_spi": 67.99161832658355,
+            "scenario_spi": 70.316862780451,
+            "spi_delta": 2.3252444538674553,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 56817,
+            "baseline_rank": 2,
+            "scenario_rank": 2,
+            "baseline_spi": 80.02140154276933,
+            "scenario_spi": 82.58960160602064,
+            "spi_delta": 2.568200063251311,
+            "rank_delta": 0
+          }
+        ],
+        "pressure_event_count": 57779,
+        "pressure_opportunity_count": 55179,
+        "weights": {
+          "performance": 0.7,
+          "consistency": 0.15,
+          "reliability": 0.15
+        }
+      },
+      {
+        "scenario": "balanced",
+        "eligible_players": 336,
+        "top_10_overlap_jaccard": 0.8181818181818182,
+        "top_10_player_ids": [
+          25138,
+          56817,
+          3077,
+          25132,
+          32862,
+          23,
+          4716,
+          2490,
+          8530,
+          3653
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 23,
+            "baseline_rank": 6,
+            "scenario_rank": 6,
+            "baseline_spi": 70.71945609743129,
+            "scenario_spi": 71.58070717970965,
+            "spi_delta": 0.8612510822783577,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 2490,
+            "baseline_rank": 9,
+            "scenario_rank": 8,
+            "baseline_spi": 66.77774747470094,
+            "scenario_spi": 68.88514528329516,
+            "spi_delta": 2.1073978085942144,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 3077,
+            "baseline_rank": 3,
+            "scenario_rank": 3,
+            "baseline_spi": 77.64452183770703,
+            "scenario_spi": 74.76401601725755,
+            "spi_delta": -2.8805058204494856,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 3653,
+            "baseline_rank": 15,
+            "scenario_rank": 10,
+            "baseline_spi": 63.99828175964588,
+            "scenario_spi": 67.0337361244718,
+            "spi_delta": 3.035454364825924,
+            "rank_delta": 5
+          },
+          {
+            "player_id": 4716,
+            "baseline_rank": 7,
+            "scenario_rank": 7,
+            "baseline_spi": 69.8192909698171,
+            "scenario_spi": 70.09127457332963,
+            "spi_delta": 0.27198360351252404,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 8530,
+            "baseline_rank": 10,
+            "scenario_rank": 9,
+            "baseline_spi": 66.2021624839939,
+            "scenario_spi": 68.31920499055622,
+            "spi_delta": 2.1170425065623135,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 25132,
+            "baseline_rank": 4,
+            "scenario_rank": 4,
+            "baseline_spi": 72.75627359669299,
+            "scenario_spi": 72.44833333367217,
+            "spi_delta": -0.307940263020825,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 25138,
+            "baseline_rank": 1,
+            "scenario_rank": 1,
+            "baseline_spi": 82.16641566981151,
+            "scenario_spi": 79.85283835742868,
+            "spi_delta": -2.313577312382833,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 32862,
+            "baseline_rank": 5,
+            "scenario_rank": 5,
+            "baseline_spi": 71.6877029986523,
+            "scenario_spi": 71.7617685145836,
+            "spi_delta": 0.07406551593129507,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 48616,
+            "baseline_rank": 8,
+            "scenario_rank": 11,
+            "baseline_spi": 67.99161832658355,
+            "scenario_spi": 65.6663738727161,
+            "spi_delta": -2.3252444538674553,
+            "rank_delta": -3
+          },
+          {
+            "player_id": 56817,
+            "baseline_rank": 2,
+            "scenario_rank": 2,
+            "baseline_spi": 80.02140154276933,
+            "scenario_spi": 77.453201479518,
+            "spi_delta": -2.568200063251325,
+            "rank_delta": 0
+          }
+        ],
+        "pressure_event_count": 57779,
+        "pressure_opportunity_count": 55179,
+        "weights": {
+          "performance": 0.5,
+          "consistency": 0.25,
+          "reliability": 0.25
+        }
+      },
+      {
+        "scenario": "consistency_heavy",
+        "eligible_players": 336,
+        "top_10_overlap_jaccard": 0.8181818181818182,
+        "top_10_player_ids": [
+          25138,
+          25132,
+          56817,
+          3077,
+          32862,
+          23,
+          4716,
+          8530,
+          2490,
+          286
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 23,
+            "baseline_rank": 6,
+            "scenario_rank": 6,
+            "baseline_spi": 70.71945609743129,
+            "scenario_spi": 70.6344261570927,
+            "spi_delta": -0.08502994033858613,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 286,
+            "baseline_rank": 11,
+            "scenario_rank": 10,
+            "baseline_spi": 65.27613472329544,
+            "scenario_spi": 68.1773563761814,
+            "spi_delta": 2.901221652885951,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 2490,
+            "baseline_rank": 9,
+            "scenario_rank": 9,
+            "baseline_spi": 66.77774747470094,
+            "scenario_spi": 68.58637166654435,
+            "spi_delta": 1.808624191843407,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 3077,
+            "baseline_rank": 3,
+            "scenario_rank": 4,
+            "baseline_spi": 77.64452183770703,
+            "scenario_spi": 70.77398939799188,
+            "spi_delta": -6.870532439715149,
+            "rank_delta": -1
+          },
+          {
+            "player_id": 4716,
+            "baseline_rank": 7,
+            "scenario_rank": 7,
+            "baseline_spi": 69.8192909698171,
+            "scenario_spi": 69.30465948571829,
+            "spi_delta": -0.514631484098814,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 8530,
+            "baseline_rank": 10,
+            "scenario_rank": 8,
+            "baseline_spi": 66.2021624839939,
+            "scenario_spi": 69.15830747238034,
+            "spi_delta": 2.9561449883864412,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 25132,
+            "baseline_rank": 4,
+            "scenario_rank": 2,
+            "baseline_spi": 72.75627359669299,
+            "scenario_spi": 73.1403012925468,
+            "spi_delta": 0.3840276958538027,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 25138,
+            "baseline_rank": 1,
+            "scenario_rank": 1,
+            "baseline_spi": 82.16641566981151,
+            "scenario_spi": 77.57923012755303,
+            "spi_delta": -4.5871855422584815,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 32862,
+            "baseline_rank": 5,
+            "scenario_rank": 5,
+            "baseline_spi": 71.6877029986523,
+            "scenario_spi": 70.77353144485167,
+            "spi_delta": -0.9141715538006281,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 48616,
+            "baseline_rank": 8,
+            "scenario_rank": 22,
+            "baseline_spi": 67.99161832658355,
+            "scenario_spi": 64.1491597395244,
+            "spi_delta": -3.8424585870591415,
+            "rank_delta": -14
+          },
+          {
+            "player_id": 56817,
+            "baseline_rank": 2,
+            "scenario_rank": 3,
+            "baseline_spi": 80.02140154276933,
+            "scenario_spi": 73.07059954365582,
+            "spi_delta": -6.950801999113509,
+            "rank_delta": -1
+          }
+        ],
+        "pressure_event_count": 57779,
+        "pressure_opportunity_count": 55179,
+        "weights": {
+          "performance": 0.4,
+          "consistency": 0.4,
+          "reliability": 0.2
+        }
+      },
+      {
+        "scenario": "reliability_heavy",
+        "eligible_players": 336,
+        "top_10_overlap_jaccard": 0.8181818181818182,
+        "top_10_player_ids": [
+          25138,
+          56817,
+          23,
+          2490,
+          3077,
+          32862,
+          3653,
+          8530,
+          4716,
+          25132
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 23,
+            "baseline_rank": 6,
+            "scenario_rank": 3,
+            "baseline_spi": 70.71945609743129,
+            "scenario_spi": 74.2494903668833,
+            "spi_delta": 3.5300342694520026,
+            "rank_delta": 3
+          },
+          {
+            "player_id": 2490,
+            "baseline_rank": 9,
+            "scenario_rank": 4,
+            "baseline_spi": 66.77774747470094,
+            "scenario_spi": 73.39871451723442,
+            "spi_delta": 6.620967042533479,
+            "rank_delta": 5
+          },
+          {
+            "player_id": 3077,
+            "baseline_rank": 3,
+            "scenario_rank": 5,
+            "baseline_spi": 77.64452183770703,
+            "scenario_spi": 72.99303099562421,
+            "spi_delta": -4.651490842082822,
+            "rank_delta": -2
+          },
+          {
+            "player_id": 3653,
+            "baseline_rank": 15,
+            "scenario_rank": 7,
+            "baseline_spi": 63.99828175964588,
+            "scenario_spi": 72.63852102478337,
+            "spi_delta": 8.640239265137495,
+            "rank_delta": 8
+          },
+          {
+            "player_id": 4716,
+            "baseline_rank": 7,
+            "scenario_rank": 9,
+            "baseline_spi": 69.8192909698171,
+            "scenario_spi": 71.42185686796603,
+            "spi_delta": 1.6025658981489244,
+            "rank_delta": -2
+          },
+          {
+            "player_id": 8530,
+            "baseline_rank": 10,
+            "scenario_rank": 8,
+            "baseline_spi": 66.2021624839939,
+            "scenario_spi": 71.71418752185674,
+            "spi_delta": 5.512025037862841,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 25132,
+            "baseline_rank": 4,
+            "scenario_rank": 10,
+            "baseline_spi": 72.75627359669299,
+            "scenario_spi": 71.14048484875592,
+            "spi_delta": -1.6157887479370743,
+            "rank_delta": -6
+          },
+          {
+            "player_id": 25138,
+            "baseline_rank": 1,
+            "scenario_rank": 1,
+            "baseline_spi": 82.16641566981151,
+            "scenario_spi": 77.49929196253869,
+            "spi_delta": -4.667123707272822,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 32862,
+            "baseline_rank": 5,
+            "scenario_rank": 6,
+            "baseline_spi": 71.6877029986523,
+            "scenario_spi": 72.89813661617816,
+            "spi_delta": 1.2104336175258652,
+            "rank_delta": -1
+          },
+          {
+            "player_id": 48616,
+            "baseline_rank": 8,
+            "scenario_rank": 47,
+            "baseline_spi": 67.99161832658355,
+            "scenario_spi": 62.53309909817288,
+            "spi_delta": -5.458519228410665,
+            "rank_delta": -39
+          },
+          {
+            "player_id": 56817,
+            "baseline_rank": 2,
+            "scenario_rank": 2,
+            "baseline_spi": 80.02140154276933,
+            "scenario_spi": 76.69940328887756,
+            "spi_delta": -3.3219982538917634,
+            "rank_delta": 0
+          }
+        ],
+        "pressure_event_count": 57779,
+        "pressure_opportunity_count": 55179,
+        "weights": {
+          "performance": 0.4,
+          "consistency": 0.2,
+          "reliability": 0.4
+        }
+      },
+      {
+        "scenario": "reliability_removed",
+        "eligible_players": 336,
+        "top_10_overlap_jaccard": 0.6666666666666666,
+        "top_10_player_ids": [
+          25138,
+          56817,
+          3077,
+          25132,
+          48616,
+          32862,
+          4716,
+          286,
+          23,
+          36553
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 23,
+            "baseline_rank": 6,
+            "scenario_rank": 9,
+            "baseline_spi": 70.71945609743129,
+            "scenario_spi": 67.16816434289464,
+            "spi_delta": -3.551291754536649,
+            "rank_delta": -3
+          },
+          {
+            "player_id": 286,
+            "baseline_rank": 11,
+            "scenario_rank": 8,
+            "baseline_spi": 65.27613472329544,
+            "scenario_spi": 67.4647336215106,
+            "spi_delta": 2.1885988982151616,
+            "rank_delta": 3
+          },
+          {
+            "player_id": 2490,
+            "baseline_rank": 9,
+            "scenario_rank": 18,
+            "baseline_spi": 66.77774747470094,
+            "scenario_spi": 60.608936480128314,
+            "spi_delta": -6.168810994572631,
+            "rank_delta": -9
+          },
+          {
+            "player_id": 3077,
+            "baseline_rank": 3,
+            "scenario_rank": 3,
+            "baseline_spi": 77.64452183770703,
+            "scenario_spi": 80.57837956986106,
+            "spi_delta": 2.9338577321540242,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 4716,
+            "baseline_rank": 7,
+            "scenario_rank": 7,
+            "baseline_spi": 69.8192909698171,
+            "scenario_spi": 68.08806720064348,
+            "spi_delta": -1.7312237691736243,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 8530,
+            "baseline_rank": 10,
+            "scenario_rank": 16,
+            "baseline_spi": 66.2021624839939,
+            "scenario_spi": 61.42917369322767,
+            "spi_delta": -4.7729887907662345,
+            "rank_delta": -6
+          },
+          {
+            "player_id": 25132,
+            "baseline_rank": 4,
+            "scenario_rank": 4,
+            "baseline_spi": 72.75627359669299,
+            "scenario_spi": 74.46806926859351,
+            "spi_delta": 1.7117956719005178,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 25138,
+            "baseline_rank": 1,
+            "scenario_rank": 1,
+            "baseline_spi": 82.16641566981151,
+            "scenario_spi": 85.68674299151971,
+            "spi_delta": 3.5203273217081943,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 32862,
+            "baseline_rank": 5,
+            "scenario_rank": 6,
+            "baseline_spi": 71.6877029986523,
+            "scenario_spi": 70.24872649267627,
+            "spi_delta": -1.4389765059760293,
+            "rank_delta": -1
+          },
+          {
+            "player_id": 36553,
+            "baseline_rank": 13,
+            "scenario_rank": 10,
+            "baseline_spi": 64.66704859295899,
+            "scenario_spi": 66.86322250590463,
+            "spi_delta": 2.196173912945639,
+            "rank_delta": 3
+          },
+          {
+            "player_id": 48616,
+            "baseline_rank": 8,
+            "scenario_rank": 5,
+            "baseline_spi": 67.99161832658355,
+            "scenario_spi": 72.48952290822945,
+            "spi_delta": 4.497904581645898,
+            "rank_delta": 3
+          },
+          {
+            "player_id": 56817,
+            "baseline_rank": 2,
+            "scenario_rank": 2,
+            "baseline_spi": 80.02140154276933,
+            "scenario_spi": 81.6056992968827,
+            "spi_delta": 1.5842977541133791,
+            "rank_delta": 0
+          }
+        ],
+        "pressure_event_count": 57779,
+        "pressure_opportunity_count": 55179,
+        "weights": {
+          "performance": 0.75,
+          "consistency": 0.25,
+          "reliability": 0.0
+        }
+      },
+      {
+        "scenario": "lower_exposure",
+        "eligible_players": 402,
+        "top_10_overlap_jaccard": 1.0,
+        "top_10_player_ids": [
+          25138,
+          56817,
+          3077,
+          25132,
+          32862,
+          23,
+          4716,
+          48616,
+          2490,
+          8530
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 23,
+            "baseline_rank": 6,
+            "scenario_rank": 6,
+            "baseline_spi": 70.71945609743129,
+            "scenario_spi": 71.37098611443612,
+            "spi_delta": 0.6515300170048306,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 2490,
+            "baseline_rank": 9,
+            "scenario_rank": 9,
+            "baseline_spi": 66.77774747470094,
+            "scenario_spi": 67.11645789278518,
+            "spi_delta": 0.33871041808423286,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 3077,
+            "baseline_rank": 3,
+            "scenario_rank": 3,
+            "baseline_spi": 77.64452183770703,
+            "scenario_spi": 78.4412411103842,
+            "spi_delta": 0.7967192726771657,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 4716,
+            "baseline_rank": 7,
+            "scenario_rank": 7,
+            "baseline_spi": 69.8192909698171,
+            "scenario_spi": 70.51327692766122,
+            "spi_delta": 0.6939859578441201,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 8530,
+            "baseline_rank": 10,
+            "scenario_rank": 10,
+            "baseline_spi": 66.2021624839939,
+            "scenario_spi": 66.51689473586902,
+            "spi_delta": 0.3147322518751139,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 25132,
+            "baseline_rank": 4,
+            "scenario_rank": 4,
+            "baseline_spi": 72.75627359669299,
+            "scenario_spi": 73.57520733498542,
+            "spi_delta": 0.8189337382924293,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 25138,
+            "baseline_rank": 1,
+            "scenario_rank": 1,
+            "baseline_spi": 82.16641566981151,
+            "scenario_spi": 82.885013708248,
+            "spi_delta": 0.7185980384364825,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 32862,
+            "baseline_rank": 5,
+            "scenario_rank": 5,
+            "baseline_spi": 71.6877029986523,
+            "scenario_spi": 72.45090165260766,
+            "spi_delta": 0.7631986539553566,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 48616,
+            "baseline_rank": 8,
+            "scenario_rank": 8,
+            "baseline_spi": 67.99161832658355,
+            "scenario_spi": 68.8616575147988,
+            "spi_delta": 0.8700391882152445,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 56817,
+            "baseline_rank": 2,
+            "scenario_rank": 2,
+            "baseline_spi": 80.02140154276933,
+            "scenario_spi": 80.78243742730066,
+            "spi_delta": 0.7610358845313385,
+            "rank_delta": 0
+          }
+        ],
+        "pressure_event_count": 57779,
+        "pressure_opportunity_count": 55179,
+        "min_matches": 2,
+        "min_pressure_opportunities": 6
+      },
+      {
+        "scenario": "higher_exposure",
+        "eligible_players": 266,
+        "top_10_overlap_jaccard": 0.6666666666666666,
+        "top_10_player_ids": [
+          56817,
+          3077,
+          25132,
+          32862,
+          23,
+          4716,
+          2490,
+          8530,
+          6683,
+          3653
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 23,
+            "baseline_rank": 6,
+            "scenario_rank": 5,
+            "baseline_spi": 70.71945609743129,
+            "scenario_spi": 69.77166004016973,
+            "spi_delta": -0.9477960572615558,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 2490,
+            "baseline_rank": 9,
+            "scenario_rank": 7,
+            "baseline_spi": 66.77774747470094,
+            "scenario_spi": 66.29283635487671,
+            "spi_delta": -0.48491111982423263,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 3077,
+            "baseline_rank": 3,
+            "scenario_rank": 2,
+            "baseline_spi": 77.64452183770703,
+            "scenario_spi": 76.34130805209156,
+            "spi_delta": -1.303213785615469,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 3653,
+            "baseline_rank": 15,
+            "scenario_rank": 10,
+            "baseline_spi": 63.99828175964588,
+            "scenario_spi": 63.88877396262474,
+            "spi_delta": -0.10950779702113778,
+            "rank_delta": 5
+          },
+          {
+            "player_id": 4716,
+            "baseline_rank": 7,
+            "scenario_rank": 6,
+            "baseline_spi": 69.8192909698171,
+            "scenario_spi": 68.80585937918396,
+            "spi_delta": -1.0134315906331466,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 6683,
+            "baseline_rank": 12,
+            "scenario_rank": 9,
+            "baseline_spi": 64.95372799153299,
+            "scenario_spi": 64.23686001115155,
+            "spi_delta": -0.7168679803814371,
+            "rank_delta": 3
+          },
+          {
+            "player_id": 8530,
+            "baseline_rank": 10,
+            "scenario_rank": 8,
+            "baseline_spi": 66.2021624839939,
+            "scenario_spi": 65.75187985815688,
+            "spi_delta": -0.45028262583701917,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 25132,
+            "baseline_rank": 4,
+            "scenario_rank": 3,
+            "baseline_spi": 72.75627359669299,
+            "scenario_spi": 71.53965924957357,
+            "spi_delta": -1.2166143471194175,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 25138,
+            "baseline_rank": 1,
+            "scenario_rank": null,
+            "baseline_spi": 82.16641566981151,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 32862,
+            "baseline_rank": 5,
+            "scenario_rank": 4,
+            "baseline_spi": 71.6877029986523,
+            "scenario_spi": 70.56424939037112,
+            "spi_delta": -1.1234536082811815,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 48616,
+            "baseline_rank": 8,
+            "scenario_rank": null,
+            "baseline_spi": 67.99161832658355,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 56817,
+            "baseline_rank": 2,
+            "scenario_rank": 1,
+            "baseline_spi": 80.02140154276933,
+            "scenario_spi": 78.76112611097517,
+            "spi_delta": -1.260275431794156,
+            "rank_delta": 1
+          }
+        ],
+        "pressure_event_count": 57779,
+        "pressure_opportunity_count": 55179,
+        "min_matches": 5,
+        "min_pressure_opportunities": 24
+      },
+      {
+        "scenario": "pressure_threshold_40",
+        "eligible_players": 410,
+        "top_10_overlap_jaccard": 0.05263157894736842,
+        "top_10_player_ids": [
+          4276,
+          4499,
+          2985,
+          56817,
+          3775,
+          4838,
+          829,
+          4438,
+          3056,
+          158
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 23,
+            "baseline_rank": 6,
+            "scenario_rank": 190,
+            "baseline_spi": 70.71945609743129,
+            "scenario_spi": 47.894104125200286,
+            "spi_delta": -22.825351972231005,
+            "rank_delta": -184
+          },
+          {
+            "player_id": 158,
+            "baseline_rank": null,
+            "scenario_rank": 10,
+            "baseline_spi": null,
+            "scenario_spi": 71.22338089714543,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 829,
+            "baseline_rank": 78,
+            "scenario_rank": 7,
+            "baseline_spi": 51.68712522902976,
+            "scenario_spi": 72.30463782368862,
+            "spi_delta": 20.617512594658862,
+            "rank_delta": 71
+          },
+          {
+            "player_id": 2490,
+            "baseline_rank": 9,
+            "scenario_rank": 24,
+            "baseline_spi": 66.77774747470094,
+            "scenario_spi": 65.52161600631675,
+            "spi_delta": -1.256131468384197,
+            "rank_delta": -15
+          },
+          {
+            "player_id": 2985,
+            "baseline_rank": 32,
+            "scenario_rank": 3,
+            "baseline_spi": 58.18064347084594,
+            "scenario_spi": 78.15741969176833,
+            "spi_delta": 19.976776220922382,
+            "rank_delta": 29
+          },
+          {
+            "player_id": 3056,
+            "baseline_rank": 225,
+            "scenario_rank": 9,
+            "baseline_spi": 40.9338996070075,
+            "scenario_spi": 71.43301837200885,
+            "spi_delta": 30.49911876500135,
+            "rank_delta": 216
+          },
+          {
+            "player_id": 3077,
+            "baseline_rank": 3,
+            "scenario_rank": 81,
+            "baseline_spi": 77.64452183770703,
+            "scenario_spi": 55.832177431019765,
+            "spi_delta": -21.812344406687266,
+            "rank_delta": -78
+          },
+          {
+            "player_id": 3775,
+            "baseline_rank": null,
+            "scenario_rank": 5,
+            "baseline_spi": null,
+            "scenario_spi": 75.76138438564779,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 4276,
+            "baseline_rank": 14,
+            "scenario_rank": 1,
+            "baseline_spi": 64.38421423835688,
+            "scenario_spi": 83.51126473696424,
+            "spi_delta": 19.12705049860736,
+            "rank_delta": 13
+          },
+          {
+            "player_id": 4438,
+            "baseline_rank": null,
+            "scenario_rank": 8,
+            "baseline_spi": null,
+            "scenario_spi": 71.73659622407094,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 4499,
+            "baseline_rank": 177,
+            "scenario_rank": 2,
+            "baseline_spi": 44.076309492467345,
+            "scenario_spi": 78.83067230877184,
+            "spi_delta": 34.75436281630449,
+            "rank_delta": 175
+          },
+          {
+            "player_id": 4716,
+            "baseline_rank": 7,
+            "scenario_rank": 69,
+            "baseline_spi": 69.8192909698171,
+            "scenario_spi": 57.388233004316064,
+            "spi_delta": -12.43105796550104,
+            "rank_delta": -62
+          },
+          {
+            "player_id": 4838,
+            "baseline_rank": null,
+            "scenario_rank": 6,
+            "baseline_spi": null,
+            "scenario_spi": 73.25438440718375,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 8530,
+            "baseline_rank": 10,
+            "scenario_rank": 50,
+            "baseline_spi": 66.2021624839939,
+            "scenario_spi": 60.76824354309531,
+            "spi_delta": -5.433918940898593,
+            "rank_delta": -40
+          },
+          {
+            "player_id": 25132,
+            "baseline_rank": 4,
+            "scenario_rank": 168,
+            "baseline_spi": 72.75627359669299,
+            "scenario_spi": 48.985737816789594,
+            "spi_delta": -23.770535779903398,
+            "rank_delta": -164
+          },
+          {
+            "player_id": 25138,
+            "baseline_rank": 1,
+            "scenario_rank": 12,
+            "baseline_spi": 82.16641566981151,
+            "scenario_spi": 70.65120683055417,
+            "spi_delta": -11.51520883925734,
+            "rank_delta": -11
+          },
+          {
+            "player_id": 32862,
+            "baseline_rank": 5,
+            "scenario_rank": 22,
+            "baseline_spi": 71.6877029986523,
+            "scenario_spi": 66.19420282461945,
+            "spi_delta": -5.493500174032846,
+            "rank_delta": -17
+          },
+          {
+            "player_id": 48616,
+            "baseline_rank": 8,
+            "scenario_rank": 17,
+            "baseline_spi": 67.99161832658355,
+            "scenario_spi": 67.15833069102207,
+            "spi_delta": -0.8332876355614758,
+            "rank_delta": -9
+          },
+          {
+            "player_id": 56817,
+            "baseline_rank": 2,
+            "scenario_rank": 4,
+            "baseline_spi": 80.02140154276933,
+            "scenario_spi": 77.5468402232573,
+            "spi_delta": -2.47456131951202,
+            "rank_delta": -2
+          }
+        ],
+        "pressure_event_count": 124766,
+        "pressure_opportunity_count": 119346,
+        "pressure_threshold": 40.0
+      },
+      {
+        "scenario": "pressure_threshold_60",
+        "eligible_players": 109,
+        "top_10_overlap_jaccard": 0.05263157894736842,
+        "top_10_player_ids": [
+          2304,
+          4229,
+          8049,
+          26663,
+          1107,
+          2526,
+          58246,
+          786,
+          8530,
+          35318
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 23,
+            "baseline_rank": 6,
+            "scenario_rank": null,
+            "baseline_spi": 70.71945609743129,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 786,
+            "baseline_rank": 251,
+            "scenario_rank": 8,
+            "baseline_spi": 39.27239654217375,
+            "scenario_spi": 48.31444160673712,
+            "spi_delta": 9.042045064563368,
+            "rank_delta": 243
+          },
+          {
+            "player_id": 1107,
+            "baseline_rank": 135,
+            "scenario_rank": 5,
+            "baseline_spi": 46.73963983063617,
+            "scenario_spi": 52.531458736560964,
+            "spi_delta": 5.791818905924792,
+            "rank_delta": 130
+          },
+          {
+            "player_id": 2304,
+            "baseline_rank": 72,
+            "scenario_rank": 1,
+            "baseline_spi": 52.433627263878414,
+            "scenario_spi": 59.08548911731935,
+            "spi_delta": 6.651861853440934,
+            "rank_delta": 71
+          },
+          {
+            "player_id": 2490,
+            "baseline_rank": 9,
+            "scenario_rank": null,
+            "baseline_spi": 66.77774747470094,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 2526,
+            "baseline_rank": 227,
+            "scenario_rank": 6,
+            "baseline_spi": 40.68091025025889,
+            "scenario_spi": 51.10843108860722,
+            "spi_delta": 10.427520838348329,
+            "rank_delta": 221
+          },
+          {
+            "player_id": 3077,
+            "baseline_rank": 3,
+            "scenario_rank": null,
+            "baseline_spi": 77.64452183770703,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 4229,
+            "baseline_rank": 47,
+            "scenario_rank": 2,
+            "baseline_spi": 55.99801973990188,
+            "scenario_spi": 56.72685037082608,
+            "spi_delta": 0.7288306309242003,
+            "rank_delta": 45
+          },
+          {
+            "player_id": 4716,
+            "baseline_rank": 7,
+            "scenario_rank": 45,
+            "baseline_spi": 69.8192909698171,
+            "scenario_spi": 40.22175148706111,
+            "spi_delta": -29.59753948275599,
+            "rank_delta": -38
+          },
+          {
+            "player_id": 8049,
+            "baseline_rank": 237,
+            "scenario_rank": 3,
+            "baseline_spi": 40.40982370519603,
+            "scenario_spi": 56.29840498345798,
+            "spi_delta": 15.888581278261945,
+            "rank_delta": 234
+          },
+          {
+            "player_id": 8530,
+            "baseline_rank": 10,
+            "scenario_rank": 9,
+            "baseline_spi": 66.2021624839939,
+            "scenario_spi": 47.89529780719252,
+            "spi_delta": -18.306864676801382,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 25132,
+            "baseline_rank": 4,
+            "scenario_rank": null,
+            "baseline_spi": 72.75627359669299,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 25138,
+            "baseline_rank": 1,
+            "scenario_rank": null,
+            "baseline_spi": 82.16641566981151,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 26663,
+            "baseline_rank": 182,
+            "scenario_rank": 4,
+            "baseline_spi": 43.69675780828331,
+            "scenario_spi": 55.98758844517084,
+            "spi_delta": 12.290830636887534,
+            "rank_delta": 178
+          },
+          {
+            "player_id": 32862,
+            "baseline_rank": 5,
+            "scenario_rank": null,
+            "baseline_spi": 71.6877029986523,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 35318,
+            "baseline_rank": 148,
+            "scenario_rank": 10,
+            "baseline_spi": 46.095126336331326,
+            "scenario_spi": 47.782887500926876,
+            "spi_delta": 1.6877611645955497,
+            "rank_delta": 138
+          },
+          {
+            "player_id": 48616,
+            "baseline_rank": 8,
+            "scenario_rank": null,
+            "baseline_spi": 67.99161832658355,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 56817,
+            "baseline_rank": 2,
+            "scenario_rank": null,
+            "baseline_spi": 80.02140154276933,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 58246,
+            "baseline_rank": 94,
+            "scenario_rank": 7,
+            "baseline_spi": 50.50146699507603,
+            "scenario_spi": 49.915033871130476,
+            "spi_delta": -0.5864331239455538,
+            "rank_delta": 87
+          }
+        ],
+        "pressure_event_count": 4646,
+        "pressure_opportunity_count": 4392,
+        "pressure_threshold": 60.0
+      },
+      {
+        "scenario": "equal_pressure_component_weights",
+        "eligible_players": 366,
+        "top_10_overlap_jaccard": 0.42857142857142855,
+        "top_10_player_ids": [
+          3077,
+          56817,
+          25138,
+          41503,
+          25132,
+          36553,
+          3623,
+          8530,
+          48616,
+          25048
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 23,
+            "baseline_rank": 6,
+            "scenario_rank": 12,
+            "baseline_spi": 70.71945609743129,
+            "scenario_spi": 64.60917494908567,
+            "spi_delta": -6.110281148345621,
+            "rank_delta": -6
+          },
+          {
+            "player_id": 2490,
+            "baseline_rank": 9,
+            "scenario_rank": 28,
+            "baseline_spi": 66.77774747470094,
+            "scenario_spi": 59.1254602050455,
+            "spi_delta": -7.652287269655446,
+            "rank_delta": -19
+          },
+          {
+            "player_id": 3077,
+            "baseline_rank": 3,
+            "scenario_rank": 1,
+            "baseline_spi": 77.64452183770703,
+            "scenario_spi": 80.58780293106551,
+            "spi_delta": 2.943281093358479,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 3623,
+            "baseline_rank": 100,
+            "scenario_rank": 7,
+            "baseline_spi": 49.68259707812972,
+            "scenario_spi": 68.57903762530523,
+            "spi_delta": 18.896440547175516,
+            "rank_delta": 93
+          },
+          {
+            "player_id": 4716,
+            "baseline_rank": 7,
+            "scenario_rank": 32,
+            "baseline_spi": 69.8192909698171,
+            "scenario_spi": 57.973620289753846,
+            "spi_delta": -11.845670680063257,
+            "rank_delta": -25
+          },
+          {
+            "player_id": 8530,
+            "baseline_rank": 10,
+            "scenario_rank": 8,
+            "baseline_spi": 66.2021624839939,
+            "scenario_spi": 67.84104086533708,
+            "spi_delta": 1.6388783813431758,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 25048,
+            "baseline_rank": 116,
+            "scenario_rank": 10,
+            "baseline_spi": 48.09230596432381,
+            "scenario_spi": 66.43478507920052,
+            "spi_delta": 18.34247911487671,
+            "rank_delta": 106
+          },
+          {
+            "player_id": 25132,
+            "baseline_rank": 4,
+            "scenario_rank": 5,
+            "baseline_spi": 72.75627359669299,
+            "scenario_spi": 69.09558908942188,
+            "spi_delta": -3.660684507271114,
+            "rank_delta": -1
+          },
+          {
+            "player_id": 25138,
+            "baseline_rank": 1,
+            "scenario_rank": 3,
+            "baseline_spi": 82.16641566981151,
+            "scenario_spi": 77.31838871094055,
+            "spi_delta": -4.84802695887096,
+            "rank_delta": -2
+          },
+          {
+            "player_id": 32862,
+            "baseline_rank": 5,
+            "scenario_rank": 70,
+            "baseline_spi": 71.6877029986523,
+            "scenario_spi": 53.22590084097031,
+            "spi_delta": -18.461802157681987,
+            "rank_delta": -65
+          },
+          {
+            "player_id": 36553,
+            "baseline_rank": 13,
+            "scenario_rank": 6,
+            "baseline_spi": 64.66704859295899,
+            "scenario_spi": 68.98965513905135,
+            "spi_delta": 4.322606546092359,
+            "rank_delta": 7
+          },
+          {
+            "player_id": 41503,
+            "baseline_rank": 81,
+            "scenario_rank": 4,
+            "baseline_spi": 51.31113555768567,
+            "scenario_spi": 69.7530108067009,
+            "spi_delta": 18.441875249015233,
+            "rank_delta": 77
+          },
+          {
+            "player_id": 48616,
+            "baseline_rank": 8,
+            "scenario_rank": 9,
+            "baseline_spi": 67.99161832658355,
+            "scenario_spi": 67.20186906921784,
+            "spi_delta": -0.7897492573657132,
+            "rank_delta": -1
+          },
+          {
+            "player_id": 56817,
+            "baseline_rank": 2,
+            "scenario_rank": 2,
+            "baseline_spi": 80.02140154276933,
+            "scenario_spi": 78.94165255448378,
+            "spi_delta": -1.0797489882855444,
+            "rank_delta": 0
+          }
+        ],
+        "pressure_event_count": 57779,
+        "pressure_opportunity_count": 55179,
+        "pressure_weights": {
+          "batting": {
+            "run_rate": 0.25,
+            "wickets": 0.25,
+            "time": 0.25,
+            "closeness": 0.25
+          },
+          "bowling": {
+            "run_rate": 0.25,
+            "wickets": 0.25,
+            "time": 0.25,
+            "closeness": 0.25
+          }
+        }
+      },
+      {
+        "scenario": "closeness_removed",
+        "eligible_players": 227,
+        "top_10_overlap_jaccard": 0.0,
+        "top_10_player_ids": [
+          4460,
+          6676,
+          17424,
+          1107,
+          25048,
+          21784,
+          2399,
+          4229,
+          3686,
+          4823
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 23,
+            "baseline_rank": 6,
+            "scenario_rank": 24,
+            "baseline_spi": 70.71945609743129,
+            "scenario_spi": 52.69814545028164,
+            "spi_delta": -18.021310647149647,
+            "rank_delta": -18
+          },
+          {
+            "player_id": 1107,
+            "baseline_rank": 135,
+            "scenario_rank": 4,
+            "baseline_spi": 46.73963983063617,
+            "scenario_spi": 61.80389239165862,
+            "spi_delta": 15.06425256102245,
+            "rank_delta": 131
+          },
+          {
+            "player_id": 2399,
+            "baseline_rank": 74,
+            "scenario_rank": 7,
+            "baseline_spi": 52.349384864438704,
+            "scenario_spi": 58.244316206107214,
+            "spi_delta": 5.89493134166851,
+            "rank_delta": 67
+          },
+          {
+            "player_id": 2490,
+            "baseline_rank": 9,
+            "scenario_rank": 39,
+            "baseline_spi": 66.77774747470094,
+            "scenario_spi": 49.49603614866934,
+            "spi_delta": -17.281711326031605,
+            "rank_delta": -30
+          },
+          {
+            "player_id": 3077,
+            "baseline_rank": 3,
+            "scenario_rank": null,
+            "baseline_spi": 77.64452183770703,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 3686,
+            "baseline_rank": 29,
+            "scenario_rank": 9,
+            "baseline_spi": 58.67866513117387,
+            "scenario_spi": 57.87229451270221,
+            "spi_delta": -0.8063706184716608,
+            "rank_delta": 20
+          },
+          {
+            "player_id": 4229,
+            "baseline_rank": 47,
+            "scenario_rank": 8,
+            "baseline_spi": 55.99801973990188,
+            "scenario_spi": 57.966595049781866,
+            "spi_delta": 1.9685753098799879,
+            "rank_delta": 39
+          },
+          {
+            "player_id": 4460,
+            "baseline_rank": 147,
+            "scenario_rank": 1,
+            "baseline_spi": 46.13411472408505,
+            "scenario_spi": 71.56714135166011,
+            "spi_delta": 25.43302662757506,
+            "rank_delta": 146
+          },
+          {
+            "player_id": 4716,
+            "baseline_rank": 7,
+            "scenario_rank": 56,
+            "baseline_spi": 69.8192909698171,
+            "scenario_spi": 47.018348905041464,
+            "spi_delta": -22.80094206477564,
+            "rank_delta": -49
+          },
+          {
+            "player_id": 4823,
+            "baseline_rank": 95,
+            "scenario_rank": 10,
+            "baseline_spi": 50.33497189087812,
+            "scenario_spi": 57.7493131655806,
+            "spi_delta": 7.41434127470248,
+            "rank_delta": 85
+          },
+          {
+            "player_id": 6676,
+            "baseline_rank": 114,
+            "scenario_rank": 2,
+            "baseline_spi": 48.343835915795665,
+            "scenario_spi": 67.34708289052077,
+            "spi_delta": 19.0032469747251,
+            "rank_delta": 112
+          },
+          {
+            "player_id": 8530,
+            "baseline_rank": 10,
+            "scenario_rank": 90,
+            "baseline_spi": 66.2021624839939,
+            "scenario_spi": 44.30007673620471,
+            "spi_delta": -21.902085747789194,
+            "rank_delta": -80
+          },
+          {
+            "player_id": 17424,
+            "baseline_rank": 102,
+            "scenario_rank": 3,
+            "baseline_spi": 49.4495940166652,
+            "scenario_spi": 62.9471735357091,
+            "spi_delta": 13.497579519043896,
+            "rank_delta": 99
+          },
+          {
+            "player_id": 21784,
+            "baseline_rank": 273,
+            "scenario_rank": 6,
+            "baseline_spi": 37.94246941869982,
+            "scenario_spi": 58.542432014157875,
+            "spi_delta": 20.599962595458052,
+            "rank_delta": 267
+          },
+          {
+            "player_id": 25048,
+            "baseline_rank": 116,
+            "scenario_rank": 5,
+            "baseline_spi": 48.09230596432381,
+            "scenario_spi": 58.647694285594724,
+            "spi_delta": 10.555388321270911,
+            "rank_delta": 111
+          },
+          {
+            "player_id": 25132,
+            "baseline_rank": 4,
+            "scenario_rank": 63,
+            "baseline_spi": 72.75627359669299,
+            "scenario_spi": 46.19972604287112,
+            "spi_delta": -26.556547553821872,
+            "rank_delta": -59
+          },
+          {
+            "player_id": 25138,
+            "baseline_rank": 1,
+            "scenario_rank": 82,
+            "baseline_spi": 82.16641566981151,
+            "scenario_spi": 44.79070077582461,
+            "spi_delta": -37.3757148939869,
+            "rank_delta": -81
+          },
+          {
+            "player_id": 32862,
+            "baseline_rank": 5,
+            "scenario_rank": null,
+            "baseline_spi": 71.6877029986523,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 48616,
+            "baseline_rank": 8,
+            "scenario_rank": null,
+            "baseline_spi": 67.99161832658355,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 56817,
+            "baseline_rank": 2,
+            "scenario_rank": 27,
+            "baseline_spi": 80.02140154276933,
+            "scenario_spi": 52.07890621886155,
+            "spi_delta": -27.942495323907778,
+            "rank_delta": -25
+          }
+        ],
+        "pressure_event_count": 17896,
+        "pressure_opportunity_count": 16994,
+        "pressure_weights": {
+          "batting": {
+            "run_rate": 0.43749999999999994,
+            "wickets": 0.3125,
+            "time": 0.25,
+            "closeness": 0.0
+          },
+          "bowling": {
+            "run_rate": 0.39999999999999997,
+            "wickets": 0.3333333333333333,
+            "time": 0.26666666666666666,
+            "closeness": 0.0
+          }
+        }
+      }
+    ]
+  },
+  "correlation_diagnostics": {
+    "batter": {
+      "eligible_players": 272,
+      "spearman_pairs": [
+        {
+          "left": "performance_component",
+          "right": "consistency",
+          "spearman_rho": 0.4023059156136543,
+          "high_overlap_flag": false
+        },
+        {
+          "left": "performance_component",
+          "right": "reliability",
+          "spearman_rho": 0.34803006498891803,
+          "high_overlap_flag": false
+        },
+        {
+          "left": "consistency",
+          "right": "reliability",
+          "spearman_rho": 0.18406129015154668,
+          "high_overlap_flag": false
+        }
+      ]
+    },
+    "bowler": {
+      "eligible_players": 336,
+      "spearman_pairs": [
+        {
+          "left": "performance_component",
+          "right": "consistency",
+          "spearman_rho": -0.10652724086224241,
+          "high_overlap_flag": false
+        },
+        {
+          "left": "performance_component",
+          "right": "reliability",
+          "spearman_rho": -0.27248347551933944,
+          "high_overlap_flag": false
+        },
+        {
+          "left": "consistency",
+          "right": "reliability",
+          "spearman_rho": -0.1381303185337576,
+          "high_overlap_flag": false
+        }
+      ]
+    }
+  },
+  "pressure_diagnostics": {
+    "batter": {
+      "weights": {
+        "run_rate": 0.35,
+        "wickets": 0.25,
+        "time": 0.2,
+        "closeness": 0.2
+      },
+      "pressure_delivery_count": 23870,
+      "pressure_opportunity_count": 22645,
+      "scored_delivery_count": 194014,
+      "mean_normalized_contributions": {
+        "run_rate": {
+          "weight": 0.35,
+          "mean_normalized_component": 0.11105041974468466,
+          "mean_score_points": 3.886764691063963
+        },
+        "wickets": {
+          "weight": 0.25,
+          "mean_normalized_component": 0.26777964476790334,
+          "mean_score_points": 6.6944911191975836
+        },
+        "time": {
+          "weight": 0.2,
+          "mean_normalized_component": 0.4724186588372563,
+          "mean_score_points": 9.448373176745125
+        },
+        "closeness": {
+          "weight": 0.2,
+          "mean_normalized_component": 0.5569643641440138,
+          "mean_score_points": 11.139287282880277
+        }
+      },
+      "component_spearman_pairs": [
+        {
+          "left": "run_rate",
+          "right": "wickets",
+          "spearman_rho": 0.37104916948764366,
+          "high_overlap_flag": false
+        },
+        {
+          "left": "run_rate",
+          "right": "time",
+          "spearman_rho": 0.17790423413596548,
+          "high_overlap_flag": false
+        },
+        {
+          "left": "run_rate",
+          "right": "closeness",
+          "spearman_rho": -0.08672355155719115,
+          "high_overlap_flag": false
+        },
+        {
+          "left": "wickets",
+          "right": "time",
+          "spearman_rho": 0.7683972601554971,
+          "high_overlap_flag": true
+        },
+        {
+          "left": "wickets",
+          "right": "closeness",
+          "spearman_rho": 0.1066963567173086,
+          "high_overlap_flag": false
+        },
+        {
+          "left": "time",
+          "right": "closeness",
+          "spearman_rho": 0.21143399628870888,
+          "high_overlap_flag": false
+        }
+      ],
+      "sample_event": {
+        "match_id": 29924,
+        "innings": 2,
+        "innings_ball_num": 125,
+        "score_before": 150.0,
+        "wickets_before": 9,
+        "legal_balls_before": 117,
+        "balls_remaining": 3.0,
+        "target": 161.0,
+        "required_run_rate": 22.0,
+        "reference_run_rate": 8.578512396694215,
+        "pressure_score": 81.18365416747113,
+        "components": {
+          "run_rate": {
+            "normalized_value": 1.0,
+            "weight": 0.35,
+            "score_points": 35.0
+          },
+          "wickets": {
+            "normalized_value": 0.9,
+            "weight": 0.25,
+            "score_points": 22.5
+          },
+          "time": {
+            "normalized_value": 0.975,
+            "weight": 0.2,
+            "score_points": 19.5
+          },
+          "closeness": {
+            "normalized_value": 0.20918270837355665,
+            "weight": 0.2,
+            "score_points": 4.183654167471133
+          }
+        }
+      }
+    },
+    "bowler": {
+      "weights": {
+        "run_rate": 0.3,
+        "wickets": 0.25,
+        "time": 0.2,
+        "closeness": 0.25
+      },
+      "pressure_delivery_count": 57779,
+      "pressure_opportunity_count": 55179,
+      "scored_delivery_count": 194014,
+      "mean_normalized_contributions": {
+        "run_rate": {
+          "weight": 0.3,
+          "mean_normalized_component": 0.054754749850906774,
+          "mean_score_points": 1.6426424955272032
+        },
+        "wickets": {
+          "weight": 0.25,
+          "mean_normalized_component": 0.7322203552320966,
+          "mean_score_points": 18.305508880802414
+        },
+        "time": {
+          "weight": 0.2,
+          "mean_normalized_component": 0.4724186588372563,
+          "mean_score_points": 9.448373176745125
+        },
+        "closeness": {
+          "weight": 0.25,
+          "mean_normalized_component": 0.5569643641440138,
+          "mean_score_points": 13.924109103600346
+        }
+      },
+      "component_spearman_pairs": [
+        {
+          "left": "run_rate",
+          "right": "wickets",
+          "spearman_rho": 0.15018568746182415,
+          "high_overlap_flag": false
+        },
+        {
+          "left": "run_rate",
+          "right": "time",
+          "spearman_rho": 0.04854937141053151,
+          "high_overlap_flag": false
+        },
+        {
+          "left": "run_rate",
+          "right": "closeness",
+          "spearman_rho": 0.10372554044023974,
+          "high_overlap_flag": false
+        },
+        {
+          "left": "wickets",
+          "right": "time",
+          "spearman_rho": -0.7683972601554971,
+          "high_overlap_flag": true
+        },
+        {
+          "left": "wickets",
+          "right": "closeness",
+          "spearman_rho": -0.1066963567173086,
+          "high_overlap_flag": false
+        },
+        {
+          "left": "time",
+          "right": "closeness",
+          "spearman_rho": 0.21143399628870888,
+          "high_overlap_flag": false
+        }
+      ],
+      "sample_event": {
+        "match_id": 37943,
+        "innings": 1,
+        "innings_ball_num": 133,
+        "score_before": 282.0,
+        "wickets_before": 1,
+        "legal_balls_before": 120,
+        "balls_remaining": 0.0,
+        "target": null,
+        "required_run_rate": null,
+        "reference_run_rate": 8.5,
+        "pressure_score": 75.20119970005574,
+        "components": {
+          "run_rate": {
+            "normalized_value": 0.6588235294117647,
+            "weight": 0.3,
+            "score_points": 19.764705882352942
+          },
+          "wickets": {
+            "normalized_value": 0.9,
+            "weight": 0.25,
+            "score_points": 22.5
+          },
+          "time": {
+            "normalized_value": 1.0,
+            "weight": 0.2,
+            "score_points": 20.0
+          },
+          "closeness": {
+            "normalized_value": 0.5174597527081123,
+            "weight": 0.25,
+            "score_points": 12.936493817702807
+          }
+        }
+      }
+    }
+  },
+  "independent_spi_checks": {
+    "batter": {
+      "formula": "weighted performance_component + consistency + reliability",
+      "sample_player_count": 10,
+      "maximum_absolute_spi_error": 0.0,
+      "independent_recalculation_passed": true,
+      "sample": [
+        {
+          "player_id": 4708,
+          "player_name": "Rinku Singh",
+          "spi": 90.23848293823126,
+          "spi_independent": 90.23848293823126,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 8,
+          "player_name": "Mahendra Singh Dhoni",
+          "spi": 88.49244794116582,
+          "spi_independent": 88.49244794116582,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 1077,
+          "player_name": "David Miller",
+          "spi": 88.37362365844972,
+          "spi_independent": 88.37362365844972,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 8301,
+          "player_name": "Asif Khan",
+          "spi": 87.49971014565797,
+          "spi_independent": 87.49971014565797,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 20702,
+          "player_name": "Tristan Stubbs",
+          "spi": 87.27922977488055,
+          "spi_independent": 87.27922977488055,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 6651,
+          "player_name": "Towhid Hridoy",
+          "spi": 86.99022592217042,
+          "spi_independent": 86.99022592217042,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 6460,
+          "player_name": "Ayush Badoni",
+          "spi": 86.95480137432789,
+          "spi_independent": 86.95480137432789,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 4773,
+          "player_name": "Jaker Ali Anik",
+          "spi": 86.89490811494643,
+          "spi_independent": 86.89490811494643,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 7897,
+          "player_name": "Namboori Tilak Varma",
+          "spi": 86.69248804712196,
+          "spi_independent": 86.69248804712196,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 152,
+          "player_name": "Ravindra Jadeja",
+          "spi": 86.27261415140498,
+          "spi_independent": 86.27261415140498,
+          "spi_absolute_error": 0.0
+        }
+      ]
+    },
+    "bowler": {
+      "formula": "weighted performance_component + consistency + reliability",
+      "sample_player_count": 10,
+      "maximum_absolute_spi_error": 0.0,
+      "independent_recalculation_passed": true,
+      "sample": [
+        {
+          "player_id": 25138,
+          "player_name": "Harsh Dubey",
+          "spi": 82.16641566981151,
+          "spi_independent": 82.16641566981151,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 56817,
+          "player_name": "Shivang Kumar",
+          "spi": 80.02140154276933,
+          "spi_independent": 80.02140154276933,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 3077,
+          "player_name": "Usama Mir",
+          "spi": 77.64452183770703,
+          "spi_independent": 77.64452183770703,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 25132,
+          "player_name": "Praful Hinge",
+          "spi": 72.75627359669299,
+          "spi_independent": 72.75627359669299,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 32862,
+          "player_name": "Allah Ghazanfar",
+          "spi": 71.6877029986523,
+          "spi_independent": 71.6877029986523,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 23,
+          "player_name": "Piyush Chawla",
+          "spi": 70.71945609743129,
+          "spi_independent": 70.71945609743129,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 4716,
+          "player_name": "Mayank Dagar",
+          "spi": 69.8192909698171,
+          "spi_independent": 69.8192909698171,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 48616,
+          "player_name": "Abdul Saqlain",
+          "spi": 67.99161832658355,
+          "spi_independent": 67.99161832658355,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 2490,
+          "player_name": "Mohammad Nawaz",
+          "spi": 66.77774747470094,
+          "spi_independent": 66.77774747470094,
+          "spi_absolute_error": 0.0
+        },
+        {
+          "player_id": 8530,
+          "player_name": "Kartik Tyagi",
+          "spi": 66.2021624839939,
+          "spi_independent": 66.2021624839939,
+          "spi_absolute_error": 0.0
+        }
+      ]
+    }
+  }
+}

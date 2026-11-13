@@ -1,0 +1,25 @@
+{
+  "delivery_count": 194014,
+  "ordering_errors": 0,
+  "state_mismatches": 0,
+  "pressure_mismatches": 0,
+  "checked_batting_pressure_scores": 194014,
+  "checked_bowling_pressure_scores": 194014,
+  "innings_count": 1660,
+  "validated": true,
+  "mismatch_examples": [],
+  "mode": "historical replay simulation; no Kafka service was used",
+  "producer": "HistoricalDeliveryProducer",
+  "consumer": "ReplayConsumer",
+  "topic": "cricket-deliveries",
+  "partition_key": "match_id:innings",
+  "ordering": [
+    "match_id",
+    "innings",
+    "innings_ball_num",
+    "overid",
+    "over_ball_num"
+  ],
+  "pressure_source": "The replay recalculates weighted pressure from batch-enriched pre-delivery component fields; it independently reconstructs score, wickets, and legal balls from each event.",
+  "pressure_threshold": 50.0
+}

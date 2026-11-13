@@ -1,0 +1,18 @@
+{
+  "status": "supplementary",
+  "graph_semantics": "Bipartite directed player-match graph from observed batter and bowler deliveries. Player-to-match edges have unit weight; match-to-player edges are weighted by delivery involvement.",
+  "nodes": 1728,
+  "edges": 36318,
+  "player_nodes": 891,
+  "match_nodes": 837,
+  "pagerank_spi_comparison": {
+    "pagerank_vs_spi_spearman": 0.2595694595568983,
+    "pagerank_vs_pressure_opportunities_spearman": 0.6987080903845527,
+    "players_compared": 419
+  },
+  "interpretation": "PageRank mainly reflects recorded network participation under these edge weights; it is not a measure of pressure skill and is not used in SPI or official rankings.",
+  "outputs": {
+    "player_pagerank": "reports/graph/pagerank_players.csv",
+    "visualization": "reports/graph/player_match_graph.html"
+  }
+}

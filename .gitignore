@@ -1,0 +1,9 @@
+/.agents/
+.venv/
+__pycache__/
+*.py[cod]
+*.crc
+*Zone.Identifier
+.env
+.env.*
+.streamlit/secrets.toml

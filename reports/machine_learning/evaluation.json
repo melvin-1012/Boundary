@@ -1,0 +1,166 @@
+{
+  "status": "exploratory",
+  "random_state": 42,
+  "classification": {
+    "objective": "Predict whether the current delivery is a four or six.",
+    "target": "is_four OR is_six from the current delivery; excluded from features.",
+    "features": [
+      "innings",
+      "score_before",
+      "wickets_before",
+      "legal_balls_before",
+      "balls_remaining",
+      "wickets_remaining",
+      "innings_progress",
+      "current_run_rate",
+      "required_run_rate",
+      "reference_run_rate"
+    ],
+    "split": {
+      "method": "GroupShuffleSplit by match_id",
+      "test_fraction": 0.25,
+      "random_state": 42,
+      "train_matches": 627,
+      "test_matches": 210,
+      "train_rows": 145280,
+      "test_rows": 48734,
+      "match_overlap": 0
+    },
+    "models": {
+      "decision_tree": {
+        "test_rows": 48734,
+        "boundary_prevalence": 0.17747363237165018,
+        "majority_class_accuracy": 0.8225263676283499,
+        "accuracy": 0.5628308778265687,
+        "balanced_accuracy": 0.5572579026303986,
+        "precision_boundary": 0.21425991149643275,
+        "recall_boundary": 0.548618337380044,
+        "f1_boundary": 0.3081669102126969,
+        "roc_auc": 0.5781672048988628,
+        "confusion_matrix_labels_0_1": [
+          [
+            22684,
+            17401
+          ],
+          [
+            3904,
+            4745
+          ]
+        ]
+      },
+      "random_forest": {
+        "test_rows": 48734,
+        "boundary_prevalence": 0.17747363237165018,
+        "majority_class_accuracy": 0.8225263676283499,
+        "accuracy": 0.6067632453728403,
+        "balanced_accuracy": 0.559617867759996,
+        "precision_boundary": 0.22228091490148433,
+        "recall_boundary": 0.4865302347092149,
+        "f1_boundary": 0.3051486584481508,
+        "roc_auc": 0.5862700248502167,
+        "confusion_matrix_labels_0_1": [
+          [
+            25362,
+            14723
+          ],
+          [
+            4441,
+            4208
+          ]
+        ]
+      }
+    },
+    "limitations": [
+      "This is an exploratory delivery-event classifier, not a player-selection model.",
+      "A match-held-out random split prevents same-match leakage but is not a chronological future-season test.",
+      "The supplied archive is observational; feature importance is association, not causal impact.",
+      "A majority-class baseline is reported because boundary events are a minority class."
+    ],
+    "model_comparison": {
+      "best_balanced_accuracy": "random_forest",
+      "decision_tree_vs_random_forest_balanced_accuracy": 0.0023599651295973523
+    }
+  },
+  "clustering": {
+    "batters": {
+      "role": "batters",
+      "features": [
+        "pressure_strike_rate",
+        "pressure_boundary_percentage",
+        "pressure_dot_ball_percentage",
+        "consistency",
+        "pressure_opportunities"
+      ],
+      "selected_k": 2,
+      "silhouette_score": 0.31555465792260534,
+      "candidate_scores": [
+        {
+          "k": 2,
+          "silhouette_score": 0.31555465792260534
+        },
+        {
+          "k": 3,
+          "silhouette_score": 0.2945653424534153
+        },
+        {
+          "k": 4,
+          "silhouette_score": 0.25987727466508237
+        },
+        {
+          "k": 5,
+          "silhouette_score": 0.27162391003705133
+        },
+        {
+          "k": 6,
+          "silhouette_score": 0.2767720995952562
+        }
+      ],
+      "cluster_sizes": {
+        "0": 270,
+        "1": 199
+      },
+      "interpretation_note": "Clusters group standardized observed pressure metrics; cluster IDs are arbitrary and do not imply player quality or causal style."
+    },
+    "bowlers": {
+      "role": "bowlers",
+      "features": [
+        "pressure_economy",
+        "pressure_wickets",
+        "pressure_dots",
+        "pressure_boundaries",
+        "pressure_opportunities",
+        "consistency"
+      ],
+      "selected_k": 2,
+      "silhouette_score": 0.48320025474390266,
+      "candidate_scores": [
+        {
+          "k": 2,
+          "silhouette_score": 0.48320025474390266
+        },
+        {
+          "k": 3,
+          "silhouette_score": 0.28631187417740783
+        },
+        {
+          "k": 4,
+          "silhouette_score": 0.30137525787793157
+        },
+        {
+          "k": 5,
+          "silhouette_score": 0.31799315635696285
+        },
+        {
+          "k": 6,
+          "silhouette_score": 0.31376636478093367
+        }
+      ],
+      "cluster_sizes": {
+        "0": 326,
+        "1": 86
+      },
+      "interpretation_note": "Clusters group standardized observed pressure metrics; cluster IDs are arbitrary and do not imply player quality or causal style."
+    }
+  },
+  "spi_integration": false
+}

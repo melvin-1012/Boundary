@@ -1,0 +1,16 @@
+{
+  "execution_mode": "local Python subprocess mapper/shuffle/reducer; not Hadoop or HDFS",
+  "input": "data/curated/pressure_deliveries.parquet",
+  "input_rows": 194014,
+  "mapped_records": 469677,
+  "aggregates": 2578,
+  "pandas_aggregates": 2578,
+  "missing_keys": [],
+  "unexpected_keys": [],
+  "mismatches": [],
+  "mismatch_count": 0,
+  "parity": true,
+  "local_mapreduce_seconds": 11.022660991999146,
+  "output": "reports/mapreduce/player_aggregates.csv",
+  "hadoop_cluster_executed": false
+}

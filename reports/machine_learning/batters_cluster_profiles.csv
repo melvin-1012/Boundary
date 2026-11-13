@@ -1,0 +1,5 @@
+,pressure_strike_rate,pressure_strike_rate,pressure_strike_rate,pressure_boundary_percentage,pressure_boundary_percentage,pressure_boundary_percentage,pressure_dot_ball_percentage,pressure_dot_ball_percentage,pressure_dot_ball_percentage,consistency,consistency,consistency,pressure_opportunities,pressure_opportunities,pressure_opportunities
+,count,mean,median,count,mean,median,count,mean,median,count,mean,median,count,mean,median
+cluster,,,,,,,,,,,,,,,
+0,270,164.04075051625838,161.9225302061123,270,22.585486127783586,21.616350067842603,270,31.95482423579983,32.519493177387915,270,62.45487735664175,60.55792999238465,270,61.92962962962963,41.0
+1,199,80.28821221930482,81.81818181818181,199,7.372413162734868,7.142857142857143,199,53.96728504845574,51.5625,199,54.61778004593981,51.77213484027761,199,25.934673366834172,16.0

@@ -1,0 +1,10 @@
+create 'cricket:deliveries', {NAME => 'state'}, {NAME => 'event'}
+
+put 'cricket:deliveries', 'match-13511|inn-1|ball-000001', 'state:score_before', '0'
+put 'cricket:deliveries', 'match-13511|inn-1|ball-000001', 'state:wickets_before', '0'
+put 'cricket:deliveries', 'match-13511|inn-1|ball-000001', 'state:pressure_score', '42.5'
+put 'cricket:deliveries', 'match-13511|inn-1|ball-000001', 'event:batter_id', '12345'
+put 'cricket:deliveries', 'match-13511|inn-1|ball-000001', 'event:bowler_id', '67890'
+
+get 'cricket:deliveries', 'match-13511|inn-1|ball-000001'
+scan 'cricket:deliveries', {STARTROW => 'match-13511|inn-1|', STOPROW => 'match-13511|inn-2|'}
