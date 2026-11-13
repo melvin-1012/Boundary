@@ -2,7 +2,7 @@
 
 ## Result summary
 
-- Full project suite: **47 tests passed** with
+- Full project suite: **51 tests passed** with
   `.venv/bin/python -m unittest discover -s tests -v`.
 - Python compilation: **passed** with the project-wide `py_compile` command
   recorded in the README.
@@ -29,6 +29,16 @@ The test suite and archive smoke check cover:
 - Provider HTTP request serialization without placing the API key in the
   request body.
 - Dashboard AppTest rendering, theme switch, and local analyst integration.
+- Natural-language regression cases for rank gaps, top-N, second-most-reliable,
+  top-versus-average, no-role defaults, qualitative "why" questions, and
+  unsupported formal significance claims. These use calculated results and
+  retain source evidence.
+- The default no-role comparison returns distinct batter and bowler
+  leaderboard results; the tool reports separate eligible counts and does
+  not combine the role score scales.
+- Format-specific IPL/T20I leader comparisons use the existing eligibility
+  rules; a scope with no eligible player is reported as insufficient rather
+  than filled with an ineligible fallback.
 
 The local archive smoke check discovered **20 CSV/Parquet datasets**; checked
 the six supplied source counts (200,999 deliveries, 883 matches, 141
@@ -38,6 +48,13 @@ filtered IPL 2023 batter analysis with independent pressure-rate and baseline
 checks. A bounded aggregate query over deliveries returned 200,999 source
 rows as its aggregate input. The tool result size was checked against the
 32,000-character cap.
+
+All eight requested natural-language examples plus the IPL-versus-T20I
+difference question were run through the local parser against the actual
+curated archive. Each produced calculated results or an explicit eligibility
+limitation, with no clarification status. The reusable ranking comparison
+tool was also run on the full archive: both roles returned eligible top-two
+results and passed independent source-record rate/baseline verification.
 
 ## Scope and limitations
 

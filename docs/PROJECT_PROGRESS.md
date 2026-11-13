@@ -97,9 +97,10 @@ viewport. This is a known verification gap.
   restrictions, and prevention of model-written numeric summaries. Existing
   AppTest and prior browser checks validate the dashboard/local analysis path,
   not live provider behavior.
-- The complete suite now passes **47 tests**; project-wide Python compilation
+- The complete suite now passes **51 tests**; project-wide Python compilation
   passes. The local archive smoke test discovered 20 datasets and validated
-  player/match lookup, filtered IPL metrics, and bounded SELECT access. Details
-  are in `docs/AI_ANALYST_TEST_REPORT.md`.
+  player/match lookup, filtered IPL metrics, bounded SELECT access, and
+  natural-language ranking questions. Details are in
+  `docs/AI_ANALYST_TEST_REPORT.md`.
 - Supported local intents, provider configuration, bounds, and limitations
   are documented in `docs/AI_CRICKET_ANALYST.md`.

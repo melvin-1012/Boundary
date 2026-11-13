@@ -565,7 +565,7 @@ with st.sidebar:
         st.image(LOGO, width=48, caption=None)
     with brand_column:
         st.markdown(
-            '<div class="brand-copy"><div class="brand-name">boundary</div><div class="brand-caption">the cricket intelligence</div></div>',
+            '<div class="brand-copy"><div class="brand-name">BOUNDARY</div><div class="brand-caption">the cricket intelligence</div></div>',
             unsafe_allow_html=True,
         )
     selected_theme = st.selectbox(
@@ -1372,6 +1372,10 @@ with ai_analyst_tab:
                 metrics_frame = pd.DataFrame(result["metrics"])
                 st.markdown("**Analytical results**")
                 st.dataframe(metrics_frame, hide_index=True, width="stretch")
+            if result.get("comparison_results"):
+                st.markdown("**Calculated comparisons**")
+                st.json(result["comparison_results"], expanded=True)
+            if result.get("metrics"):
                 chart_value = next(
                     (
                         column

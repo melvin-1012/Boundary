@@ -21,6 +21,17 @@ mocked provider responses, not a live model. Do not treat the list of local
 question intents as proof of end-to-end live-provider support for every
 natural-language formulation.
 
+Ranking questions use sensible defaults instead of stopping for role or scope
+choices: "best under pressure" means the existing eligible pressure SPI;
+missing season or competition means the full available historical archive;
+and an unspecified role means separate batter and bowler results. Rank-gap,
+top-N, reliability/consistency ordering, and top-versus-eligible-average
+questions use the reusable `compare_player_rankings` operation. It returns
+role-specific score gaps, SPI component values, opportunity counts, sample
+sizes, reliability, uncertainty indicators, and source-backed evidence.
+Cross-role scores are never combined. A gap is descriptive, not a statistical
+significance test; the current methodology does not define such a test.
+
 ## Data discovery and calculations
 
 `analytics/analyst_tools.py` discovers CSV and Parquet datasets under `data/`
@@ -95,10 +106,28 @@ Compare IPL and T20I batter pressure performance
 Show batting pressure for match <match ID>
 ```
 
-Queries that omit a required role, metric, or comparison subject may require
-clarification. The local parser does not infer nationality or venue-country
-from a player's name, competition, or team membership. Evidence is capped to
-200 match records in the local results.
+Only unresolved player identities or a metric that cannot reasonably be
+inferred should require clarification. The local parser does not infer
+nationality or venue-country from a player's name, competition, or team
+membership. Evidence is capped to 200 match records in the local results.
+
+Examples of natural-language ranking questions handled by the local parser:
+
+```text
+How much is the difference between first and second best player under pressure?
+Who is the second most reliable bowler?
+Compare the top three pressure performers
+How much better is the top batter than the average batter?
+Who ranks first overall in pressure performance?
+Is the gap between first and second significant?
+Why is the top-ranked player better?
+```
+
+The local parser calculates these using the same existing SPI eligibility and
+formula. If a scope has too few eligible players—for example, a short
+format-specific subset—it reports that limitation instead of substituting an
+ineligible player. Dynamic language understanding still depends on the
+configured model and has not been live-provider tested here.
 
 ## Configuration and launch
 
@@ -122,11 +151,13 @@ dashboard falls back to local analysis where possible.
 ## Validation and known limits
 
 `tests/test_analyst_tools.py` covers data discovery, schema inspection, entity
-and match lookup, query restrictions, role metrics, tool dispatch, multi-step
-calls, recent-turn context, and model numerical-claim withholding. Provider
-request serialization is tested with a mocked HTTP response. Existing
-`tests/test_cricket_analyst.py` and `tests/test_dashboard_app.py` cover the
-local analyzer and dashboard integration.
+and match lookup, query restrictions, role metrics, rank comparisons, tool
+dispatch, multi-step calls, recent-turn context, and model numerical-claim
+withholding. Provider request serialization is tested with a mocked HTTP
+response. `tests/test_cricket_analyst.py` covers the natural-language rank
+forms and defaults against hand-calculable fixtures; `tests/test_dashboard_app.py`
+covers dashboard integration. The full project suite currently passes 51
+tests.
 
 These automated and local checks do not establish live provider quality,
 live tool-call interoperability, or successful coverage of every requested

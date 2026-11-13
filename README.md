@@ -98,6 +98,12 @@ mocked responses, not a live model; no live provider credentials were
 available for verification. To enable dynamic tool calling, set these
 environment variables before starting Streamlit:
 
+Ranking questions default to the existing pressure SPI and all available
+historical scope. If no role is specified, the analyst returns separate
+batter and bowler rankings. Rank gaps, top-N comparisons, and comparisons
+against the eligible-player average use the existing formulas and eligibility
+rules; insufficient eligible samples are reported rather than backfilled.
+
 ```bash
 export SUPERR_LLM_API_KEY="your-provider-key"
 export SUPERR_LLM_MODEL="your-model-name"

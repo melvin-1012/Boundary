@@ -195,16 +195,25 @@ The planned tool-based increment is implemented:
 - `dashboard/app.py` uses this dynamic path when a compatible provider is
   configured and retains the local rule-based analyzer when no provider is
   configured or a provider failure is recoverable. Tool activity/results are
-  shown in the existing tab.
+  shown in the existing tab. The local parser now handles natural-language
+  ranking comparisons and displays calculated comparison values directly.
+- The `compare_player_rankings` tool applies existing eligibility and SPI
+  logic to rank gaps, top-N/ordinal ranks, and eligible-player averages. Its
+  default scope includes all available seasons/competitions; a missing role
+  returns separate batter and bowler leaderboards.
 - `data/metadata/ai_analyst_catalog.json` is the generated catalog snapshot.
 - `docs/AI_CRICKET_ANALYST.md` documents both operating modes and safeguards.
 
-The full test suite and project compilation passed after this increment. A live
-archive smoke test discovered 20 datasets and verified source counts, player
-and match lookup, a filtered IPL batter calculation, and a SELECT aggregate.
-The mocked tests cover tool sequencing, follow-up context, provider request
-serialization, query restrictions, filter handling, metric reuse, and
-withholding model-generated numerical prose.
+The full test suite (**51 tests**) and project compilation passed after this
+increment. A live archive smoke test discovered 20 datasets and verified
+source counts, player and match lookup, a filtered IPL batter calculation, and
+a SELECT aggregate. The new natural-language ranking questions were run
+against the actual curated archive; all returned calculations or explicit
+eligibility limitations. The reusable ranking operation returned top-two
+comparisons for both roles and passed independent source-record checks. Mocked
+tests cover tool sequencing, follow-up context, provider request serialization,
+query restrictions, filter handling, metric reuse, and withholding
+model-generated numerical prose.
 
 **Not verified:** no live model credentials were configured. Therefore the
 provider has not been tested against a real endpoint, and the 15 requested

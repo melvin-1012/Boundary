@@ -132,6 +132,55 @@ class CricketAnalystTests(unittest.TestCase):
         self.assertEqual(indian["status"], "clarification")
         self.assertIn("Players in IPL 2025", indian["clarification_options"])
 
+    def test_natural_language_rank_questions_use_defaults_and_calculate_results(self):
+        questions = [
+            "How much is the difference between first and second best player under pressure?",
+            "How far ahead is the best batter from the second best?",
+            "Who is the second most reliable bowler?",
+            "Compare the top three pressure performers.",
+            "How much better is the top batter than the average batter?",
+            "Who ranks first overall in pressure performance?",
+            "Is the gap between first and second significant?",
+            "Why is the top-ranked player better?",
+        ]
+        results = [
+            analyze_question(question, self.deliveries, teams=self.teams)
+            for question in questions
+        ]
+
+        for question, result in zip(questions, results):
+            with self.subTest(question=question):
+                self.assertNotEqual(result["status"], "clarification")
+                self.assertTrue(result["metrics"])
+                self.assertTrue(result["verification"])
+        self.assertEqual(
+            {row["role"] for row in results[0]["metrics"]},
+            {"batter", "bowler"},
+        )
+        self.assertIn(
+            results[0]["comparison_results"]["relative_comparison_support"][
+                "more_supported_role"
+            ],
+            {"batter", "bowler"},
+        )
+        self.assertIsNotNone(
+            results[0]["comparison_results"]["batter"]["comparison"]["first_minus_second"]
+        )
+        self.assertEqual(
+            results[2]["metrics"][0]["rank"],
+            2,
+        )
+        self.assertTrue(
+            any("Only 2 eligible" in item for item in results[3]["limitations"])
+        )
+        self.assertEqual(
+            results[4]["scope"]["ranking_comparison"],
+            "top_vs_average",
+        )
+        self.assertTrue(
+            any("statistical significance test" in item.lower() for item in results[6]["limitations"])
+        )
+
     def test_season_competition_and_phase_filters(self):
         parsed = parse_question(
             "Show batter Alex Alpha under pressure in death overs, IPL 2023",
@@ -203,15 +252,16 @@ class CricketAnalystTests(unittest.TestCase):
 
     def test_format_and_season_comparisons_include_evidence(self):
         formats = analyze_question(
-            "Compare IPL and T20I batter pressure performance", self.deliveries
+            "Show me the difference between the best IPL batter and best T20I batter",
+            self.deliveries,
         )
         seasons = analyze_question(
             "Show batter pressure leaders by season", self.deliveries
         )
 
-        self.assertEqual(formats["status"], "answer")
-        self.assertEqual({row["format"] for row in formats["metrics"]}, {"T20", "T20I"})
-        self.assertTrue(formats["evidence"])
+        self.assertEqual(formats["intent"], "format_comparison")
+        self.assertEqual(formats["status"], "insufficient")
+        self.assertIn("eligibility", " ".join(formats["limitations"]).lower())
         self.assertEqual(seasons["status"], "answer")
         self.assertTrue(seasons["metrics"])
         self.assertTrue(seasons["evidence"])

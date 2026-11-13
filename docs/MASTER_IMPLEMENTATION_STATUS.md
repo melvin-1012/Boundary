@@ -245,7 +245,7 @@ single-machine `local[2]`.
 
 | Command/check | Result |
 |---|---|
-| `.venv/bin/python -m unittest discover -s tests -v` | **47 tests passed**, including dynamic analyst-tool tests and dashboard AppTest. |
+| `.venv/bin/python -m unittest discover -s tests -v` | **51 tests passed**, including natural-language ranking comparisons, dynamic analyst-tool tests, and dashboard AppTest. |
 | `.venv/bin/python -m py_compile analytics/*.py dashboard/*.py graph_analytics/*.py ingestion/*.py machine_learning/*.py streaming/*.py tests/*.py` | **Passed.** |
 | `.venv/bin/python -m ingestion.run_etl` | **38 checks passed, 5 warnings, 0 failures**; selected 853 matches and 194,014 deliveries; generated source/curated Parquet and report. |
 | `.venv/bin/python -m analytics.build_rankings` | **10 batters / 10 bowlers**, 272 / 336 eligible; ranking status remains provisional. |
@@ -284,7 +284,7 @@ constitute a Hadoop/HDFS test.
 | 11 | Kafka and Spark Streaming | **TESTED** | Local historical replay validates incremental state and pressure; Kafka integration is blocked. |
 | 12 | Graph analytics and PageRank | **TESTED** | Player-match graph, PageRank output, HTML visualization, and interpretation generated. |
 | 13 | Complete dashboard integration | **TESTED** | Seven integrated views, selected filters, exact exported top tens, and both themes verified in browser/AppTest. |
-| 14 | Final testing and documentation | **IN PROGRESS** | 47 tests pass; AI analyst tool architecture, setup, safety, and test limitations are documented. Official approval and remaining browser verification are outstanding. |
+| 14 | Final testing and documentation | **IN PROGRESS** | 51 tests pass; AI analyst tool architecture, natural-language ranking defaults, setup, safety, and test limitations are documented. Official approval and remaining browser verification are outstanding. |
 
 ## Remaining blockers and review decisions
 

@@ -12,6 +12,9 @@ class DashboardIntegrationTests(unittest.TestCase):
         app = AppTest.from_file(str(ROOT / "dashboard" / "app.py"), default_timeout=90).run()
 
         self.assertEqual(len(app.exception), 0)
+        self.assertTrue(
+            any("BOUNDARY" in element.value for element in app.markdown)
+        )
         theme_selector = next(widget for widget in app.selectbox if widget.key == "dashboard_theme")
         self.assertEqual(theme_selector.value, "Rajasthan Royals Theme")
         self.assertEqual(
@@ -62,6 +65,22 @@ class DashboardIntegrationTests(unittest.TestCase):
         self.assertEqual(
             app.session_state["cricket_analyst_conversation"][0]["result"]["status"],
             "answer",
+        )
+        app.chat_input[0].set_value(
+            "How much is the difference between first and second best player under pressure?"
+        ).run()
+        self.assertEqual(len(app.exception), 0)
+        comparison = app.session_state["cricket_analyst_conversation"][1]["result"]
+        self.assertEqual(comparison["status"], "answer")
+        self.assertEqual(
+            set(comparison["comparison_results"]) - {"relative_comparison_support"},
+            {"batter", "bowler"},
+        )
+        self.assertTrue(
+            comparison["comparison_results"]["batter"]["comparison"][
+                "first_minus_second"
+            ]
+            is not None
         )
 
 

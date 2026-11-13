@@ -218,6 +218,88 @@ class CricketToolboxTests(unittest.TestCase):
             any("SPI is unavailable" in item for item in small_sample["limitations"])
         )
 
+    def test_reusable_rank_comparison_calculates_gaps_and_keeps_roles_separate(self):
+        result = self.toolbox.compare_player_rankings(comparison="top_gap")
+
+        self.assertTrue(result["scope"]["roles_are_ranked_separately"])
+        self.assertEqual(set(result["roles"]), {"batter", "bowler"})
+        self.assertIn(
+            result["relative_comparison_support"]["more_supported_role"],
+            {"batter", "bowler"},
+        )
+        for role_result in result["roles"].values():
+            self.assertEqual(role_result["status"], "answer")
+            first, second = role_result["players"]
+            self.assertAlmostEqual(
+                role_result["comparison"]["first_minus_second"],
+                first["SPI"] - second["SPI"],
+            )
+            self.assertEqual(role_result["verification"]["status"], "passed")
+            self.assertIn("pressure_opportunities", first)
+            self.assertIn("sample_support", role_result)
+
+        top_three = self.toolbox.compare_player_rankings(
+            roles=["batter"],
+            comparison="top_n",
+            count=3,
+        )
+        self.assertEqual(top_three["roles"]["batter"]["status"], "insufficient")
+        self.assertEqual(len(top_three["roles"]["batter"]["players"]), 2)
+
+    def test_rank_comparison_supports_reliability_ordinal_and_eligible_average(self):
+        second_reliable = self.toolbox.compare_player_rankings(
+            roles=["bowler"],
+            sort_by="reliability",
+            comparison="top_n",
+            start_rank=2,
+            count=1,
+        )
+        average = self.toolbox.compare_player_rankings(
+            roles=["batter"],
+            comparison="top_vs_average",
+        )
+
+        self.assertEqual(second_reliable["roles"]["bowler"]["players"][0]["rank"], 2)
+        average_result = average["roles"]["batter"]["comparison"]
+        self.assertEqual(average_result["eligible_player_count"], 2)
+        self.assertAlmostEqual(
+            average_result["first_minus_average"],
+            average["roles"]["batter"]["players"][0]["SPI"]
+            - average_result["eligible_player_average"],
+        )
+
+    def test_dynamic_planning_policy_prefers_defaults_and_rank_tool(self):
+        provider = ToolCallingProvider(
+            [
+                {
+                    "content": None,
+                    "tool_calls": [
+                        _function_call(
+                            "call-1",
+                            "compare_player_rankings",
+                            {"comparison": "top_gap"},
+                        )
+                    ],
+                },
+                {"content": "The role-specific score gaps are shown in the results.", "tool_calls": []},
+            ]
+        )
+        result = analyze_with_tools(
+            "How much is the difference between first and second best player under pressure?",
+            provider,
+            self.toolbox,
+        )
+
+        self.assertEqual(result["status"], "answer")
+        self.assertEqual(result["tool_trace"][0]["tool"], "compare_player_rankings")
+        self.assertEqual(
+            set(result["tool_results"][0]["result"]["roles"]),
+            {"batter", "bowler"},
+        )
+        system_prompt = provider.messages[0][0][0]["content"]
+        self.assertIn("without asking", system_prompt)
+        self.assertIn("never combine their scores", system_prompt)
+
     def test_tool_orchestrator_executes_multiple_calls_and_returns_evidence(self):
         provider = ToolCallingProvider(
             [

@@ -27,6 +27,10 @@ SUPPORTED_QUESTION_CATEGORIES = {
     "phase_analysis": "Powerplay, middle-over, or death-over filtered performance.",
     "consistency": "Most consistent eligible batters or bowlers.",
     "reliability": "Most reliable eligible batters or bowlers.",
+    "ranking_comparison": (
+        "Natural-language rank gaps, top-N rankings, ordinal rank selection, "
+        "and comparison against eligible-player averages."
+    ),
     "ranking_explanation": "Player rank, SPI, exposure, reliability, and calculation evidence.",
     "sample_analysis": "Pressure opportunities, sample eligibility, and reliability.",
     "season_trend": "Historical season-by-season role leaders.",
@@ -52,6 +56,10 @@ class Question:
     match_id: int | None
     team: str | None
     compare_seasons: tuple[str, ...] | None = None
+    ranking_metric: str | None = None
+    ranking_comparison: str | None = None
+    start_rank: int = 1
+    result_count: int = 1
 
 
 def _normalize(value):
@@ -188,10 +196,12 @@ def parse_question(question, deliveries, teams=None):
     if SQL_COMMAND.search(text) or ";" in text or "--" in text:
         return Question(text, "unsupported", role, players, season, format_filter, competition, phase, match_id, team)
 
-    if re.search(r"\b(compare|versus|vs\.?)\b", normalized) and (
-        len(players) > 1
-        or compare_seasons
-        or is_format_comparison
+    if (
+        is_format_comparison
+        or (
+            re.search(r"\b(compare|versus|vs\.?)\b", normalized)
+            and (len(players) > 1 or compare_seasons)
+        )
     ):
         if is_format_comparison:
             intent = "format_comparison"
@@ -217,6 +227,54 @@ def parse_question(question, deliveries, teams=None):
         intent = "player_profile"
     else:
         intent = "unsupported"
+
+    ranking_comparison = None
+    ranking_metric = None
+    start_rank = 1
+    result_count = 1
+    ranking_terms = re.search(
+        r"\b(difference|gap|ahead|better|top\s*(?:two|three|2|3)|"
+        r"first\s+and\s+second|second\s+(?:best|most)|third\s+(?:best|most)|"
+        r"average|overall|rank(?:s|ed|ing)?\s+first|top[- ]ranked)\b|"
+        r"\bwhy\b.*\b(first|top|rank(?:ed|ing)?)\b",
+        normalized,
+    )
+    if ranking_terms and not players and not is_format_comparison and not compare_seasons:
+        intent = "ranking_comparison"
+        ranking_metric = (
+            "reliability"
+            if re.search(r"\breliab(?:le|ility)\b", normalized)
+            else "consistency"
+            if re.search(r"\bconsistent|consistency\b", normalized)
+            else "spi"
+        )
+        if re.search(r"\baverage\b", normalized):
+            ranking_comparison = "top_vs_average"
+            result_count = 1
+        elif re.search(r"\b(difference|gap|ahead|better|first\s+and\s+second)\b", normalized):
+            ranking_comparison = "top_gap"
+            result_count = 2
+        else:
+            ranking_comparison = "top_n"
+            ordinal = re.search(r"\b(second|2nd|third|3rd)\b", normalized)
+            if ordinal:
+                start_rank = 3 if ordinal.group(1) in {"third", "3rd"} else 2
+            top_count = re.search(r"\btop\s*(two|three|2|3)\b", normalized)
+            result_count = (
+                {"two": 2, "2": 2, "three": 3, "3": 3}[top_count.group(1)]
+                if top_count
+                else 1
+            )
+            if ordinal and not top_count:
+                result_count = 1
+    elif (
+        intent == "ranking"
+        and role is None
+        and re.search(r"\bpressure\b|\bunder pressure\b|\boverall\b", normalized)
+    ):
+        intent = "ranking_comparison"
+        ranking_metric = "spi"
+        ranking_comparison = "top_n"
 
     if has_year and season is None and not compare_seasons:
         intent = "ranking"
@@ -257,12 +315,25 @@ def parse_question(question, deliveries, teams=None):
         match_id,
         team,
         compare_seasons,
+        ranking_metric,
+        ranking_comparison,
+        start_rank,
+        result_count,
     )
 
 
 def _filter_scope(question, deliveries, teams):
     scoped = deliveries
-    if question.format:
+    normalized_text = _normalize(question.text)
+    if "ipl" in normalized_text and "t20i" in normalized_text:
+        scoped = scoped.loc[
+            (
+                scoped["match_format"].eq("T20")
+                & scoped["comp_name"].astype(str).str.startswith("IPL")
+            )
+            | scoped["match_format"].eq("T20I")
+        ]
+    elif question.format:
         if question.format == "T20":
             scoped = scoped.loc[
                 scoped["match_format"].eq("T20")
@@ -401,6 +472,7 @@ def _metric_rows(metrics, role, question):
         "ranking",
         "consistency",
         "reliability",
+        "ranking_comparison",
         "sample_analysis",
         "player_explanation",
         "player_comparison",
@@ -598,6 +670,7 @@ def analyze_question(question_text, deliveries, teams=None, provider=None):
                 "ranking", "player_profile", "player_explanation",
                 "player_comparison", "format_comparison", "season_comparison", "season_trend",
                 "team_analysis", "consistency", "reliability", "sample_analysis",
+                "ranking_comparison",
                 "match_analysis", "ambiguous", "unsupported",
             ],
             "allowed_roles": ["batter", "bowler", None],
@@ -700,7 +773,235 @@ def analyze_question(question_text, deliveries, teams=None, provider=None):
         "seasons": sorted(scoped["season"].dropna().astype(str).unique().tolist()),
     }
 
-    if question.intent == "format_comparison":
+    comparison_results = None
+    if question.intent == "ranking_comparison":
+        roles = [question.role] if question.role else ["batter", "bowler"]
+        sort_by = question.ranking_metric or "spi"
+        comparison_type = question.ranking_comparison or "top_n"
+        start_rank = question.start_rank
+        count = question.result_count
+        if comparison_type == "top_gap":
+            start_rank, count = 1, 2
+        elif comparison_type == "top_vs_average":
+            start_rank, count = 1, 1
+        metric_rows = []
+        evidence_rows = []
+        comparisons = {}
+        role_limitations = []
+        verification_notes = []
+        for role in roles:
+            calculated = calculate_player_metrics(scoped)
+            eligible = rank_players(calculated, role)
+            if eligible.empty:
+                role_limitations.append(
+                    f"No {role} in this scope satisfies the existing pressure-match "
+                    "and opportunity eligibility rules."
+                )
+                comparisons[role] = {
+                    "status": "insufficient",
+                    "eligible_count": 0,
+                    "players": [],
+                    "comparison": None,
+                }
+                continue
+            ranked = eligible.sort_values(
+                [sort_by, "rank"],
+                ascending=[False, True],
+                kind="stable",
+            ).copy()
+            ranked["rank"] = np.arange(1, len(ranked) + 1)
+            selected = ranked.iloc[start_rank - 1 : start_rank - 1 + count].copy()
+            columns = _role_columns(role)
+            players = []
+            verification_rows = []
+            for row in selected.to_dict("records"):
+                player_id = int(row[columns["id"]])
+                player_record = {
+                    "role": role,
+                    "rank": int(row["rank"]),
+                    "player_id": player_id,
+                    "player_name": str(row[columns["name"]]),
+                    "SPI": row.get("spi"),
+                    "ranking_metric": sort_by,
+                    "ranking_score": row.get(sort_by),
+                    "performance_component": row.get("performance_component"),
+                    "consistency": row.get("consistency"),
+                    "reliability": row.get("reliability"),
+                    "pressure_performance": row.get(columns["performance"]),
+                    "normal_baseline": row.get(columns["normal"]),
+                    "competition_adjusted_difference": row.get(
+                        "competition_adjusted_difference"
+                    ),
+                    "pressure_matches": row.get("pressure_matches"),
+                    "pressure_opportunities": row.get("pressure_opportunities"),
+                    "matches": row.get("matches"),
+                    "uncertainty_indicator": row.get("uncertainty_indicator"),
+                }
+                players.append(player_record)
+                verification_rows.append(
+                    {
+                        "player_id": player_id,
+                        "performance": row.get(columns["performance"]),
+                        "normal_baseline": row.get(columns["normal"]),
+                    }
+                )
+            player_ids = [row["player_id"] for row in players]
+            role_evidence = calculated[columns["match_evidence"]]
+            role_evidence = role_evidence.loc[
+                role_evidence[columns["id"]].isin(player_ids)
+            ]
+            role_evidence_records = _safe_records(role_evidence)
+            verified, verification_note = _verification(
+                role, verification_rows, role_evidence_records, scoped
+            )
+            if not verified:
+                return {
+                    "status": "verification_failed",
+                    "intent": question.intent,
+                    "question": question_text,
+                    "answer": "The ranking comparison failed source-record verification and is withheld.",
+                    "scope": scope,
+                    "metrics": [],
+                    "evidence": [],
+                    "limitations": [verification_note],
+                }
+            verification_notes.append(verification_note)
+            evidence_rows.extend(role_evidence_records)
+            if comparison_type == "top_gap":
+                difference = (
+                    players[0]["ranking_score"] - players[1]["ranking_score"]
+                    if len(players) > 1
+                    else None
+                )
+                comparison = {
+                    "metric": sort_by,
+                    "first_minus_second": difference,
+                    "component_differences": (
+                        {
+                            metric: (
+                                players[0][metric] - players[1][metric]
+                                if players[0][metric] is not None
+                                and players[1][metric] is not None
+                                else None
+                            )
+                            for metric in (
+                                "performance_component",
+                                "consistency",
+                                "reliability",
+                            )
+                        }
+                        if len(players) > 1
+                        else None
+                    ),
+                    "interpretation": (
+                        "Descriptive score difference only; this is not a statistical "
+                        "significance test."
+                    ),
+                }
+            elif comparison_type == "top_vs_average":
+                average = float(ranked[sort_by].mean())
+                comparison = {
+                    "metric": sort_by,
+                    "eligible_player_average": average,
+                    "first_minus_average": (
+                        players[0]["ranking_score"] - average if players else None
+                    ),
+                    "eligible_player_count": int(len(ranked)),
+                }
+            else:
+                comparison = {
+                    "metric": sort_by,
+                    "adjacent_score_gaps": [
+                        {
+                            "higher_rank": first["rank"],
+                            "lower_rank": second["rank"],
+                            "difference": first["ranking_score"] - second["ranking_score"],
+                        }
+                        for first, second in zip(players, players[1:])
+                    ],
+                }
+            comparisons[role] = {
+                "status": "answer" if len(players) == count else "insufficient",
+                "eligible_count": int(len(ranked)),
+                "players": players,
+                "comparison": comparison,
+                "sample_support": {
+                    "mean_reliability": (
+                        float(np.mean([row["reliability"] for row in players]))
+                        if players
+                        else None
+                    ),
+                    "combined_pressure_opportunities": int(
+                        sum(row["pressure_opportunities"] for row in players)
+                    ),
+                    "minimum_pressure_matches": (
+                        int(min(row["pressure_matches"] for row in players))
+                        if players
+                        else None
+                    ),
+                    "maximum_uncertainty_indicator": (
+                        float(max(row["uncertainty_indicator"] for row in players))
+                        if players
+                        else None
+                    ),
+                },
+            }
+            metric_rows.extend(players)
+            if len(players) < count:
+                role_limitations.append(
+                    f"Only {len(players)} eligible {role}(s) are available for the requested ranking."
+                )
+
+        supported_roles = [
+            (role, data.get("sample_support", {}).get("mean_reliability"))
+            for role, data in comparisons.items()
+            if data.get("sample_support", {}).get("mean_reliability") is not None
+        ]
+        more_supported_role = (
+            max(supported_roles, key=lambda item: item[1])[0]
+            if len(supported_roles) > 1
+            else None
+        )
+        comparisons["relative_comparison_support"] = {
+            "more_supported_role": more_supported_role,
+            "basis": (
+                "Higher mean existing sample-reliability score across selected "
+                "players; descriptive exposure support, not a formal confidence "
+                "or significance test."
+            ),
+        }
+        return {
+            "status": "answer" if metric_rows else "insufficient",
+            "intent": question.intent,
+            "question": question_text,
+            "answer": (
+                "Rankings use the existing eligible pressure SPI and are calculated "
+                "separately for batters and bowlers. Score gaps are descriptive, not "
+                "statistical significance tests."
+                if metric_rows
+                else "No eligible players were found for the requested ranking."
+            ),
+            "scope": {
+                **scope,
+                "ranking_metric": sort_by,
+                "ranking_comparison": comparison_type,
+                "roles_ranked_separately": True,
+            },
+            "metrics": _safe_records(pd.DataFrame(metric_rows), 20),
+            "comparison_results": comparisons,
+            "evidence": evidence_rows[:EVIDENCE_LIMIT],
+            "verification": " ".join(dict.fromkeys(verification_notes)),
+            "limitations": [
+                "Existing pressure labels, SPI formula, and eligibility rules are unchanged and remain provisional.",
+                *(
+                    ["A score gap is descriptive; the available methodology does not define a statistical significance test."]
+                    if comparison_type == "top_gap"
+                    else []
+                ),
+                *role_limitations,
+            ],
+        }
+    elif question.intent == "format_comparison":
         if question.role is None:
             return {
                 "status": "clarification",
@@ -715,20 +1016,24 @@ def analyze_question(question_text, deliveries, teams=None, provider=None):
             }
         format_frames = []
         evidence_frames = []
+        format_limitations = []
         for format_name, format_frame in scoped.groupby("match_format"):
             calculated = calculate_player_metrics(format_frame)
-            role_frame = calculated["batters" if question.role == "batter" else "bowlers"].copy()
             role_columns = _role_columns(question.role)
             ranked = rank_players(calculated, question.role)
             if ranked.empty:
-                ranked = role_frame.sort_values(
-                    [role_columns["performance"], "pressure_opportunities"],
-                    ascending=[question.role == "bowler", False],
-                    kind="stable",
-                    na_position="last",
-                ).head(10)
-            else:
-                ranked = ranked.head(10)
+                format_label = (
+                    "IPL"
+                    if format_name == "T20"
+                    and format_frame["comp_name"].astype(str).str.startswith("IPL").all()
+                    else format_name
+                )
+                format_limitations.append(
+                    f"No {question.role} in {format_label} satisfies the existing SPI "
+                    "eligibility rules for this scope."
+                )
+                continue
+            ranked = ranked.head(10)
             ranked["format"] = format_name
             ranked["player_id"] = ranked[role_columns["id"]].astype("int64")
             ranked["player_name"] = ranked[role_columns["name"]].astype(str)
@@ -755,10 +1060,26 @@ def analyze_question(question_text, deliveries, teams=None, provider=None):
         evidence = _safe_records(
             pd.concat(evidence_frames, ignore_index=True) if evidence_frames else pd.DataFrame()
         )
+        if metric_rows.empty:
+            return {
+                "status": "insufficient",
+                "intent": question.intent,
+                "question": question_text,
+                "answer": (
+                    "The requested format-specific ranking cannot be calculated "
+                    "because no players meet the existing eligibility rules."
+                ),
+                "scope": scope,
+                "metrics": [],
+                "evidence": [],
+                "limitations": [
+                    "Eligibility thresholds and SPI methodology were not changed.",
+                    *format_limitations,
+                ],
+            }
         answer = (
-            f"Compared {question.role} metrics separately within IPL and T20I records. "
-            "The table reports each format's pressure rate and normal baseline; "
-            "player results are not treated as directly interchangeable."
+            f"Compared {question.role} rankings separately across the eligible "
+            "format-specific records. Player results are not pooled across formats."
         )
         metric_records = _safe_records(metric_rows, 20)
         evidence_records = evidence
@@ -783,6 +1104,34 @@ def analyze_question(question_text, deliveries, teams=None, provider=None):
                 }
             verification_notes.append(note)
         verification_note = " ".join(dict.fromkeys(verification_notes))
+        if re.search(r"\b(difference|gap|ahead|better)\b", _normalize(question.text)):
+            leaders = metric_rows.sort_values("rank", kind="stable").drop_duplicates("format")
+            leaders = leaders.set_index("format")
+            if (
+                "T20" in leaders.index
+                and "T20I" in leaders.index
+                and pd.notna(leaders.loc["T20", "spi"])
+                and pd.notna(leaders.loc["T20I", "spi"])
+            ):
+                difference = float(leaders.loc["T20", "spi"] - leaders.loc["T20I", "spi"])
+                comparison_results = {
+                    "ranking_metric": "spi",
+                    "IPL_leader": {
+                        "player_id": int(leaders.loc["T20", "player_id"]),
+                        "player_name": leaders.loc["T20", "player_name"],
+                        "SPI": float(leaders.loc["T20", "spi"]),
+                    },
+                    "T20I_leader": {
+                        "player_id": int(leaders.loc["T20I", "player_id"]),
+                        "player_name": leaders.loc["T20I", "player_name"],
+                        "SPI": float(leaders.loc["T20I", "spi"]),
+                    },
+                    "IPL_minus_T20I_SPI": difference,
+                    "interpretation": (
+                        "Descriptive difference between each format's eligible "
+                        "leader; format-specific leaderboards are not pooled."
+                    ),
+                }
     elif question.intent == "season_comparison":
         if question.role is None:
             return {
@@ -1179,9 +1528,19 @@ def analyze_question(question_text, deliveries, teams=None, provider=None):
         "metric_columns": list(metric_rows.columns) if isinstance(metric_rows, pd.DataFrame) else [],
         "evidence_columns": [],
         "verification": verification_note,
+        **(
+            {"comparison_results": comparison_results}
+            if comparison_results is not None
+            else {}
+        ),
         "limitations": [
             "Values are calculated from the supplied historical archive; missing context is not inferred.",
             "Rankings and pressure methodology remain provisional.",
+            *(
+                format_limitations
+                if question.intent == "format_comparison"
+                else []
+            ),
         ],
     }
 

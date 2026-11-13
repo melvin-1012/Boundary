@@ -47,7 +47,7 @@ scope cannot be asserted.
 
 ## Test evidence
 
-- `.venv/bin/python -m unittest discover -s tests -v`: **47 tests passed**,
+- `.venv/bin/python -m unittest discover -s tests -v`: **51 tests passed**,
   including analyst-tool tests and dashboard AppTest.
 - Project-wide Python compilation: **passed**.
 - AppTest rendered all nine views, switched themes, and returned a real

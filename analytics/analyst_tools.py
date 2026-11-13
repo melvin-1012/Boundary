@@ -227,6 +227,44 @@ TOOL_DEFINITIONS = [
             },
         },
     },
+    {
+        "type": "function",
+        "function": {
+            "name": "compare_player_rankings",
+            "description": (
+                "Calculate eligible player rankings using the existing SPI or a supported "
+                "ranking metric. Use this for rank gaps, top-N comparisons, rank selection, "
+                "and comparisons against the eligible-player average. If role is unspecified, "
+                "request both roles; batter and bowler rankings must remain separate."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "roles": {
+                        "type": "array",
+                        "items": {"type": "string", "enum": ["batter", "bowler"]},
+                        "minItems": 1,
+                        "maxItems": 2,
+                    },
+                    "sort_by": {
+                        "type": "string",
+                        "enum": ["spi", "reliability", "consistency"],
+                        "description": "Defaults to existing pressure SPI.",
+                    },
+                    "comparison": {
+                        "type": "string",
+                        "enum": ["top_gap", "top_n", "top_vs_average"],
+                    },
+                    "start_rank": {"type": "integer", "minimum": 1, "maximum": 50},
+                    "count": {"type": "integer", "minimum": 1, "maximum": 10},
+                    "season": {"type": "string"},
+                    "competition": {"type": "string"},
+                    "match_format": {"type": "string"},
+                },
+                "additionalProperties": False,
+            },
+        },
+    },
 ]
 
 
@@ -443,6 +481,7 @@ class CricketToolbox:
             "find_matches": self.find_matches,
             "query_cricket_data": self.query_cricket_data,
             "calculate_player_metrics": self.calculate_role_metrics,
+            "compare_player_rankings": self.compare_player_rankings,
         }
         if name not in dispatch:
             raise ValueError(f"Unknown analytical tool: {name}")
@@ -979,6 +1018,263 @@ class CricketToolbox:
             ],
         }
 
+    def compare_player_rankings(
+        self,
+        roles=None,
+        sort_by="spi",
+        comparison="top_gap",
+        start_rank=1,
+        count=2,
+        season=None,
+        competition=None,
+        match_format=None,
+    ):
+        """Compare eligible ranks without mixing role-specific score scales."""
+        if roles is None:
+            roles = ["batter", "bowler"]
+        if not isinstance(roles, list) or not roles or any(
+            role not in {"batter", "bowler"} for role in roles
+        ):
+            raise ValueError("Request one or both valid roles: batter and bowler.")
+        roles = list(dict.fromkeys(roles))
+        if sort_by not in {"spi", "reliability", "consistency"}:
+            raise ValueError("Ranking metric must be SPI, reliability, or consistency.")
+        if comparison not in {"top_gap", "top_n", "top_vs_average"}:
+            raise ValueError("Unsupported ranking comparison.")
+        start_rank = int(start_rank)
+        count = int(count)
+        if not 1 <= start_rank <= 50 or not 1 <= count <= 10:
+            raise ValueError("Rank must be 1–50 and count must be 1–10.")
+        if comparison == "top_gap":
+            start_rank, count = 1, 2
+        elif comparison == "top_vs_average":
+            start_rank, count = 1, 1
+        else:
+            end_rank = start_rank + count - 1
+            if end_rank > 50:
+                raise ValueError("Requested rank range exceeds the supported top 50.")
+
+        if self.curated_deliveries is None:
+            table_name = next(
+                (name for name in self.datasets if name == "curated_pressure_deliveries"),
+                None,
+            )
+            if table_name is None:
+                raise ValueError("Curated pressure deliveries are unavailable.")
+            deliveries = self._frame(table_name)
+        else:
+            deliveries = self.curated_deliveries
+        scoped = deliveries
+        for column, value in (
+            ("season", season),
+            ("comp_name", competition),
+            ("match_format", match_format),
+        ):
+            if value is not None:
+                if column not in scoped:
+                    raise ValueError(f"Requested filter is unavailable: {column}.")
+                scoped = scoped.loc[
+                    scoped[column].astype(str).str.casefold().eq(str(value).casefold())
+                ]
+
+        role_results = {}
+        for role in roles:
+            if scoped.empty:
+                role_results[role] = {
+                    "status": "insufficient",
+                    "eligible_count": 0,
+                    "requested_ranks": [start_rank, start_rank + count - 1],
+                    "players": [],
+                    "limitations": ["No source deliveries matched the requested scope."],
+                }
+                continue
+            calculated = calculate_player_metrics(scoped)
+            eligible = rank_players(calculated, role)
+            if eligible.empty:
+                role_results[role] = {
+                    "status": "insufficient",
+                    "eligible_count": 0,
+                    "requested_ranks": [start_rank, start_rank + count - 1],
+                    "players": [],
+                    "limitations": [
+                        "No players in this scope satisfy the existing SPI eligibility rules."
+                    ],
+                }
+                continue
+            ranked = eligible.sort_values(
+                [sort_by, "rank"],
+                ascending=[False, True],
+                kind="stable",
+            ).copy()
+            ranked["rank"] = np.arange(1, len(ranked) + 1)
+            selected = ranked.iloc[start_rank - 1 : start_rank - 1 + count].copy()
+            player_id_column = "striker_id" if role == "batter" else "bowler_id"
+            player_name_column = "striker_name" if role == "batter" else "bowler_name"
+            performance_column = (
+                "pressure_strike_rate" if role == "batter" else "pressure_economy"
+            )
+            baseline_column = "normal_strike_rate" if role == "batter" else "normal_economy"
+            records = []
+            for row in selected.to_dict("records"):
+                records.append(
+                    {
+                        "rank": int(row["rank"]),
+                        "player_id": int(row[player_id_column]),
+                        "player_name": str(row[player_name_column]),
+                        "SPI": _jsonable(row.get("spi")),
+                        "ranking_score": _jsonable(row.get(sort_by)),
+                        "ranking_metric": sort_by,
+                        "performance_component": _jsonable(row.get("performance_component")),
+                        "consistency": _jsonable(row.get("consistency")),
+                        "reliability": _jsonable(row.get("reliability")),
+                        "pressure_performance": _jsonable(row.get(performance_column)),
+                        "normal_baseline": _jsonable(row.get(baseline_column)),
+                        "competition_adjusted_difference": _jsonable(
+                            row.get("competition_adjusted_difference")
+                        ),
+                        "pressure_matches": int(row["pressure_matches"]),
+                        "pressure_opportunities": int(row["pressure_opportunities"]),
+                        "matches": int(row["matches"]),
+                        "uncertainty_indicator": _jsonable(
+                            row.get("uncertainty_indicator")
+                        ),
+                    }
+                )
+
+            if comparison == "top_gap":
+                if len(records) < 2:
+                    gap = None
+                else:
+                    gap = records[0]["ranking_score"] - records[1]["ranking_score"]
+                comparison_result = {
+                    "metric": sort_by,
+                    "first_minus_second": gap,
+                    "interpretation": (
+                        "Descriptive score difference only; this is not a statistical "
+                        "significance test."
+                    ),
+                }
+            elif comparison == "top_vs_average":
+                average = float(ranked[sort_by].mean())
+                comparison_result = {
+                    "metric": sort_by,
+                    "eligible_player_average": average,
+                    "first_minus_average": records[0]["ranking_score"] - average,
+                    "eligible_player_count": int(len(ranked)),
+                    "interpretation": "Average is calculated across all eligible players in this scope.",
+                }
+            else:
+                comparison_result = {
+                    "metric": sort_by,
+                    "adjacent_score_gaps": [
+                        {
+                            "higher_rank": first["rank"],
+                            "lower_rank": second["rank"],
+                            "difference": first["ranking_score"] - second["ranking_score"],
+                        }
+                        for first, second in zip(records, records[1:])
+                    ],
+                }
+            if records:
+                verification = self.calculate_role_metrics(
+                    role,
+                    season=season,
+                    competition=competition,
+                    player_ids=[row["player_id"] for row in records],
+                    match_format=match_format,
+                    limit=count,
+                )
+                if verification.get("verification", {}).get("status") != "passed":
+                    raise ValueError(f"Source-record verification failed for {role} ranking.")
+                evidence = verification.get("evidence", [])
+            else:
+                verification = {"verification": {"status": "not_available"}}
+                evidence = []
+            role_results[role] = {
+                "status": "answer" if len(records) == count else "insufficient",
+                "eligible_count": int(len(ranked)),
+                "requested_ranks": [start_rank, start_rank + count - 1],
+                "players": records,
+                "sample_support": {
+                    "mean_reliability": (
+                        float(np.mean([row["reliability"] for row in records]))
+                        if records
+                        else None
+                    ),
+                    "combined_pressure_opportunities": sum(
+                        row["pressure_opportunities"] for row in records
+                    ),
+                    "minimum_pressure_matches": (
+                        min(row["pressure_matches"] for row in records)
+                        if records
+                        else None
+                    ),
+                    "maximum_uncertainty_indicator": (
+                        max(
+                            row["uncertainty_indicator"]
+                            for row in records
+                            if row["uncertainty_indicator"] is not None
+                        )
+                        if any(row["uncertainty_indicator"] is not None for row in records)
+                        else None
+                    ),
+                },
+                "comparison": comparison_result,
+                "evidence": evidence,
+                "verification": verification["verification"],
+                "limitations": (
+                    []
+                    if len(records) == count
+                    else [
+                        f"Only {len(records)} eligible player(s) are available for the requested rank range."
+                    ]
+                ),
+            }
+
+        supported_roles = [
+            (role, data.get("sample_support", {}).get("mean_reliability"))
+            for role, data in role_results.items()
+            if data.get("sample_support", {}).get("mean_reliability") is not None
+        ]
+        more_supported_role = (
+            max(supported_roles, key=lambda item: item[1])[0]
+            if len(supported_roles) > 1
+            else None
+        )
+        return {
+            "scope": {
+                "season": season or "all available seasons",
+                "competition": competition or "all available competitions",
+                "match_format": match_format or "all available formats",
+                "competitions_present": sorted(
+                    scoped["comp_name"].dropna().astype(str).unique().tolist()
+                ) if "comp_name" in scoped else [],
+                "seasons_present": sorted(
+                    scoped["season"].dropna().astype(str).unique().tolist()
+                ) if "season" in scoped else [],
+                "roles_are_ranked_separately": True,
+            },
+            "comparison_type": comparison,
+            "ranking_metric": sort_by,
+            "roles": role_results,
+            "relative_comparison_support": {
+                "more_supported_role": more_supported_role,
+                "basis": (
+                    "Higher mean existing sample-reliability score across the "
+                    "selected players; this is descriptive exposure support, "
+                    "not a formal confidence or significance test."
+                ),
+            },
+            "limitations": [
+                "Existing pressure labels, SPI formula, and eligibility rules are unchanged and remain provisional.",
+                *(
+                    ["A score gap is descriptive; no inferential significance test is defined by the project methodology."]
+                    if comparison == "top_gap"
+                    else []
+                ),
+            ],
+        }
+
 
 def analyze_with_tools(
     question,
@@ -1006,11 +1302,23 @@ def analyze_with_tools(
             "calculation tool or read-only query tool; SQL must be one SELECT "
             "against catalog-listed tables. Never request secrets, code "
             "execution, shell access, or write operations. Do not infer player "
-            "nationality from names, team or competition. When filters or "
-            "definitions are ambiguous, ask a clarifying question instead of "
-            "silently assuming. Final prose must be concise and contain no "
-            "numbers or player/team names; the application displays verified "
-            "tool outputs separately as the numerical answer and evidence. "
+            "nationality from names, team or competition. Apply these defaults "
+            "without asking: best under pressure means existing eligible pressure "
+            "SPI; first/second/top-N refer to existing rank order; a difference "
+            "means a calculated score gap plus component gaps where requested; "
+            "omitted season/competition means the full available historical scope. "
+            "If role is omitted, calculate batter and bowler rankings separately "
+            "using compare_player_rankings; never combine their scores. Use the "
+            "ranking comparison tool for rank gaps, top-N, and eligible-player "
+            "averages. To compare support, use the tool's sample-reliability "
+            "summary and describe it as exposure support, not statistical confidence. "
+            "Ask only when a player/entity cannot be resolved or the "
+            "requested metric genuinely cannot be inferred. For significance "
+            "questions, report descriptive gaps and uncertainty fields without "
+            "claiming statistical significance unless a valid test is implemented. "
+            "Final prose must be concise and contain no numbers or player/team "
+            "names; the application displays verified tool outputs separately "
+            "as the numerical answer and evidence. "
             "If evidence is insufficient, say so plainly."
         ),
     }
