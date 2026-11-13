@@ -28,7 +28,7 @@ class DashboardIntegrationTests(unittest.TestCase):
                 "Methodology",
                 "Fixtures",
                 "Final Methodology & Validation",
-                "AI Cricket Analyst",
+                "Cricket Analyst",
             ],
         )
         appearance_selector = next(

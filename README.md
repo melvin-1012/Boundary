@@ -24,7 +24,7 @@ using results as a final submission.
   exports.
 - **Streamlit dashboard:** nine views for match exploration, pressure,
   batting, bowling, player insights, methodology, fixtures, final validation,
-  and the AI Cricket Analyst.
+  and the Cricket Analyst.
 - **Supporting demonstrations:** local MapReduce-compatible processing,
   single-machine Spark, machine-learning experiments, historical event replay,
   and player-match graph analysis. These do not imply deployed Hadoop, Kafka,
@@ -62,11 +62,11 @@ The dashboard views are:
 7. **Fixtures** — historical match listings.
 8. **Final Methodology & Validation** — validation evidence, sensitivity,
    ranking outputs, and submission-readiness status.
-9. **AI Cricket Analyst** — locally calculated, evidence-backed supported
+9. **Cricket Analyst** — locally calculated, evidence-backed supported
    questions, with optional provider-backed dynamic investigation through
    bounded data tools.
 
-### AI Cricket Analyst
+### Cricket Analyst
 
 The analyst can answer implemented question paths for pressure performance,
 player comparisons, season and competition comparisons, phase-specific

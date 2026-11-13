@@ -1,8 +1,8 @@
-# AI Cricket Analyst
+# Cricket Analyst
 
 ## Overview and operating modes
 
-The **AI Cricket Analyst** is available as a tab in `dashboard/app.py`. It has
+The **Cricket Analyst** is available as a tab in `dashboard/app.py`. It has
 two modes:
 
 - **Local mode:** With no provider configured, the existing rule-based

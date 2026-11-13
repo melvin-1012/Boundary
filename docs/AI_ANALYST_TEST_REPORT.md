@@ -1,4 +1,4 @@
-# AI Cricket Analyst Test Report
+# Cricket Analyst Test Report
 
 ## Result summary
 

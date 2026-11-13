@@ -699,7 +699,7 @@ overview, pressure_analytics, batting, bowling, player_insights, methodology, fi
         "  Methodology  ",
         "  Fixtures  ",
         "  Final Methodology & Validation  ",
-        "  AI Cricket Analyst  ",
+        "  Cricket Analyst  ",
     ],
     key="dashboard_tabs",
     default="  Match centre  ",
@@ -1253,7 +1253,7 @@ with methodology:
 
 with ai_analyst_tab:
     st.markdown(
-        '<div class="section-head">AI Cricket Analyst</div>'
+        '<div class="section-head">Cricket Analyst</div>'
         '<div class="section-sub">Ask about the supplied historical IPL and T20I archive; calculations stay grounded in verified delivery records.</div>',
         unsafe_allow_html=True,
     )

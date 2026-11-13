@@ -1,4 +1,4 @@
-# AI Cricket Analyst Architecture Audit and Implementation Plan
+# Cricket Analyst Architecture Audit and Implementation Plan
 
 ## Audit scope
 
@@ -11,7 +11,7 @@ The source archive is read-only.
 
 ### User interface and request path
 
-`dashboard/app.py` renders the **AI Cricket Analyst** tab and keeps a
+`dashboard/app.py` renders the **Cricket Analyst** tab and keeps a
 conversation list in Streamlit session state. On each submitted prompt it:
 
 1. Loads `data/curated/pressure_deliveries.parquet`.
