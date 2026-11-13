@@ -82,6 +82,14 @@ class DashboardIntegrationTests(unittest.TestCase):
             ]
             is not None
         )
+        app.chat_input[0].set_value(
+            "how much better is the best player under pressure from the second best player"
+        ).run()
+        self.assertEqual(len(app.exception), 0)
+        screenshot_phrase = app.session_state["cricket_analyst_conversation"][2]["result"]
+        self.assertEqual(screenshot_phrase["status"], "answer")
+        self.assertNotIn("clarification_options", screenshot_phrase)
+        self.assertEqual(len(screenshot_phrase["metrics"]), 4)
 
 
 if __name__ == "__main__":

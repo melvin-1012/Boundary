@@ -166,6 +166,10 @@ class CricketAnalystTests(unittest.TestCase):
         self.assertIsNotNone(
             results[0]["comparison_results"]["batter"]["comparison"]["first_minus_second"]
         )
+        self.assertIn("Alex Alpha", results[0]["answer"])
+        self.assertIn("Drew Delta", results[0]["answer"])
+        self.assertIn("SPI points", results[0]["answer"])
+        self.assertIn("pressure opportunities", results[0]["answer"])
         self.assertEqual(
             results[2]["metrics"][0]["rank"],
             2,

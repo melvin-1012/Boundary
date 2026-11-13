@@ -31,6 +31,9 @@ role-specific score gaps, SPI component values, opportunity counts, sample
 sizes, reliability, uncertainty indicators, and source-backed evidence.
 Cross-role scores are never combined. A gap is descriptive, not a statistical
 significance test; the current methodology does not define such a test.
+The local answer text now includes calculated top names and IDs, ranking scores,
+score and component gaps, sample opportunity counts, reliability, and scope;
+the same values remain available in the results table and evidence sections.
 
 ## Data discovery and calculations
 

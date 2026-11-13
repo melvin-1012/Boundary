@@ -970,14 +970,84 @@ def analyze_question(question_text, deliveries, teams=None, provider=None):
                 "or significance test."
             ),
         }
+        answer_parts = []
+        for role in roles:
+            role_result = comparisons[role]
+            players = role_result.get("players", [])
+            label = "Batter" if role == "batter" else "Bowler"
+            if not players:
+                answer_parts.append(
+                    f"{label}: no players meet the existing pressure SPI eligibility rules."
+                )
+                continue
+            if comparison_type == "top_gap" and len(players) > 1:
+                first, second = players[:2]
+                gap = role_result["comparison"]["first_minus_second"]
+                components = role_result["comparison"]["component_differences"]
+                score_label = {
+                    "spi": "SPI",
+                    "reliability": "reliability",
+                    "consistency": "consistency",
+                }[sort_by]
+                answer_parts.append(
+                    f"{label}: {first['player_name']} (ID {first['player_id']}) is "
+                    f"ranked first at {first['ranking_score']:.2f} {score_label}, "
+                    f"ahead of {second['player_name']} (ID {second['player_id']}) "
+                    f"at {second['ranking_score']:.2f} by {gap:.2f} {score_label} "
+                    f"points. Their SPI scores are {first['SPI']:.2f} and "
+                    f"{second['SPI']:.2f}. SPI component gaps (first minus second): "
+                    f"performance "
+                    f"{components['performance_component']:+.2f}, consistency "
+                    f"{components['consistency']:+.2f}, reliability "
+                    f"{components['reliability']:+.2f}. The two players have "
+                    f"{first['pressure_opportunities']} and "
+                    f"{second['pressure_opportunities']} pressure opportunities, "
+                    f"with reliability scores {first['reliability']:.2f} and "
+                    f"{second['reliability']:.2f}."
+                )
+            elif comparison_type == "top_vs_average":
+                first = players[0]
+                comparison = role_result["comparison"]
+                answer_parts.append(
+                    f"{label}: {first['player_name']} (ID {first['player_id']}) "
+                    f"leads eligible players at {first['ranking_score']:.2f} "
+                    f"{sort_by}, {comparison['first_minus_average']:+.2f} versus "
+                    f"the eligible-player average of "
+                    f"{comparison['eligible_player_average']:.2f} "
+                    f"({comparison['eligible_player_count']} eligible players)."
+                )
+            else:
+                listed = "; ".join(
+                    f"#{player['rank']} {player['player_name']} "
+                    f"(ID {player['player_id']}, {sort_by} "
+                    f"{player['ranking_score']:.2f}, "
+                    f"{player['pressure_opportunities']} pressure opportunities)"
+                    for player in players
+                )
+                answer_parts.append(f"{label} ranking: {listed}.")
+        if more_supported_role:
+            support = comparisons[more_supported_role]["sample_support"]
+            answer_parts.append(
+                f"The {more_supported_role} comparison has the higher mean "
+                f"reliability ({support['mean_reliability']:.2f}); this indicates "
+                "more observed pressure-opportunity support, not statistical "
+                "significance."
+            )
+        answer_parts.append(
+            "The rankings use the existing pressure SPI and eligibility rules over "
+            f"{scope['matches']:,} matches and {scope['deliveries']:,} deliveries "
+            "in the selected historical scope."
+        )
+        answer_parts.append(
+            "A score gap is descriptive; the project does not define a statistical "
+            "significance test."
+        )
         return {
             "status": "answer" if metric_rows else "insufficient",
             "intent": question.intent,
             "question": question_text,
             "answer": (
-                "Rankings use the existing eligible pressure SPI and are calculated "
-                "separately for batters and bowlers. Score gaps are descriptive, not "
-                "statistical significance tests."
+                " ".join(answer_parts)
                 if metric_rows
                 else "No eligible players were found for the requested ranking."
             ),

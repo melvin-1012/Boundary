@@ -1414,6 +1414,7 @@ with ai_analyst_tab:
                             chart,
                             width="stretch",
                             config={"displayModeBar": False},
+                            key=f"analyst_chart_{conversation_index}",
                         )
             if result.get("evidence"):
                 with st.expander(
