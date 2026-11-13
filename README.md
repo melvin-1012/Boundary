@@ -1,90 +1,239 @@
 # SupeRR Intelligence
 
-Cricket pressure analytics over the supplied ball-by-ball archive. The project
-contains source-data validation and ETL, match-state reconstruction, provisional
-pressure/SPI rankings, local Hadoop-compatible and Spark demonstrations,
-exploratory ML, historical event replay, graph/PageRank analysis, and a
-Streamlit dashboard.
+SupeRR Intelligence is a historical cricket analytics project built around
+ball-by-ball IPL and T20I data. It includes a reproducible data pipeline,
+exploratory pressure and player-performance analysis, ranking exports, a
+Streamlit dashboard, and a local evidence-backed cricket question analyst.
 
-> **Scope and status:** rankings, pressure weights, and exposure eligibility
-> remain provisional. The official Rajasthan Royals hackathon statement was
-> not supplied. Kafka, Hadoop/HDFS, Cassandra, and HBase services are not
-> deployed here; local replay and schema demonstrations are labeled as such.
+The project is intended for analysis and demonstration. **Pressure weights,
+SPI formulas, eligibility rules, and the resulting rankings are provisional,
+not official Rajasthan Royals selection criteria.** The official hackathon
+problem statement and domain approval are not available in this workspace.
+Review [`docs/MASTER_IMPLEMENTATION_STATUS.md`](./docs/MASTER_IMPLEMENTATION_STATUS.md)
+and [`docs/SUBMISSION_READINESS.md`](./docs/SUBMISSION_READINESS.md) before
+using results as a final submission.
 
-## Environment
+## What is included
+
+- **Historical archive:** six source CSVs in `data/raw/`, with data definitions
+  and relationships documented under `data/metadata/` and `docs/`.
+- **ETL and validation:** source profiling, integrity checks, match-state
+  reconstruction, pressure indicators, and processed/curated Parquet outputs.
+- **Cricket analytics:** batter and bowler metrics, pressure-versus-normal
+  comparisons, provisional SPI scores, sensitivity checks, and ranking
+  exports.
+- **Streamlit dashboard:** nine views for match exploration, pressure,
+  batting, bowling, player insights, methodology, fixtures, final validation,
+  and the AI Cricket Analyst.
+- **Supporting demonstrations:** local MapReduce-compatible processing,
+  single-machine Spark, machine-learning experiments, historical event replay,
+  and player-match graph analysis. These do not imply deployed Hadoop, Kafka,
+  Cassandra, HBase, or multi-node Spark services.
+
+## Dashboard
+
+Start the app from the project root:
+
+```bash
+.venv/bin/streamlit run dashboard/app.py --server.port 8501
+```
+
+Open [http://localhost:8501](http://localhost:8501). The sidebar provides:
+
+- **Theme:** Rajasthan Royals Theme or IPL Theme. Rajasthan Royals is the
+  default.
+- **Appearance:** Dark mode or Light mode. Dark mode is the default.
+- **Filters:** competition, season, and team. These scope the applicable
+  match, pressure, and player views.
+
+Both palettes share the same dashboard and theme configuration. Dark surfaces
+use light text; light surfaces use dark text. Theme accents remain pink for
+Rajasthan Royals and gold for IPL. The supplied SupeRR artwork is located at
+`dashboard/assets/superr_intelligence_logo.png`.
+
+The dashboard views are:
+
+1. **Match centre** — scoring trends, results, and match/innings exploration.
+2. **Pressure Analytics** — pressure states, metrics, and delivery evidence.
+3. **Batting room** — batting and boundary analysis.
+4. **Bowling lab** — bowling performance analysis.
+5. **Player Insights** — player-level comparisons and metrics.
+6. **Methodology** — current metric definitions and methodology reporting.
+7. **Fixtures** — historical match listings.
+8. **Final Methodology & Validation** — validation evidence, sensitivity,
+   ranking outputs, and submission-readiness status.
+9. **AI Cricket Analyst** — natural-language questions answered from the
+   supplied archive, with calculations and evidence produced locally.
+
+### AI Cricket Analyst
+
+The analyst can answer implemented question paths for pressure performance,
+player comparisons, season and competition comparisons, phase-specific
+performance, consistency, reliability, SPI/rank explanations, sample size,
+team-scoped queries, and match-level pressure. Use explicit roles and filters
+for clearer results. Examples:
+
+```text
+Who is the best batter under pressure in IPL 2023?
+Who is the best bowler under pressure in T20I 2024?
+Compare batter Rinku Singh and David Miller under pressure
+Show batter <name> pressure performance in death overs
+Show batting pressure for match <match ID>
+```
+
+The application calculates statistics from the curated delivery archive and
+verifies evidence against source player and match identifiers. Unsupported or
+ambiguous requests should receive a clarification or an insufficient-evidence
+response; venue- and nationality-based analyses are not inferred.
+
+An external OpenAI-compatible provider is **optional**. Without it, local
+question parsing and calculations remain available. To enable provider
+interpretation/commentary, set these environment variables before starting
+Streamlit:
+
+```bash
+export SUPERR_LLM_API_KEY="your-provider-key"
+export SUPERR_LLM_MODEL="your-model-name"
+# Optional; defaults to https://api.openai.com/v1
+export SUPERR_LLM_BASE_URL="https://api.openai.com/v1"
+.venv/bin/streamlit run dashboard/app.py --server.port 8501
+```
+
+Do not commit credentials. When configured, verified query context may be sent
+to the configured provider for interpretation; numerical results remain
+application-calculated. See [`docs/AI_CRICKET_ANALYST.md`](./docs/AI_CRICKET_ANALYST.md)
+for supported query behavior and safety details.
+
+## Requirements and installation
 
 - Python 3.12
-- Install the pinned Python dependencies in [`requirements.txt`](./requirements.txt)
-- No additional services are required for the local data, ML, graph, replay, or
-  dashboard workflows.
-- The project does not modify the source files in `data/raw/`.
+- Packages pinned in [`requirements.txt`](./requirements.txt)
+- No external database, streaming broker, or cluster is required for the
+  standard local pipeline and dashboard.
+
+Create an isolated environment and install dependencies:
 
 ```bash
 python3.12 -m venv .venv
+.venv/bin/python -m pip install --upgrade pip
 .venv/bin/python -m pip install -r requirements.txt
 ```
 
-## Run the pipeline
+Use the virtual environment's Python and Streamlit executables in the commands
+below. Run module commands from the repository root so project-relative data
+and report paths resolve correctly.
 
-Run from the project root:
+## Data pipeline and analysis
+
+The existing archive lets you run the dashboard directly. To regenerate
+processed data and analytics, run the modules in this order:
 
 ```bash
+# Validate/profile source records and rebuild processed/curated datasets.
 .venv/bin/python -m ingestion.run_etl
+
+# Rebuild batter/bowler metrics, SPI rankings, and ranking manifests.
 .venv/bin/python -m analytics.build_rankings
-.venv/bin/python -m machine_learning.run_models
-.venv/bin/python -m streaming.replay
-.venv/bin/python -m graph_analytics.run_graph
+
+# Rebuild the methodology report from the current analytical outputs.
 .venv/bin/python -m analytics.build_methodology_report
 ```
 
-Optional local big-data demonstrations:
+Additional reproducible local demonstrations:
+
+```bash
+.venv/bin/python -m machine_learning.run_models
+.venv/bin/python -m streaming.replay
+.venv/bin/python -m graph_analytics.run_graph
+```
+
+Optional local big-data examples:
 
 ```bash
 .venv/bin/python -m hadoop.run_mapreduce
 .venv/bin/python -m spark.run_spark
 ```
 
-`hadoop.run_mapreduce` uses local Python subprocesses and does not upload data
-to HDFS. `spark.run_spark` uses `local[2]` and is not a multi-node cluster
-deployment. The replay is a historical simulation, not Kafka.
+These are deliberately bounded demonstrations: MapReduce runs locally and
+does not upload to HDFS; Spark uses a local session rather than a multi-node
+cluster; streaming replays historical records rather than consuming Kafka.
+Cassandra and HBase artifacts are schema/query demonstrations, not live
+database integrations.
 
-## Start the dashboard
+## Data layout and outputs
 
-```bash
-.venv/bin/streamlit run dashboard/app.py --server.port 8501
-```
+| Location | Contents |
+|---|---|
+| `data/raw/` | Supplied source CSV files. The ETL reads these and does not edit them. |
+| `data/processed/` | Source-shaped and validated Parquet datasets. |
+| `data/curated/` | Derived delivery-pressure and batter/bowler metric Parquet datasets. |
+| `data/metadata/` | Machine-readable data dictionary and dataset relationships. |
+| `reports/top_10_batters.csv`, `reports/top_10_bowlers.csv` | Current provisional top-ten exports. |
+| `reports/full_batter_ranking.csv`, `reports/full_bowler_ranking.csv` | Full provisional ranking outputs. |
+| `reports/all_batter_metrics.csv`, `reports/all_bowler_metrics.csv` | Supporting player metric exports. |
+| `reports/final_rankings.json` | Ranking run and input/output provenance. |
+| `reports/final_validation.json`, `reports/data_quality_report.json` | Validation and quality evidence. |
+| `reports/methodology_report.md` | Generated methodology, sensitivity, ranking, and limitation report. |
+| `reports/machine_learning/`, `reports/graph/`, `reports/streaming/`, `reports/spark/`, `reports/mapreduce/` | Results from the corresponding local analyses/demonstrations. |
 
-The app includes Match centre, Pressure Analytics, Batting room, Bowling lab,
-Player Insights, Methodology, and Fixtures views. Its sidebar competition,
-season, and team filters scope match and pressure/player exploration. Exported
-top-ten tables intentionally remain tied to the same provisional generated
-ranking files rather than being recalculated differently in the UI. IPL and
-Rajasthan Royals themes are selectable.
+Generated rankings and reports are only as authoritative as their documented
+assumptions. Do not describe them as final selections while methodology or
+source-data ambiguities remain unresolved.
 
-## Tests
+## Methodology and limitations
+
+The pipeline records match state and batting/bowling pressure indicators from
+the historical delivery data, then calculates role-specific player metrics
+and SPI rankings. The methodology report and validation artifacts document
+the currently implemented formulas, thresholds, sensitivity results,
+eligibility, and run provenance.
+
+Important caveats:
+
+- Pressure thresholds, weights, SPI choices, and minimum-opportunity rules
+  remain exploratory and need domain approval.
+- The official Rajasthan Royals challenge brief was not supplied, so alignment
+  with official requirements is unverified.
+- Source-data ambiguities and anomalies are reported, not silently corrected.
+  See the data quality report and methodology report for specific cases.
+- IPL and T20I comparisons use only the supplied historical archive; they are
+  not real-time feeds or comprehensive career records.
+- AI commentary is optional and has not been validated against a live provider
+  in this environment. The local analytics path does not require an LLM.
+
+## Tests and checks
+
+Run the complete test suite:
 
 ```bash
 .venv/bin/python -m unittest discover -s tests -v
-.venv/bin/python -m py_compile analytics/*.py dashboard/*.py graph_analytics/*.py ingestion/*.py machine_learning/*.py streaming/*.py tests/*.py
 ```
 
-The automated suite covers data and cricket calculations, raw-source hash
-immutability, rank-file consistency and independent player examples, grouped
-ML evaluation, graph construction, incremental replay, and Streamlit
-render/theme switching.
+Compile the Python modules:
 
-## Outputs and documentation
+```bash
+.venv/bin/python -m py_compile \
+  analytics/*.py dashboard/*.py graph_analytics/*.py ingestion/*.py \
+  machine_learning/*.py streaming/*.py tests/*.py
+```
 
-- Processed and curated data: `data/processed/`, `data/curated/`
-- Top-ten and full rankings: `reports/top_10_*.csv`,
-  `reports/full_*_ranking.csv`
-- Supporting metrics: `reports/all_*_metrics.csv`
-- Quality, replay, ML, graph, MapReduce, and Spark evidence: `reports/`
-- Formula and ranking evidence: [`reports/methodology_report.md`](./reports/methodology_report.md)
-- Current status and blockers: [`docs/MASTER_IMPLEMENTATION_STATUS.md`](./docs/MASTER_IMPLEMENTATION_STATUS.md)
-- Audit and incremental work log: [`docs/PROJECT_AUDIT.md`](./docs/PROJECT_AUDIT.md),
-  [`docs/PROJECT_PROGRESS.md`](./docs/PROJECT_PROGRESS.md)
-- Architecture and data-flow diagrams: [`docs/architecture.md`](./docs/architecture.md)
-- NoSQL design-only demonstration: [`databases/README.md`](./databases/README.md)
-- Submission readiness: [`docs/SUBMISSION_READINESS.md`](./docs/SUBMISSION_READINESS.md)
-- Presentation outline: [`docs/final_presentation.md`](./docs/final_presentation.md)
+Tests cover source-data validation and immutability, cricket calculations,
+ranking exports and provenance, analytics evidence, graph construction,
+machine-learning evaluation, historical replay, and Streamlit dashboard
+rendering/theme switching. They verify software behavior, not external
+methodology approval.
+
+## Project documentation
+
+- [Master implementation status](./docs/MASTER_IMPLEMENTATION_STATUS.md)
+- [Project audit](./docs/PROJECT_AUDIT.md)
+- [Project progress](./docs/PROJECT_PROGRESS.md)
+- [Submission readiness](./docs/SUBMISSION_READINESS.md)
+- [AI Cricket Analyst guide](./docs/AI_CRICKET_ANALYST.md)
+- [Methodology report](./reports/methodology_report.md)
+- [Pressure methodology notes](./docs/pressure_methodology.md)
+- [Architecture](./docs/architecture.md)
+- [Data dictionary](./docs/data_dictionary.md)
+- [Dataset relationships](./docs/dataset_relationships.md)
+- [Final presentation outline](./docs/final_presentation.md)
+- [Database demonstration notes](./databases/README.md)
