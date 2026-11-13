@@ -78,26 +78,28 @@ viewport. This is a known verification gap.
 
 ## AI Cricket Analyst increment
 
-- Added `analytics/cricket_analyst.py` with deterministic intent/entity
-  resolution, validated optional LLM question classification, read-only
-  analytics, source-record evidence checks, comparisons, rankings, and
-  insufficient/clarification responses.
-- Added the ninth dashboard view, `AI Cricket Analyst`, with session-scoped
-  chat history, example questions, metric tables/charts, expandable evidence,
-  scope, limitations, and optional qualitative commentary.
-- The new path uses the curated pressure-delivery Parquet and existing metric,
-  ranking, and reliability functions. It does not execute SQL or modify source
-  data. The LLM only classifies an allowlisted query and comments on verified
-  output; numeric commentary is rejected.
-- No LLM credentials were configured. The local rule-based parser and
-  analytics were exercised through Streamlit AppTest and the live local
-  browser; external LLM behavior remains unverified. A real Rinku Singh
-  question returned a source-verified answer and 14 match-level evidence rows.
-- `tests/test_cricket_analyst.py` has 14 tests covering player resolution, clarification,
-  role/season/competition/phase/team filters, batter and bowler metrics,
-  comparisons, SPI, sample eligibility, source evidence, unsupported input,
-  LLM interpretation allowlisting, and numeric-output rejection.
-- Complete suite: 34 tests passed. Python compilation passed for the analyst,
-  dashboard, and their tests. Browser validation ran the updated app on port
-  8502 to avoid interrupting the existing server on port 8501.
-- Run instructions and limitations are in `docs/AI_CRICKET_ANALYST.md`.
+- The existing `analytics/cricket_analyst.py` local parser and evidence
+  calculations remain available. Provider-backed dynamic analysis is
+  implemented in `analytics/analyst_tools.py` and uses structured,
+  allowlisted tool calls for catalog discovery, schema inspection, entity
+  lookup, existing batter/bowler metrics, and bounded read-only SQL.
+- The tool loop supports up to eight rounds and twelve total calls, includes
+  recent conversation context, and returns inspectable tool results. SQLite
+  queries are constrained to registered dataframes, known columns, approved
+  functions, a 3-second timeout, and a 500-row result limit. Source data is
+  never modified.
+- The ninth dashboard view selects dynamic tool calling when a compatible
+  provider is configured and retains the local supported-intent path otherwise.
+  The UI displays tool activity/results and continues to show application-
+  calculated metrics separately from model prose.
+- No live LLM credentials were configured. Mocked tests cover multi-step tool
+  dispatch, follow-up context, provider request serialization, query
+  restrictions, and prevention of model-written numeric summaries. Existing
+  AppTest and prior browser checks validate the dashboard/local analysis path,
+  not live provider behavior.
+- The complete suite now passes **47 tests**; project-wide Python compilation
+  passes. The local archive smoke test discovered 20 datasets and validated
+  player/match lookup, filtered IPL metrics, and bounded SELECT access. Details
+  are in `docs/AI_ANALYST_TEST_REPORT.md`.
+- Supported local intents, provider configuration, bounds, and limitations
+  are documented in `docs/AI_CRICKET_ANALYST.md`.

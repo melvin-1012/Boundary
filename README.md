@@ -62,8 +62,9 @@ The dashboard views are:
 7. **Fixtures** — historical match listings.
 8. **Final Methodology & Validation** — validation evidence, sensitivity,
    ranking outputs, and submission-readiness status.
-9. **AI Cricket Analyst** — natural-language questions answered from the
-   supplied archive, with calculations and evidence produced locally.
+9. **AI Cricket Analyst** — locally calculated, evidence-backed supported
+   questions, with optional provider-backed dynamic investigation through
+   bounded data tools.
 
 ### AI Cricket Analyst
 
@@ -81,15 +82,21 @@ Show batter <name> pressure performance in death overs
 Show batting pressure for match <match ID>
 ```
 
-The application calculates statistics from the curated delivery archive and
-verifies evidence against source player and match identifiers. Unsupported or
-ambiguous requests should receive a clarification or an insufficient-evidence
-response; venue- and nationality-based analyses are not inferred.
+The local mode calculates supported questions from the curated delivery
+archive and verifies evidence against source player and match identifiers.
+When an OpenAI-compatible provider is configured, the analyst can also
+discover available datasets, inspect schemas, call existing role metrics, and
+run guarded read-only analytical queries through an allowlisted tool loop.
+Unsupported or ambiguous requests should receive a clarification or an
+insufficient-evidence response; venue- and nationality-based analyses are not
+inferred from names.
 
-An external OpenAI-compatible provider is **optional**. Without it, local
-question parsing and calculations remain available. To enable provider
-interpretation/commentary, set these environment variables before starting
-Streamlit:
+An external OpenAI-compatible provider is **optional**. Without it, the
+documented local parser remains available but does not support arbitrary
+question formulations. Provider-backed tool calling has been tested with
+mocked responses, not a live model; no live provider credentials were
+available for verification. To enable dynamic tool calling, set these
+environment variables before starting Streamlit:
 
 ```bash
 export SUPERR_LLM_API_KEY="your-provider-key"
@@ -99,10 +106,13 @@ export SUPERR_LLM_BASE_URL="https://api.openai.com/v1"
 .venv/bin/streamlit run dashboard/app.py --server.port 8501
 ```
 
-Do not commit credentials. When configured, verified query context may be sent
-to the configured provider for interpretation; numerical results remain
-application-calculated. See [`docs/AI_CRICKET_ANALYST.md`](./docs/AI_CRICKET_ANALYST.md)
-for supported query behavior and safety details.
+Do not commit credentials. When configured, the question, bounded catalog
+context, and results required for the analysis are sent to the configured
+provider. SQL tools accept only bounded, single SELECT/WITH...SELECT queries
+over registered tables. Numerical results are calculated by application
+tools, not by the model. See
+[`docs/AI_CRICKET_ANALYST.md`](./docs/AI_CRICKET_ANALYST.md) for operating
+modes, tool limits, supported local intents, and safety details.
 
 ## Requirements and installation
 
@@ -230,6 +240,8 @@ methodology approval.
 - [Project progress](./docs/PROJECT_PROGRESS.md)
 - [Submission readiness](./docs/SUBMISSION_READINESS.md)
 - [AI Cricket Analyst guide](./docs/AI_CRICKET_ANALYST.md)
+- [AI Analyst architecture audit and implementation status](./docs/AI_ANALYST_ARCHITECTURE.md)
+- [AI Analyst test report](./docs/AI_ANALYST_TEST_REPORT.md)
 - [Methodology report](./reports/methodology_report.md)
 - [Pressure methodology notes](./docs/pressure_methodology.md)
 - [Architecture](./docs/architecture.md)

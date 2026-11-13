@@ -1,0 +1,4538 @@
+{
+  "catalog_version": 1,
+  "root": "data",
+  "datasets": [
+    {
+      "table_name": "curated_batter_match_metrics",
+      "path": "curated/batter_match_metrics.parquet",
+      "format": "parquet",
+      "row_count": 13235,
+      "column_count": 10,
+      "columns": [
+        {
+          "name": "striker_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "striker_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "match_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "comp_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batter_runs",
+          "dtype": "int64",
+          "description": "Sum of source runs for the striker; source anomaly semantics remain documented.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "balls_faced",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_balls",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "strike_rate",
+          "dtype": "float64",
+          "description": "100 * batter runs / batter balls faced; wides are not balls faced.",
+          "nullable": true,
+          "missing_count": 6
+        },
+        {
+          "name": "pressure_strike_rate",
+          "dtype": "float64",
+          "description": "100 * batter runs on batting-pressure balls / batter balls faced in batting pressure.",
+          "nullable": true,
+          "missing_count": 9349
+        }
+      ],
+      "candidate_key": [],
+      "date_ranges": {},
+      "coverage": {
+        "comp_name": [
+          "Afghanistan in Bangladesh T20I Series 2023",
+          "Afghanistan in India T20I Series 2024",
+          "Afghanistan in Ireland T20I Series 2022",
+          "Afghanistan in Sri Lanka T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2022",
+          "Afghanistan in Zimbabwe T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2025",
+          "Afghanistan v Bangladesh T20I Series 2025",
+          "Afghanistan v Ireland T20I Series 2024",
+          "Afghanistan v Pakistan T20I Series 2023",
+          "Afghanistan v West Indies T20I Series 2026",
+          "Afghanistan v Zimbabwe T20I Series 2026",
+          "Afghanistan vs India in India T20I Series 2026",
+          "Asia Cup 2025",
+          "Asia Cup T20 Qualifiers 2022",
+          "Australia in Bangladesh T20I Series 2026",
+          "Australia in England T20I Series 2024",
+          "Australia in India T20I Series 2022",
+          "Australia in India T20I Series 2023",
+          "Australia in New Zealand T20I Series 2024",
+          "Australia in New Zealand T20I Series 2025",
+          "Australia in Pakistan T20I Series 2026",
+          "Australia in Scotland T20I Series 2024",
+          "Australia in South Africa T20I Series 2023",
+          "Australia in Sri Lanka T20I Series 2022",
+          "Australia in West Indies T20I Series 2025",
+          "Bangladesh in India T20I Series 2024",
+          "Bangladesh in New Zealand T20I Series 2023",
+          "Bangladesh in Pakistan T20I Series 2025",
+          "Bangladesh in Sri Lanka T20I Series 2025",
+          "Bangladesh in United Arab Emirates T20I Series 2022",
+          "Bangladesh in United Arab Emirates T20I Series 2025",
+          "Bangladesh in West Indies T20I Series 2022",
+          "Bangladesh in West Indies T20I Series 2024",
+          "Bangladesh in Zimbabwe T20I Series 2022",
+          "Bangladesh in Zimbabwe T20I Series 2026",
+          "England in Australia T20I Series 2022",
+          "England in Bangladesh T20I Series 2023",
+          "England in India T20I Series 2025",
+          "England in Ireland T20I series 2025",
+          "England in New Zealand T20I Series 2025",
+          "England in Pakistan T20I Series 2022",
+          "England in Sri Lanka T20I Series 2026",
+          "England in West Indies T20I Series 2022",
+          "England in West Indies T20I Series 2023",
+          "England in West Indies T20I Series 2024",
+          "IPL 2022",
+          "IPL 2023",
+          "IPL 2024",
+          "IPL 2025",
+          "IPL 2026",
+          "India in Australia T20I Series 2025",
+          "India in England T20I Series 2022",
+          "India in England T20I Series 2026",
+          "India in Ireland T20I Series 2022",
+          "India in Ireland T20I Series 2023",
+          "India in Ireland T20I Series 2026",
+          "India in Japan T20I Match 2026",
+          "India in New Zealand T20I Series 2022/23",
+          "India in New Zealand T20I Series 2026",
+          "India in South Africa T20I Series 2023",
+          "India in South Africa T20I Series 2024",
+          "India in Sri Lanka T20I Series 2024",
+          "India in West Indies T20I Series 2022",
+          "India in West Indies T20I Series 2023",
+          "India in Zimbabwe T20I Series 2024",
+          "India in Zimbabwe T20I Series 2026",
+          "Ireland in Bangladesh T20I Series 2023",
+          "Ireland in Bangladesh T20I Series 2025",
+          "Ireland in United Arab Emirates T20I Series 2026",
+          "Ireland in Zimbabwe T20I Series 2023",
+          "Ireland in Zimbabwe T20I Series 2023/24",
+          "Ireland in Zimbabwe T20I Series 2025",
+          "Ireland v South Africa T20I Series 2024",
+          "Mens Twenty20 Asia Cup 2022",
+          "Nepal v West Indies T20I Series 2025",
+          "Netherlands Tri-Nation T20I Series 2024",
+          "Netherlands Tri-Nation T20I Series [Aug 2024] 2024",
+          "Netherlands in Bangladesh T20I Series 2025",
+          "New Zealand T20I Tri Series 2022/23",
+          "New Zealand in Bangladesh T20I Series 2026",
+          "New Zealand in England T20I Series 2023",
+          "New Zealand in India T20I Series 2023",
+          "New Zealand in India T20I Series 2026",
+          "New Zealand in Ireland T20I Series 2022",
+          "New Zealand in Netherlands T20I Series 2022",
+          "New Zealand in Pakistan T20I Series 2023",
+          "New Zealand in Pakistan T20I Series 2024",
+          "New Zealand in Sri Lanka T20I Series 2024",
+          "New Zealand in United Arab Emirates T20I Series 2023",
+          "New Zealand in West Indies T20I Series 2022",
+          "Pakistan T20I Tri-Series 2025",
+          "Pakistan in Australia T20I Series 2024",
+          "Pakistan in Bangladesh T20I Series 2025",
+          "Pakistan in England T20I Series 2024",
+          "Pakistan in Ireland T20I series 2024",
+          "Pakistan in New Zealand T20I Series 2025",
+          "Pakistan in New Zealand T20I series 2024",
+          "Pakistan in South Africa T20I Series 2024",
+          "Pakistan in Sri Lanka T20I Series 2026",
+          "Pakistan in West Indies T20I Series 2025",
+          "Pakistan in Zimbabwe T20I Series 2024",
+          "South Africa in Australia T20I Series 2025",
+          "South Africa in England T20I Series 2022",
+          "South Africa in England T20I Series 2025",
+          "South Africa in India T20I Series 2022",
+          "South Africa in India T20I Series 2022/23",
+          "South Africa in India T20I Series 2025",
+          "South Africa in New Zealand T20I Series 2026",
+          "South Africa in Pakistan T20I Series 2025",
+          "South Africa in West Indies T20I Series 2024",
+          "South Africa in West Indies T20I Series [May 2024] 2024",
+          "South Africa vs Ireland T20I Series 2022",
+          "Sri Lanka in Australia T20I Series 2022",
+          "Sri Lanka in Bangladesh T20I Series 2024",
+          "Sri Lanka in England T20I Series 2026",
+          "Sri Lanka in India T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2024/25",
+          "Sri Lanka in Pakistan T20I Series 2026",
+          "Sri Lanka in West Indies T20I Series 2026",
+          "Sri Lanka in Zimbabwe T20I Series 2025",
+          "United Arab Emirates T20I Tri-Series 2025",
+          "West Indies in Australia T20I Series 2022",
+          "West Indies in Australia T20I Series 2024",
+          "West Indies in Bangladesh T20I Series 2025",
+          "West Indies in England T20I Series 2025",
+          "West Indies in India T20I Series 2022",
+          "West Indies in India T20I Series 2026",
+          "West Indies in Ireland T20I Series 2025",
+          "West Indies in New Zealand T20I Series 2025",
+          "West Indies in South Africa T20I Series 2023",
+          "West Indies in South Africa T20I Series 2026",
+          "West Indies in Sri Lanka T20I Series 2024",
+          "Zimbabwe in Bangladesh T20I Series 2024",
+          "Zimbabwe in Sri Lanka T20I Series 2024"
+        ]
+      }
+    },
+    {
+      "table_name": "curated_batter_metrics",
+      "path": "curated/batter_metrics.parquet",
+      "format": "parquet",
+      "row_count": 824,
+      "column_count": 34,
+      "columns": [
+        {
+          "name": "striker_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "striker_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batter_runs",
+          "dtype": "int64",
+          "description": "Sum of source runs for the striker; source anomaly semantics remain documented.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "balls_faced",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "legal_balls",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "fours",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "sixes",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "team_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "outs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "matches",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_balls",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_fours",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_sixes",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "normal_balls",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "normal_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "dot_balls",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_dot_balls",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "strike_rate",
+          "dtype": "float64",
+          "description": "100 * batter runs / batter balls faced; wides are not balls faced.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_average",
+          "dtype": "float64",
+          "description": "Batter runs / observed striker dismissals.",
+          "nullable": true,
+          "missing_count": 74
+        },
+        {
+          "name": "boundary_percentage",
+          "dtype": "float64",
+          "description": "100 * source four/six flags / batter balls faced.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "dot_ball_percentage",
+          "dtype": "float64",
+          "description": "100 * source-defined batter dot balls / balls faced.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "dismissal_rate",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_strike_rate",
+          "dtype": "float64",
+          "description": "100 * batter runs on batting-pressure balls / batter balls faced in batting pressure.",
+          "nullable": true,
+          "missing_count": 196
+        },
+        {
+          "name": "pressure_boundary_percentage",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 196
+        },
+        {
+          "name": "pressure_dot_ball_percentage",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 196
+        },
+        {
+          "name": "pressure_opportunities",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "normal_strike_rate",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 172
+        },
+        {
+          "name": "strike_rate_difference",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 368
+        },
+        {
+          "name": "competition_adjusted_difference",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 196
+        },
+        {
+          "name": "consistency",
+          "dtype": "float64",
+          "description": "100 / (1 + sample coefficient of variation) of match-level pressure strike rates for batters or pressure economy rates for bowlers.",
+          "nullable": true,
+          "missing_count": 355
+        },
+        {
+          "name": "pressure_matches",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_innings",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "competition_coverage",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [],
+      "date_ranges": {},
+      "coverage": {}
+    },
+    {
+      "table_name": "curated_bowler_match_metrics",
+      "path": "curated/bowler_match_metrics.parquet",
+      "format": "parquet",
+      "row_count": 9730,
+      "column_count": 11,
+      "columns": [
+        {
+          "name": "bowler_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowler_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "match_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "comp_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "legal_balls",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "runs_conceded",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_balls",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "wickets",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "economy",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_economy",
+          "dtype": "float64",
+          "description": "6 * bowler-conceded runs in bowling pressure / legal balls in bowling pressure.",
+          "nullable": true,
+          "missing_count": 4344
+        }
+      ],
+      "candidate_key": [],
+      "date_ranges": {},
+      "coverage": {
+        "comp_name": [
+          "Afghanistan in Bangladesh T20I Series 2023",
+          "Afghanistan in India T20I Series 2024",
+          "Afghanistan in Ireland T20I Series 2022",
+          "Afghanistan in Sri Lanka T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2022",
+          "Afghanistan in Zimbabwe T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2025",
+          "Afghanistan v Bangladesh T20I Series 2025",
+          "Afghanistan v Ireland T20I Series 2024",
+          "Afghanistan v Pakistan T20I Series 2023",
+          "Afghanistan v West Indies T20I Series 2026",
+          "Afghanistan v Zimbabwe T20I Series 2026",
+          "Afghanistan vs India in India T20I Series 2026",
+          "Asia Cup 2025",
+          "Asia Cup T20 Qualifiers 2022",
+          "Australia in Bangladesh T20I Series 2026",
+          "Australia in England T20I Series 2024",
+          "Australia in India T20I Series 2022",
+          "Australia in India T20I Series 2023",
+          "Australia in New Zealand T20I Series 2024",
+          "Australia in New Zealand T20I Series 2025",
+          "Australia in Pakistan T20I Series 2026",
+          "Australia in Scotland T20I Series 2024",
+          "Australia in South Africa T20I Series 2023",
+          "Australia in Sri Lanka T20I Series 2022",
+          "Australia in West Indies T20I Series 2025",
+          "Bangladesh in India T20I Series 2024",
+          "Bangladesh in New Zealand T20I Series 2023",
+          "Bangladesh in Pakistan T20I Series 2025",
+          "Bangladesh in Sri Lanka T20I Series 2025",
+          "Bangladesh in United Arab Emirates T20I Series 2022",
+          "Bangladesh in United Arab Emirates T20I Series 2025",
+          "Bangladesh in West Indies T20I Series 2022",
+          "Bangladesh in West Indies T20I Series 2024",
+          "Bangladesh in Zimbabwe T20I Series 2022",
+          "Bangladesh in Zimbabwe T20I Series 2026",
+          "England in Australia T20I Series 2022",
+          "England in Bangladesh T20I Series 2023",
+          "England in India T20I Series 2025",
+          "England in Ireland T20I series 2025",
+          "England in New Zealand T20I Series 2025",
+          "England in Pakistan T20I Series 2022",
+          "England in Sri Lanka T20I Series 2026",
+          "England in West Indies T20I Series 2022",
+          "England in West Indies T20I Series 2023",
+          "England in West Indies T20I Series 2024",
+          "IPL 2022",
+          "IPL 2023",
+          "IPL 2024",
+          "IPL 2025",
+          "IPL 2026",
+          "India in Australia T20I Series 2025",
+          "India in England T20I Series 2022",
+          "India in England T20I Series 2026",
+          "India in Ireland T20I Series 2022",
+          "India in Ireland T20I Series 2023",
+          "India in Ireland T20I Series 2026",
+          "India in Japan T20I Match 2026",
+          "India in New Zealand T20I Series 2022/23",
+          "India in New Zealand T20I Series 2026",
+          "India in South Africa T20I Series 2023",
+          "India in South Africa T20I Series 2024",
+          "India in Sri Lanka T20I Series 2024",
+          "India in West Indies T20I Series 2022",
+          "India in West Indies T20I Series 2023",
+          "India in Zimbabwe T20I Series 2024",
+          "India in Zimbabwe T20I Series 2026",
+          "Ireland in Bangladesh T20I Series 2023",
+          "Ireland in Bangladesh T20I Series 2025",
+          "Ireland in United Arab Emirates T20I Series 2026",
+          "Ireland in Zimbabwe T20I Series 2023",
+          "Ireland in Zimbabwe T20I Series 2023/24",
+          "Ireland in Zimbabwe T20I Series 2025",
+          "Ireland v South Africa T20I Series 2024",
+          "Mens Twenty20 Asia Cup 2022",
+          "Nepal v West Indies T20I Series 2025",
+          "Netherlands Tri-Nation T20I Series 2024",
+          "Netherlands Tri-Nation T20I Series [Aug 2024] 2024",
+          "Netherlands in Bangladesh T20I Series 2025",
+          "New Zealand T20I Tri Series 2022/23",
+          "New Zealand in Bangladesh T20I Series 2026",
+          "New Zealand in England T20I Series 2023",
+          "New Zealand in India T20I Series 2023",
+          "New Zealand in India T20I Series 2026",
+          "New Zealand in Ireland T20I Series 2022",
+          "New Zealand in Netherlands T20I Series 2022",
+          "New Zealand in Pakistan T20I Series 2023",
+          "New Zealand in Pakistan T20I Series 2024",
+          "New Zealand in Sri Lanka T20I Series 2024",
+          "New Zealand in United Arab Emirates T20I Series 2023",
+          "New Zealand in West Indies T20I Series 2022",
+          "Pakistan T20I Tri-Series 2025",
+          "Pakistan in Australia T20I Series 2024",
+          "Pakistan in Bangladesh T20I Series 2025",
+          "Pakistan in England T20I Series 2024",
+          "Pakistan in Ireland T20I series 2024",
+          "Pakistan in New Zealand T20I Series 2025",
+          "Pakistan in New Zealand T20I series 2024",
+          "Pakistan in South Africa T20I Series 2024",
+          "Pakistan in Sri Lanka T20I Series 2026",
+          "Pakistan in West Indies T20I Series 2025",
+          "Pakistan in Zimbabwe T20I Series 2024",
+          "South Africa in Australia T20I Series 2025",
+          "South Africa in England T20I Series 2022",
+          "South Africa in England T20I Series 2025",
+          "South Africa in India T20I Series 2022",
+          "South Africa in India T20I Series 2022/23",
+          "South Africa in India T20I Series 2025",
+          "South Africa in New Zealand T20I Series 2026",
+          "South Africa in Pakistan T20I Series 2025",
+          "South Africa in West Indies T20I Series 2024",
+          "South Africa in West Indies T20I Series [May 2024] 2024",
+          "South Africa vs Ireland T20I Series 2022",
+          "Sri Lanka in Australia T20I Series 2022",
+          "Sri Lanka in Bangladesh T20I Series 2024",
+          "Sri Lanka in England T20I Series 2026",
+          "Sri Lanka in India T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2024/25",
+          "Sri Lanka in Pakistan T20I Series 2026",
+          "Sri Lanka in West Indies T20I Series 2026",
+          "Sri Lanka in Zimbabwe T20I Series 2025",
+          "United Arab Emirates T20I Tri-Series 2025",
+          "West Indies in Australia T20I Series 2022",
+          "West Indies in Australia T20I Series 2024",
+          "West Indies in Bangladesh T20I Series 2025",
+          "West Indies in England T20I Series 2025",
+          "West Indies in India T20I Series 2022",
+          "West Indies in India T20I Series 2026",
+          "West Indies in Ireland T20I Series 2025",
+          "West Indies in New Zealand T20I Series 2025",
+          "West Indies in South Africa T20I Series 2023",
+          "West Indies in South Africa T20I Series 2026",
+          "West Indies in Sri Lanka T20I Series 2024",
+          "Zimbabwe in Bangladesh T20I Series 2024",
+          "Zimbabwe in Sri Lanka T20I Series 2024"
+        ]
+      }
+    },
+    {
+      "table_name": "curated_bowler_metrics",
+      "path": "curated/bowler_metrics.parquet",
+      "format": "parquet",
+      "row_count": 596,
+      "column_count": 28,
+      "columns": [
+        {
+          "name": "bowler_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowler_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "legal_balls",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "runs_conceded",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "wickets",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "matches",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_balls",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_wickets",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_dots",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_boundaries",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "normal_balls",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "normal_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "overs",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "economy",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_average",
+          "dtype": "float64",
+          "description": "Bowler-conceded runs / bowler-credited wickets.",
+          "nullable": true,
+          "missing_count": 87
+        },
+        {
+          "name": "bowling_strike_rate",
+          "dtype": "float64",
+          "description": "Legal balls / bowler-credited wickets.",
+          "nullable": true,
+          "missing_count": 87
+        },
+        {
+          "name": "dot_ball_percentage",
+          "dtype": "float64",
+          "description": "100 * source-defined batter dot balls / balls faced.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "boundary_percentage_conceded",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_opportunities",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "normal_economy",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 28
+        },
+        {
+          "name": "pressure_economy",
+          "dtype": "float64",
+          "description": "6 * bowler-conceded runs in bowling pressure / legal balls in bowling pressure.",
+          "nullable": true,
+          "missing_count": 67
+        },
+        {
+          "name": "economy_difference",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 95
+        },
+        {
+          "name": "competition_adjusted_difference",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 67
+        },
+        {
+          "name": "consistency",
+          "dtype": "float64",
+          "description": "100 / (1 + sample coefficient of variation) of match-level pressure strike rates for batters or pressure economy rates for bowlers.",
+          "nullable": true,
+          "missing_count": 184
+        },
+        {
+          "name": "pressure_matches",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_innings",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "competition_coverage",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [],
+      "date_ranges": {},
+      "coverage": {}
+    },
+    {
+      "table_name": "curated_pressure_deliveries",
+      "path": "curated/pressure_deliveries.parquet",
+      "format": "parquet",
+      "row_count": 194014,
+      "column_count": 81,
+      "columns": [
+        {
+          "name": "match_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "innings",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "overid",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "over_ball_num",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "innings_ball_num",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "striker_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "striker_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "non_striker_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "non_striker_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowler_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowler_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_order",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_four",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_six",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_wicket",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "dismissal_type_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 183528
+        },
+        {
+          "name": "dismissal_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 183528
+        },
+        {
+          "name": "dismissed_player_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 183518
+        },
+        {
+          "name": "extras_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 182548
+        },
+        {
+          "name": "extras1_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "extras_2_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pace_or_spin",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowl_speed",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "stroke",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 6016
+        },
+        {
+          "name": "delivery_style",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 381
+        },
+        {
+          "name": "over_or_around",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 399
+        },
+        {
+          "name": "on_or_off",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "delivery_ist_time",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "comp_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "match_date",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "first_inn_revised_overs",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 191330
+        },
+        {
+          "name": "second_inn_revised_overs",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 190219
+        },
+        {
+          "name": "revised_target",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 190287
+        },
+        {
+          "name": "result",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "win_team_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 1932
+        },
+        {
+          "name": "comp_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "match_format",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "season",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "team_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batter_runs",
+          "dtype": "int64",
+          "description": "Sum of source runs for the striker; source anomaly semantics remain documented.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_legal_ball",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_batter_ball_faced",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowler_conceded_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_bowler_wicket",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_dot_ball",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "has_boundary_flag",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "score_before",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "wickets_before",
+          "dtype": "int8",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "legal_balls_before",
+          "dtype": "int8",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "target_innings",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 102073
+        },
+        {
+          "name": "preceding_innings_runs",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 102073
+        },
+        {
+          "name": "target",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 102073
+        },
+        {
+          "name": "innings_overs",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "innings_balls",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "balls_remaining",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "wickets_remaining",
+          "dtype": "int8",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "innings_progress",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "current_run_rate",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "runs_required",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 102073
+        },
+        {
+          "name": "required_run_rate",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 102116
+        },
+        {
+          "name": "innings_phase",
+          "dtype": "string",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "reference_run_rate",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_run_rate_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_wickets_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_time_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_closeness_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_run_rate_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_wickets_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_time_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_closeness_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_pressure",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_batting_pressure",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_pressure",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_bowling_pressure",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_batter_ball",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_bowler_ball",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [],
+      "date_ranges": {
+        "delivery_ist_time": {
+          "min": "2022-01-23T00:00:00+00:00",
+          "max": "2026-11-01T16:50:46+00:00"
+        },
+        "match_date": {
+          "min": "2022-01-22T00:00:00",
+          "max": "2026-11-01T00:00:00"
+        },
+        "batting_time_component": {
+          "min": "1970-01-01T00:00:00",
+          "max": "1970-01-01T00:00:00.000000001"
+        },
+        "bowling_time_component": {
+          "min": "1970-01-01T00:00:00",
+          "max": "1970-01-01T00:00:00.000000001"
+        }
+      },
+      "coverage": {
+        "comp_name": [
+          "Afghanistan in Bangladesh T20I Series 2023",
+          "Afghanistan in India T20I Series 2024",
+          "Afghanistan in Ireland T20I Series 2022",
+          "Afghanistan in Sri Lanka T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2022",
+          "Afghanistan in Zimbabwe T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2025",
+          "Afghanistan v Bangladesh T20I Series 2025",
+          "Afghanistan v Ireland T20I Series 2024",
+          "Afghanistan v Pakistan T20I Series 2023",
+          "Afghanistan v West Indies T20I Series 2026",
+          "Afghanistan v Zimbabwe T20I Series 2026",
+          "Afghanistan vs India in India T20I Series 2026",
+          "Asia Cup 2025",
+          "Asia Cup T20 Qualifiers 2022",
+          "Australia in Bangladesh T20I Series 2026",
+          "Australia in England T20I Series 2024",
+          "Australia in India T20I Series 2022",
+          "Australia in India T20I Series 2023",
+          "Australia in New Zealand T20I Series 2024",
+          "Australia in New Zealand T20I Series 2025",
+          "Australia in Pakistan T20I Series 2026",
+          "Australia in Scotland T20I Series 2024",
+          "Australia in South Africa T20I Series 2023",
+          "Australia in Sri Lanka T20I Series 2022",
+          "Australia in West Indies T20I Series 2025",
+          "Bangladesh in India T20I Series 2024",
+          "Bangladesh in New Zealand T20I Series 2023",
+          "Bangladesh in Pakistan T20I Series 2025",
+          "Bangladesh in Sri Lanka T20I Series 2025",
+          "Bangladesh in United Arab Emirates T20I Series 2022",
+          "Bangladesh in United Arab Emirates T20I Series 2025",
+          "Bangladesh in West Indies T20I Series 2022",
+          "Bangladesh in West Indies T20I Series 2024",
+          "Bangladesh in Zimbabwe T20I Series 2022",
+          "Bangladesh in Zimbabwe T20I Series 2026",
+          "England in Australia T20I Series 2022",
+          "England in Bangladesh T20I Series 2023",
+          "England in India T20I Series 2025",
+          "England in Ireland T20I series 2025",
+          "England in New Zealand T20I Series 2025",
+          "England in Pakistan T20I Series 2022",
+          "England in Sri Lanka T20I Series 2026",
+          "England in West Indies T20I Series 2022",
+          "England in West Indies T20I Series 2023",
+          "England in West Indies T20I Series 2024",
+          "IPL 2022",
+          "IPL 2023",
+          "IPL 2024",
+          "IPL 2025",
+          "IPL 2026",
+          "India in Australia T20I Series 2025",
+          "India in England T20I Series 2022",
+          "India in England T20I Series 2026",
+          "India in Ireland T20I Series 2022",
+          "India in Ireland T20I Series 2023",
+          "India in Ireland T20I Series 2026",
+          "India in Japan T20I Match 2026",
+          "India in New Zealand T20I Series 2022/23",
+          "India in New Zealand T20I Series 2026",
+          "India in South Africa T20I Series 2023",
+          "India in South Africa T20I Series 2024",
+          "India in Sri Lanka T20I Series 2024",
+          "India in West Indies T20I Series 2022",
+          "India in West Indies T20I Series 2023",
+          "India in Zimbabwe T20I Series 2024",
+          "India in Zimbabwe T20I Series 2026",
+          "Ireland in Bangladesh T20I Series 2023",
+          "Ireland in Bangladesh T20I Series 2025",
+          "Ireland in United Arab Emirates T20I Series 2026",
+          "Ireland in Zimbabwe T20I Series 2023",
+          "Ireland in Zimbabwe T20I Series 2023/24",
+          "Ireland in Zimbabwe T20I Series 2025",
+          "Ireland v South Africa T20I Series 2024",
+          "Mens Twenty20 Asia Cup 2022",
+          "Nepal v West Indies T20I Series 2025",
+          "Netherlands Tri-Nation T20I Series 2024",
+          "Netherlands Tri-Nation T20I Series [Aug 2024] 2024",
+          "Netherlands in Bangladesh T20I Series 2025",
+          "New Zealand T20I Tri Series 2022/23",
+          "New Zealand in Bangladesh T20I Series 2026",
+          "New Zealand in England T20I Series 2023",
+          "New Zealand in India T20I Series 2023",
+          "New Zealand in India T20I Series 2026",
+          "New Zealand in Ireland T20I Series 2022",
+          "New Zealand in Netherlands T20I Series 2022",
+          "New Zealand in Pakistan T20I Series 2023",
+          "New Zealand in Pakistan T20I Series 2024",
+          "New Zealand in Sri Lanka T20I Series 2024",
+          "New Zealand in United Arab Emirates T20I Series 2023",
+          "New Zealand in West Indies T20I Series 2022",
+          "Pakistan T20I Tri-Series 2025",
+          "Pakistan in Australia T20I Series 2024",
+          "Pakistan in Bangladesh T20I Series 2025",
+          "Pakistan in England T20I Series 2024",
+          "Pakistan in Ireland T20I series 2024",
+          "Pakistan in New Zealand T20I Series 2025",
+          "Pakistan in New Zealand T20I series 2024",
+          "Pakistan in South Africa T20I Series 2024",
+          "Pakistan in Sri Lanka T20I Series 2026",
+          "Pakistan in West Indies T20I Series 2025",
+          "Pakistan in Zimbabwe T20I Series 2024",
+          "South Africa in Australia T20I Series 2025",
+          "South Africa in England T20I Series 2022",
+          "South Africa in England T20I Series 2025",
+          "South Africa in India T20I Series 2022",
+          "South Africa in India T20I Series 2022/23",
+          "South Africa in India T20I Series 2025",
+          "South Africa in New Zealand T20I Series 2026",
+          "South Africa in Pakistan T20I Series 2025",
+          "South Africa in West Indies T20I Series 2024",
+          "South Africa in West Indies T20I Series [May 2024] 2024",
+          "South Africa vs Ireland T20I Series 2022",
+          "Sri Lanka in Australia T20I Series 2022",
+          "Sri Lanka in Bangladesh T20I Series 2024",
+          "Sri Lanka in England T20I Series 2026",
+          "Sri Lanka in India T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2024/25",
+          "Sri Lanka in Pakistan T20I Series 2026",
+          "Sri Lanka in West Indies T20I Series 2026",
+          "Sri Lanka in Zimbabwe T20I Series 2025",
+          "United Arab Emirates T20I Tri-Series 2025",
+          "West Indies in Australia T20I Series 2022",
+          "West Indies in Australia T20I Series 2024",
+          "West Indies in Bangladesh T20I Series 2025",
+          "West Indies in England T20I Series 2025",
+          "West Indies in India T20I Series 2022",
+          "West Indies in India T20I Series 2026",
+          "West Indies in Ireland T20I Series 2025",
+          "West Indies in New Zealand T20I Series 2025",
+          "West Indies in South Africa T20I Series 2023",
+          "West Indies in South Africa T20I Series 2026",
+          "West Indies in Sri Lanka T20I Series 2024",
+          "Zimbabwe in Bangladesh T20I Series 2024",
+          "Zimbabwe in Sri Lanka T20I Series 2024"
+        ],
+        "match_format": [
+          "T20",
+          "T20I"
+        ],
+        "season": [
+          "2022",
+          "2022/23",
+          "2023",
+          "2023/24",
+          "2024",
+          "2024/25",
+          "2025",
+          "2026"
+        ]
+      }
+    },
+    {
+      "table_name": "curated_spark_batter_aggregation",
+      "path": "curated/spark_batter_aggregation.parquet",
+      "format": "parquet",
+      "row_count": 824,
+      "column_count": 7,
+      "columns": [
+        {
+          "name": "striker_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batter_runs",
+          "dtype": "int64",
+          "description": "Sum of source runs for the striker; source anomaly semantics remain documented.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "balls_faced",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "fours",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "sixes",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_balls",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [],
+      "date_ranges": {},
+      "coverage": {}
+    },
+    {
+      "table_name": "curated_spark_pressure_deliveries",
+      "path": "curated/spark_pressure_deliveries.parquet",
+      "format": "parquet",
+      "row_count": 194014,
+      "column_count": 80,
+      "columns": [
+        {
+          "name": "match_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "innings",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "overid",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "over_ball_num",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "innings_ball_num",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "striker_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "striker_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "non_striker_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "non_striker_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowler_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowler_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_order",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_four",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_six",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_wicket",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "dismissal_type_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 183528
+        },
+        {
+          "name": "dismissal_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 183528
+        },
+        {
+          "name": "dismissed_player_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 183518
+        },
+        {
+          "name": "extras_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 182548
+        },
+        {
+          "name": "extras1_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "extras_2_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pace_or_spin",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowl_speed",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "stroke",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 6016
+        },
+        {
+          "name": "delivery_style",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 381
+        },
+        {
+          "name": "over_or_around",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 399
+        },
+        {
+          "name": "on_or_off",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "delivery_ist_time",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "comp_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "match_date",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "first_inn_revised_overs",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 191330
+        },
+        {
+          "name": "second_inn_revised_overs",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 190219
+        },
+        {
+          "name": "revised_target",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 190287
+        },
+        {
+          "name": "comp_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "match_format",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "season",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "result",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "win_team_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 1932
+        },
+        {
+          "name": "team_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batter_runs",
+          "dtype": "int64",
+          "description": "Sum of source runs for the striker; source anomaly semantics remain documented.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_legal_ball",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_batter_ball_faced",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowler_conceded_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_bowler_wicket",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_dot_ball",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "has_boundary_flag",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "score_before",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "wickets_before",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "legal_balls_before",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "preceding_innings_runs",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 102073
+        },
+        {
+          "name": "target",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 102073
+        },
+        {
+          "name": "innings_overs",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "innings_balls",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "balls_remaining",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "wickets_remaining",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "innings_progress",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "current_run_rate",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "runs_required",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 102073
+        },
+        {
+          "name": "required_run_rate",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 102116
+        },
+        {
+          "name": "innings_phase",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "reference_run_rate",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_run_rate_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_wickets_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_time_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_closeness_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_run_rate_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_wickets_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_time_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_closeness_component",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_pressure",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_pressure",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_batting_pressure",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_bowling_pressure",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_batter_ball",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pressure_bowler_ball",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [],
+      "date_ranges": {
+        "delivery_ist_time": {
+          "min": "2022-01-23T00:00:00+00:00",
+          "max": "2026-11-01T16:50:46+00:00"
+        },
+        "match_date": {
+          "min": "2022-01-22T00:00:00",
+          "max": "2026-11-01T00:00:00"
+        },
+        "batting_time_component": {
+          "min": "1970-01-01T00:00:00",
+          "max": "1970-01-01T00:00:00.000000001"
+        },
+        "bowling_time_component": {
+          "min": "1970-01-01T00:00:00",
+          "max": "1970-01-01T00:00:00.000000001"
+        }
+      },
+      "coverage": {
+        "comp_name": [
+          "Afghanistan in Bangladesh T20I Series 2023",
+          "Afghanistan in India T20I Series 2024",
+          "Afghanistan in Ireland T20I Series 2022",
+          "Afghanistan in Sri Lanka T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2022",
+          "Afghanistan in Zimbabwe T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2025",
+          "Afghanistan v Bangladesh T20I Series 2025",
+          "Afghanistan v Ireland T20I Series 2024",
+          "Afghanistan v Pakistan T20I Series 2023",
+          "Afghanistan v West Indies T20I Series 2026",
+          "Afghanistan v Zimbabwe T20I Series 2026",
+          "Afghanistan vs India in India T20I Series 2026",
+          "Asia Cup 2025",
+          "Asia Cup T20 Qualifiers 2022",
+          "Australia in Bangladesh T20I Series 2026",
+          "Australia in England T20I Series 2024",
+          "Australia in India T20I Series 2022",
+          "Australia in India T20I Series 2023",
+          "Australia in New Zealand T20I Series 2024",
+          "Australia in New Zealand T20I Series 2025",
+          "Australia in Pakistan T20I Series 2026",
+          "Australia in Scotland T20I Series 2024",
+          "Australia in South Africa T20I Series 2023",
+          "Australia in Sri Lanka T20I Series 2022",
+          "Australia in West Indies T20I Series 2025",
+          "Bangladesh in India T20I Series 2024",
+          "Bangladesh in New Zealand T20I Series 2023",
+          "Bangladesh in Pakistan T20I Series 2025",
+          "Bangladesh in Sri Lanka T20I Series 2025",
+          "Bangladesh in United Arab Emirates T20I Series 2022",
+          "Bangladesh in United Arab Emirates T20I Series 2025",
+          "Bangladesh in West Indies T20I Series 2022",
+          "Bangladesh in West Indies T20I Series 2024",
+          "Bangladesh in Zimbabwe T20I Series 2022",
+          "Bangladesh in Zimbabwe T20I Series 2026",
+          "England in Australia T20I Series 2022",
+          "England in Bangladesh T20I Series 2023",
+          "England in India T20I Series 2025",
+          "England in Ireland T20I series 2025",
+          "England in New Zealand T20I Series 2025",
+          "England in Pakistan T20I Series 2022",
+          "England in Sri Lanka T20I Series 2026",
+          "England in West Indies T20I Series 2022",
+          "England in West Indies T20I Series 2023",
+          "England in West Indies T20I Series 2024",
+          "IPL 2022",
+          "IPL 2023",
+          "IPL 2024",
+          "IPL 2025",
+          "IPL 2026",
+          "India in Australia T20I Series 2025",
+          "India in England T20I Series 2022",
+          "India in England T20I Series 2026",
+          "India in Ireland T20I Series 2022",
+          "India in Ireland T20I Series 2023",
+          "India in Ireland T20I Series 2026",
+          "India in Japan T20I Match 2026",
+          "India in New Zealand T20I Series 2022/23",
+          "India in New Zealand T20I Series 2026",
+          "India in South Africa T20I Series 2023",
+          "India in South Africa T20I Series 2024",
+          "India in Sri Lanka T20I Series 2024",
+          "India in West Indies T20I Series 2022",
+          "India in West Indies T20I Series 2023",
+          "India in Zimbabwe T20I Series 2024",
+          "India in Zimbabwe T20I Series 2026",
+          "Ireland in Bangladesh T20I Series 2023",
+          "Ireland in Bangladesh T20I Series 2025",
+          "Ireland in United Arab Emirates T20I Series 2026",
+          "Ireland in Zimbabwe T20I Series 2023",
+          "Ireland in Zimbabwe T20I Series 2023/24",
+          "Ireland in Zimbabwe T20I Series 2025",
+          "Ireland v South Africa T20I Series 2024",
+          "Mens Twenty20 Asia Cup 2022",
+          "Nepal v West Indies T20I Series 2025",
+          "Netherlands Tri-Nation T20I Series 2024",
+          "Netherlands Tri-Nation T20I Series [Aug 2024] 2024",
+          "Netherlands in Bangladesh T20I Series 2025",
+          "New Zealand T20I Tri Series 2022/23",
+          "New Zealand in Bangladesh T20I Series 2026",
+          "New Zealand in England T20I Series 2023",
+          "New Zealand in India T20I Series 2023",
+          "New Zealand in India T20I Series 2026",
+          "New Zealand in Ireland T20I Series 2022",
+          "New Zealand in Netherlands T20I Series 2022",
+          "New Zealand in Pakistan T20I Series 2023",
+          "New Zealand in Pakistan T20I Series 2024",
+          "New Zealand in Sri Lanka T20I Series 2024",
+          "New Zealand in United Arab Emirates T20I Series 2023",
+          "New Zealand in West Indies T20I Series 2022",
+          "Pakistan T20I Tri-Series 2025",
+          "Pakistan in Australia T20I Series 2024",
+          "Pakistan in Bangladesh T20I Series 2025",
+          "Pakistan in England T20I Series 2024",
+          "Pakistan in Ireland T20I series 2024",
+          "Pakistan in New Zealand T20I Series 2025",
+          "Pakistan in New Zealand T20I series 2024",
+          "Pakistan in South Africa T20I Series 2024",
+          "Pakistan in Sri Lanka T20I Series 2026",
+          "Pakistan in West Indies T20I Series 2025",
+          "Pakistan in Zimbabwe T20I Series 2024",
+          "South Africa in Australia T20I Series 2025",
+          "South Africa in England T20I Series 2022",
+          "South Africa in England T20I Series 2025",
+          "South Africa in India T20I Series 2022",
+          "South Africa in India T20I Series 2022/23",
+          "South Africa in India T20I Series 2025",
+          "South Africa in New Zealand T20I Series 2026",
+          "South Africa in Pakistan T20I Series 2025",
+          "South Africa in West Indies T20I Series 2024",
+          "South Africa in West Indies T20I Series [May 2024] 2024",
+          "South Africa vs Ireland T20I Series 2022",
+          "Sri Lanka in Australia T20I Series 2022",
+          "Sri Lanka in Bangladesh T20I Series 2024",
+          "Sri Lanka in England T20I Series 2026",
+          "Sri Lanka in India T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2024/25",
+          "Sri Lanka in Pakistan T20I Series 2026",
+          "Sri Lanka in West Indies T20I Series 2026",
+          "Sri Lanka in Zimbabwe T20I Series 2025",
+          "United Arab Emirates T20I Tri-Series 2025",
+          "West Indies in Australia T20I Series 2022",
+          "West Indies in Australia T20I Series 2024",
+          "West Indies in Bangladesh T20I Series 2025",
+          "West Indies in England T20I Series 2025",
+          "West Indies in India T20I Series 2022",
+          "West Indies in India T20I Series 2026",
+          "West Indies in Ireland T20I Series 2025",
+          "West Indies in New Zealand T20I Series 2025",
+          "West Indies in South Africa T20I Series 2023",
+          "West Indies in South Africa T20I Series 2026",
+          "West Indies in Sri Lanka T20I Series 2024",
+          "Zimbabwe in Bangladesh T20I Series 2024",
+          "Zimbabwe in Sri Lanka T20I Series 2024"
+        ],
+        "match_format": [
+          "T20",
+          "T20I"
+        ],
+        "season": [
+          "2022",
+          "2022/23",
+          "2023",
+          "2023/24",
+          "2024",
+          "2024/25",
+          "2025",
+          "2026"
+        ]
+      }
+    },
+    {
+      "table_name": "metadata_data_dictionary",
+      "path": "metadata/data_dictionary.csv",
+      "format": "csv",
+      "row_count": 77,
+      "column_count": 8,
+      "columns": [
+        {
+          "name": "dataset",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "column",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "dtype",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "nullable",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "missing_count",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "distinct_non_null",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "candidate_key_column",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "example_values",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [],
+      "date_ranges": {},
+      "coverage": {}
+    },
+    {
+      "table_name": "processed_ball_by_ball",
+      "path": "processed/ball_by_ball.parquet",
+      "format": "parquet",
+      "row_count": 200999,
+      "column_count": 33,
+      "columns": [
+        {
+          "name": "match_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "innings",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "overid",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "over_ball_num",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "innings_ball_num",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "striker_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "striker_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "non_striker_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "non_striker_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowler_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowler_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_order",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_four",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_six",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_wicket",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "dismissal_type_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 190118
+        },
+        {
+          "name": "dismissal_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 190118
+        },
+        {
+          "name": "dismissed_player_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 190107
+        },
+        {
+          "name": "extras_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 189167
+        },
+        {
+          "name": "extras1_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "extras_2_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pace_or_spin",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowl_speed",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "stroke",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 6158
+        },
+        {
+          "name": "delivery_style",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 391
+        },
+        {
+          "name": "over_or_around",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 407
+        },
+        {
+          "name": "on_or_off",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "delivery_ist_time",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [],
+      "date_ranges": {
+        "delivery_ist_time": {
+          "min": "2022-01-23T00:00:00+00:00",
+          "max": "2026-11-01T16:50:46+00:00"
+        }
+      },
+      "coverage": {}
+    },
+    {
+      "table_name": "processed_competition_team_player_mapping",
+      "path": "processed/competition_team_player_mapping.parquet",
+      "format": "parquet",
+      "row_count": 6413,
+      "column_count": 6,
+      "columns": [
+        {
+          "name": "comp_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "comp_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "team_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "player_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "player_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [],
+      "date_ranges": {},
+      "coverage": {
+        "comp_name": [
+          "Afghanistan in Bangladesh T20I Series 2023",
+          "Afghanistan in India T20I Series 2024",
+          "Afghanistan in Ireland T20I Series 2022",
+          "Afghanistan in Sri Lanka T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2022",
+          "Afghanistan in Zimbabwe T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2025",
+          "Afghanistan v Bangladesh T20I Series 2025",
+          "Afghanistan v Ireland T20I Series 2024",
+          "Afghanistan v Pakistan T20I Series 2023",
+          "Afghanistan v Sri Lanka T20I Series 2026",
+          "Afghanistan v West Indies T20I Series 2026",
+          "Afghanistan v Zimbabwe T20I Series 2026",
+          "Afghanistan vs India in India T20I Series 2026",
+          "Asia Cup 2025",
+          "Asia Cup Rising Stars 2025",
+          "Asia Cup T20 Qualifiers 2022",
+          "Australia in Bangladesh T20I Series 2026",
+          "Australia in England T20I Series 2024",
+          "Australia in India T20I Series 2022",
+          "Australia in India T20I Series 2023",
+          "Australia in New Zealand T20I Series 2024",
+          "Australia in New Zealand T20I Series 2025",
+          "Australia in Pakistan T20I Series 2026",
+          "Australia in Scotland T20I Series 2024",
+          "Australia in South Africa T20I Series 2023",
+          "Australia in Sri Lanka T20I Series 2022",
+          "Australia in West Indies T20I Series 2025",
+          "Bangladesh in India T20I Series 2024",
+          "Bangladesh in New Zealand T20I Series 2023",
+          "Bangladesh in Pakistan T20I Series 2025",
+          "Bangladesh in Sri Lanka T20I Series 2025",
+          "Bangladesh in United Arab Emirates T20I Series 2022",
+          "Bangladesh in United Arab Emirates T20I Series 2025",
+          "Bangladesh in West Indies T20I Series 2022",
+          "Bangladesh in West Indies T20I Series 2024",
+          "Bangladesh in Zimbabwe T20I Series 2022",
+          "Bangladesh in Zimbabwe T20I Series 2026",
+          "England in Australia T20I Series 2022",
+          "England in Bangladesh T20I Series 2023",
+          "England in India T20I Series 2025",
+          "England in Ireland T20I series 2025",
+          "England in New Zealand T20I Series 2025",
+          "England in Pakistan T20I Series 2022",
+          "England in Sri Lanka T20I Series 2026",
+          "England in West Indies T20I Series 2022",
+          "England in West Indies T20I Series 2023",
+          "England in West Indies T20I Series 2024",
+          "IPL 2022",
+          "IPL 2023",
+          "IPL 2024",
+          "IPL 2025",
+          "IPL 2026",
+          "India in Australia T20I Series 2025",
+          "India in England T20I Series 2022",
+          "India in England T20I Series 2026",
+          "India in Ireland T20I Series 2022",
+          "India in Ireland T20I Series 2023",
+          "India in Ireland T20I Series 2026",
+          "India in Japan T20I Match 2026",
+          "India in New Zealand T20I Series 2022/23",
+          "India in New Zealand T20I Series 2026",
+          "India in South Africa T20I Series 2023",
+          "India in South Africa T20I Series 2024",
+          "India in Sri Lanka T20I Series 2024",
+          "India in West Indies T20I Series 2022",
+          "India in West Indies T20I Series 2023",
+          "India in Zimbabwe T20I Series 2024",
+          "India in Zimbabwe T20I Series 2026",
+          "Ireland in Bangladesh T20I Series 2023",
+          "Ireland in Bangladesh T20I Series 2025",
+          "Ireland in United Arab Emirates T20I Series 2026",
+          "Ireland in Zimbabwe T20I Series 2023",
+          "Ireland in Zimbabwe T20I Series 2023/24",
+          "Ireland in Zimbabwe T20I Series 2025",
+          "Ireland v South Africa T20I Series 2024",
+          "Mens T20 Emerging Teams Asia Cup 2024",
+          "Mens Twenty20 Asia Cup 2022",
+          "Nepal v West Indies T20I Series 2025",
+          "Netherlands Tri-Nation T20I Series 2024",
+          "Netherlands Tri-Nation T20I Series [Aug 2024] 2024",
+          "Netherlands in Bangladesh T20I Series 2025",
+          "New Zealand T20I Tri Series 2022/23",
+          "New Zealand in Bangladesh T20I Series 2026",
+          "New Zealand in England T20I Series 2023",
+          "New Zealand in India T20I Series 2023",
+          "New Zealand in India T20I Series 2026",
+          "New Zealand in Ireland T20I Series 2022",
+          "New Zealand in Netherlands T20I Series 2022",
+          "New Zealand in Pakistan T20I Series 2023",
+          "New Zealand in Pakistan T20I Series 2024",
+          "New Zealand in Sri Lanka T20I Series 2024",
+          "New Zealand in United Arab Emirates T20I Series 2023",
+          "New Zealand in West Indies T20I Series 2022",
+          "Pakistan T20I Tri-Series 2025",
+          "Pakistan in Australia T20I Series 2024",
+          "Pakistan in Bangladesh T20I Series 2025",
+          "Pakistan in England T20I Series 2024",
+          "Pakistan in Ireland T20I series 2024",
+          "Pakistan in New Zealand T20I Series 2025",
+          "Pakistan in New Zealand T20I series 2024",
+          "Pakistan in South Africa T20I Series 2024",
+          "Pakistan in Sri Lanka T20I Series 2026",
+          "Pakistan in West Indies T20I Series 2025",
+          "Pakistan in Zimbabwe T20I Series 2024",
+          "South Africa in Australia T20I Series 2025",
+          "South Africa in England T20I Series 2022",
+          "South Africa in England T20I Series 2025",
+          "South Africa in India T20I Series 2022",
+          "South Africa in India T20I Series 2022/23",
+          "South Africa in India T20I Series 2025",
+          "South Africa in New Zealand T20I Series 2026",
+          "South Africa in Pakistan T20I Series 2025",
+          "South Africa in West Indies T20I Series 2024",
+          "South Africa in West Indies T20I Series [May 2024] 2024",
+          "South Africa vs Ireland T20I Series 2022",
+          "Sri Lanka in Australia T20I Series 2022",
+          "Sri Lanka in Bangladesh T20I Series 2024",
+          "Sri Lanka in England T20I Series 2026",
+          "Sri Lanka in India T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2024/25",
+          "Sri Lanka in Pakistan T20I Series 2026",
+          "Sri Lanka in West Indies T20I Series 2026",
+          "Sri Lanka in Zimbabwe T20I Series 2025",
+          "United Arab Emirates T20I Tri-Series 2025",
+          "United Arab Emirates in Nepal T20I Series 2026",
+          "West Indies in Australia T20I Series 2022",
+          "West Indies in Australia T20I Series 2024",
+          "West Indies in Bangladesh T20I Series 2025",
+          "West Indies in England T20I Series 2025",
+          "West Indies in India T20I Series 2022",
+          "West Indies in India T20I Series 2026",
+          "West Indies in Ireland T20I Series 2025",
+          "West Indies in New Zealand T20I Series 2025",
+          "West Indies in South Africa T20I Series 2023",
+          "West Indies in South Africa T20I Series 2026",
+          "West Indies in Sri Lanka T20I Series 2024",
+          "Zimbabwe in Bangladesh T20I Series 2024",
+          "Zimbabwe in Sri Lanka T20I Series 2024"
+        ]
+      }
+    },
+    {
+      "table_name": "processed_competitions",
+      "path": "processed/competitions.parquet",
+      "format": "parquet",
+      "row_count": 141,
+      "column_count": 4,
+      "columns": [
+        {
+          "name": "comp_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "comp_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "match_format",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "season",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [],
+      "date_ranges": {},
+      "coverage": {
+        "comp_name": [
+          "Afghanistan in Bangladesh T20I Series 2023",
+          "Afghanistan in India T20I Series 2024",
+          "Afghanistan in Ireland T20I Series 2022",
+          "Afghanistan in Sri Lanka T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2022",
+          "Afghanistan in Zimbabwe T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2025",
+          "Afghanistan v Bangladesh T20I Series 2025",
+          "Afghanistan v Ireland T20I Series 2024",
+          "Afghanistan v Pakistan T20I Series 2023",
+          "Afghanistan v Sri Lanka T20I Series 2026",
+          "Afghanistan v West Indies T20I Series 2026",
+          "Afghanistan v Zimbabwe T20I Series 2026",
+          "Afghanistan vs India in India T20I Series 2026",
+          "Asia Cup 2025",
+          "Asia Cup Rising Stars 2025",
+          "Asia Cup T20 Qualifiers 2022",
+          "Australia in Bangladesh T20I Series 2026",
+          "Australia in England T20I Series 2024",
+          "Australia in India T20I Series 2022",
+          "Australia in India T20I Series 2023",
+          "Australia in New Zealand T20I Series 2024",
+          "Australia in New Zealand T20I Series 2025",
+          "Australia in Pakistan T20I Series 2026",
+          "Australia in Scotland T20I Series 2024",
+          "Australia in South Africa T20I Series 2023",
+          "Australia in Sri Lanka T20I Series 2022",
+          "Australia in West Indies T20I Series 2025",
+          "Bangladesh in India T20I Series 2024",
+          "Bangladesh in New Zealand T20I Series 2023",
+          "Bangladesh in Pakistan T20I Series 2025",
+          "Bangladesh in Sri Lanka T20I Series 2025",
+          "Bangladesh in United Arab Emirates T20I Series 2022",
+          "Bangladesh in United Arab Emirates T20I Series 2025",
+          "Bangladesh in West Indies T20I Series 2022",
+          "Bangladesh in West Indies T20I Series 2024",
+          "Bangladesh in Zimbabwe T20I Series 2022",
+          "Bangladesh in Zimbabwe T20I Series 2026",
+          "England in Australia T20I Series 2022",
+          "England in Bangladesh T20I Series 2023",
+          "England in India T20I Series 2025",
+          "England in Ireland T20I series 2025",
+          "England in New Zealand T20I Series 2025",
+          "England in Pakistan T20I Series 2022",
+          "England in Sri Lanka T20I Series 2026",
+          "England in West Indies T20I Series 2022",
+          "England in West Indies T20I Series 2023",
+          "England in West Indies T20I Series 2024",
+          "IPL 2022",
+          "IPL 2023",
+          "IPL 2024",
+          "IPL 2025",
+          "IPL 2026",
+          "India in Australia T20I Series 2025",
+          "India in Bangladesh T20I Series 2025",
+          "India in England T20I Series 2022",
+          "India in England T20I Series 2026",
+          "India in Ireland T20I Series 2022",
+          "India in Ireland T20I Series 2023",
+          "India in Ireland T20I Series 2026",
+          "India in Japan T20I Match 2026",
+          "India in New Zealand T20I Series 2022/23",
+          "India in New Zealand T20I Series 2026",
+          "India in South Africa T20I Series 2023",
+          "India in South Africa T20I Series 2024",
+          "India in Sri Lanka T20I Series 2024",
+          "India in West Indies T20I Series 2022",
+          "India in West Indies T20I Series 2023",
+          "India in Zimbabwe T20I Series 2024",
+          "India in Zimbabwe T20I Series 2026",
+          "Ireland in Bangladesh T20I Series 2023",
+          "Ireland in Bangladesh T20I Series 2025",
+          "Ireland in United Arab Emirates T20I Series 2026",
+          "Ireland in Zimbabwe T20I Series 2023",
+          "Ireland in Zimbabwe T20I Series 2023/24",
+          "Ireland in Zimbabwe T20I Series 2025",
+          "Ireland v South Africa T20I Series 2024",
+          "Mens T20 Emerging Teams Asia Cup 2024",
+          "Mens Twenty20 Asia Cup 2022",
+          "Nepal v West Indies T20I Series 2025",
+          "Netherlands Tri-Nation T20I Series 2024",
+          "Netherlands Tri-Nation T20I Series [Aug 2024] 2024",
+          "Netherlands in Bangladesh T20I Series 2025",
+          "New Zealand T20I Tri Series 2022/23",
+          "New Zealand in Bangladesh T20I Series 2026",
+          "New Zealand in England T20I Series 2023",
+          "New Zealand in India T20I Series 2023",
+          "New Zealand in India T20I Series 2026",
+          "New Zealand in Ireland T20I Series 2022",
+          "New Zealand in Netherlands T20I Series 2022",
+          "New Zealand in Pakistan T20I Series 2023",
+          "New Zealand in Pakistan T20I Series 2024",
+          "New Zealand in Sri Lanka T20I Series 2024",
+          "New Zealand in United Arab Emirates T20I Series 2023",
+          "New Zealand in West Indies T20I Series 2022",
+          "Pakistan T20I Tri-Series 2025",
+          "Pakistan in Australia T20I Series 2024",
+          "Pakistan in Bangladesh T20I Series 2025",
+          "Pakistan in England T20I Series 2024",
+          "Pakistan in Ireland T20I series 2024",
+          "Pakistan in New Zealand T20I Series 2025",
+          "Pakistan in New Zealand T20I series 2024",
+          "Pakistan in South Africa T20I Series 2024",
+          "Pakistan in Sri Lanka T20I Series 2026",
+          "Pakistan in West Indies T20I Series 2025",
+          "Pakistan in Zimbabwe T20I Series 2024",
+          "South Africa in Australia T20I Series 2025",
+          "South Africa in England T20I Series 2022",
+          "South Africa in England T20I Series 2025",
+          "South Africa in India T20I Series 2022",
+          "South Africa in India T20I Series 2022/23",
+          "South Africa in India T20I Series 2025",
+          "South Africa in New Zealand T20I Series 2026",
+          "South Africa in Pakistan T20I Series 2025",
+          "South Africa in West Indies T20I Series 2024",
+          "South Africa in West Indies T20I Series [May 2024] 2024",
+          "South Africa vs Ireland T20I Series 2022",
+          "Sri Lanka in Australia T20I Series 2022",
+          "Sri Lanka in Bangladesh T20I Series 2024",
+          "Sri Lanka in England T20I Series 2026",
+          "Sri Lanka in India T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2024/25",
+          "Sri Lanka in Pakistan T20I Series 2026",
+          "Sri Lanka in West Indies T20I Series 2026",
+          "Sri Lanka in Zimbabwe T20I Series 2025",
+          "United Arab Emirates T20I Tri-Series 2025",
+          "United Arab Emirates in Nepal T20I Series 2026",
+          "West Indies in Australia T20I Series 2022",
+          "West Indies in Australia T20I Series 2024",
+          "West Indies in Bangladesh T20I Series 2025",
+          "West Indies in England T20I Series 2025",
+          "West Indies in India T20I Series 2022",
+          "West Indies in India T20I Series 2026",
+          "West Indies in Ireland T20I Series 2025",
+          "West Indies in New Zealand T20I Series 2025",
+          "West Indies in South Africa T20I Series 2023",
+          "West Indies in South Africa T20I Series 2026",
+          "West Indies in Sri Lanka T20I Series 2024",
+          "Zimbabwe in Bangladesh T20I Series 2024",
+          "Zimbabwe in Sri Lanka T20I Series 2024"
+        ],
+        "match_format": [
+          "T20",
+          "T20I"
+        ],
+        "season": [
+          "2022",
+          "2022/23",
+          "2023",
+          "2023/24",
+          "2024",
+          "2024/25",
+          "2025",
+          "2026"
+        ]
+      }
+    },
+    {
+      "table_name": "processed_matches",
+      "path": "processed/matches.parquet",
+      "format": "parquet",
+      "row_count": 883,
+      "column_count": 22,
+      "columns": [
+        {
+          "name": "match_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "comp_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "match_number",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "match_date",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "stage",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "venue_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "venue_country",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "home_team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "home_team",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "away_team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "away_team",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "home_team_captain_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 44
+        },
+        {
+          "name": "away_team_captain_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 45
+        },
+        {
+          "name": "toss_win_team_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 15
+        },
+        {
+          "name": "toss_opted",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 15
+        },
+        {
+          "name": "man_of_the_match",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "first_inn_revised_overs",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 858
+        },
+        {
+          "name": "second_inn_revised_overs",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 858
+        },
+        {
+          "name": "revised_target",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 860
+        },
+        {
+          "name": "knock_out",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "win_team_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 41
+        },
+        {
+          "name": "result",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [],
+      "date_ranges": {
+        "match_date": {
+          "min": "2022-01-22T00:00:00",
+          "max": "2026-11-01T00:00:00"
+        }
+      },
+      "coverage": {
+        "venue_country": [
+          "Australia",
+          "Bangladesh",
+          "India",
+          "Ireland",
+          "Japan",
+          "Netherlands",
+          "New Zealand",
+          "Oman",
+          "Pakistan",
+          "Qatar",
+          "South Africa",
+          "Sri Lanka",
+          "United Arab Emirates",
+          "United Kingdom",
+          "United States",
+          "West Indies",
+          "Zimbabwe"
+        ]
+      }
+    },
+    {
+      "table_name": "processed_playing_eleven",
+      "path": "processed/playing_eleven.parquet",
+      "format": "parquet",
+      "row_count": 28381,
+      "column_count": 9,
+      "columns": [
+        {
+          "name": "match_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "player_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_order",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 8678
+        },
+        {
+          "name": "is_played",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_captain",
+          "dtype": "object",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 8667
+        },
+        {
+          "name": "is_wk",
+          "dtype": "object",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 8667
+        },
+        {
+          "name": "is_impact",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_impact_off",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [],
+      "date_ranges": {},
+      "coverage": {}
+    },
+    {
+      "table_name": "processed_teams",
+      "path": "processed/teams.parquet",
+      "format": "parquet",
+      "row_count": 353,
+      "column_count": 3,
+      "columns": [
+        {
+          "name": "comp_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "team_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [],
+      "date_ranges": {},
+      "coverage": {}
+    },
+    {
+      "table_name": "raw_ball_by_ball",
+      "path": "raw/ball_by_ball.csv",
+      "format": "csv",
+      "row_count": 200999,
+      "column_count": 33,
+      "columns": [
+        {
+          "name": "match_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0,
+          "candidate_key_column": true
+        },
+        {
+          "name": "innings",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0,
+          "candidate_key_column": true
+        },
+        {
+          "name": "overid",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "over_ball_num",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "innings_ball_num",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0,
+          "candidate_key_column": true
+        },
+        {
+          "name": "batting_team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "striker_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "striker_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "non_striker_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "non_striker_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowler_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowler_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowling_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "batting_order",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_four",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_six",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_wicket",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "dismissal_type_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 190118
+        },
+        {
+          "name": "dismissal_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 190118
+        },
+        {
+          "name": "dismissed_player_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 190107
+        },
+        {
+          "name": "extras_type",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 189167
+        },
+        {
+          "name": "extras1_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "extras_2_runs",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "pace_or_spin",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "bowl_speed",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "stroke",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 6158
+        },
+        {
+          "name": "delivery_style",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 391
+        },
+        {
+          "name": "over_or_around",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 407
+        },
+        {
+          "name": "on_or_off",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "delivery_ist_time",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [
+        "match_id",
+        "innings",
+        "innings_ball_num"
+      ],
+      "date_ranges": {
+        "delivery_ist_time": {
+          "min": "2022-01-23T00:00:00+00:00",
+          "max": "2026-11-01T16:50:46+00:00"
+        }
+      },
+      "coverage": {}
+    },
+    {
+      "table_name": "raw_competition_team_player_mapping",
+      "path": "raw/competition_team_player_mapping.csv",
+      "format": "csv",
+      "row_count": 6413,
+      "column_count": 6,
+      "columns": [
+        {
+          "name": "comp_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0,
+          "candidate_key_column": true
+        },
+        {
+          "name": "comp_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0,
+          "candidate_key_column": true
+        },
+        {
+          "name": "team_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "player_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0,
+          "candidate_key_column": true
+        },
+        {
+          "name": "player_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [
+        "comp_id",
+        "team_id",
+        "player_id"
+      ],
+      "date_ranges": {},
+      "coverage": {
+        "comp_name": [
+          "Afghanistan in Bangladesh T20I Series 2023",
+          "Afghanistan in India T20I Series 2024",
+          "Afghanistan in Ireland T20I Series 2022",
+          "Afghanistan in Sri Lanka T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2022",
+          "Afghanistan in Zimbabwe T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2025",
+          "Afghanistan v Bangladesh T20I Series 2025",
+          "Afghanistan v Ireland T20I Series 2024",
+          "Afghanistan v Pakistan T20I Series 2023",
+          "Afghanistan v Sri Lanka T20I Series 2026",
+          "Afghanistan v West Indies T20I Series 2026",
+          "Afghanistan v Zimbabwe T20I Series 2026",
+          "Afghanistan vs India in India T20I Series 2026",
+          "Asia Cup 2025",
+          "Asia Cup Rising Stars 2025",
+          "Asia Cup T20 Qualifiers 2022",
+          "Australia in Bangladesh T20I Series 2026",
+          "Australia in England T20I Series 2024",
+          "Australia in India T20I Series 2022",
+          "Australia in India T20I Series 2023",
+          "Australia in New Zealand T20I Series 2024",
+          "Australia in New Zealand T20I Series 2025",
+          "Australia in Pakistan T20I Series 2026",
+          "Australia in Scotland T20I Series 2024",
+          "Australia in South Africa T20I Series 2023",
+          "Australia in Sri Lanka T20I Series 2022",
+          "Australia in West Indies T20I Series 2025",
+          "Bangladesh in India T20I Series 2024",
+          "Bangladesh in New Zealand T20I Series 2023",
+          "Bangladesh in Pakistan T20I Series 2025",
+          "Bangladesh in Sri Lanka T20I Series 2025",
+          "Bangladesh in United Arab Emirates T20I Series 2022",
+          "Bangladesh in United Arab Emirates T20I Series 2025",
+          "Bangladesh in West Indies T20I Series 2022",
+          "Bangladesh in West Indies T20I Series 2024",
+          "Bangladesh in Zimbabwe T20I Series 2022",
+          "Bangladesh in Zimbabwe T20I Series 2026",
+          "England in Australia T20I Series 2022",
+          "England in Bangladesh T20I Series 2023",
+          "England in India T20I Series 2025",
+          "England in Ireland T20I series 2025",
+          "England in New Zealand T20I Series 2025",
+          "England in Pakistan T20I Series 2022",
+          "England in Sri Lanka T20I Series 2026",
+          "England in West Indies T20I Series 2022",
+          "England in West Indies T20I Series 2023",
+          "England in West Indies T20I Series 2024",
+          "IPL 2022",
+          "IPL 2023",
+          "IPL 2024",
+          "IPL 2025",
+          "IPL 2026",
+          "India in Australia T20I Series 2025",
+          "India in England T20I Series 2022",
+          "India in England T20I Series 2026",
+          "India in Ireland T20I Series 2022",
+          "India in Ireland T20I Series 2023",
+          "India in Ireland T20I Series 2026",
+          "India in Japan T20I Match 2026",
+          "India in New Zealand T20I Series 2022/23",
+          "India in New Zealand T20I Series 2026",
+          "India in South Africa T20I Series 2023",
+          "India in South Africa T20I Series 2024",
+          "India in Sri Lanka T20I Series 2024",
+          "India in West Indies T20I Series 2022",
+          "India in West Indies T20I Series 2023",
+          "India in Zimbabwe T20I Series 2024",
+          "India in Zimbabwe T20I Series 2026",
+          "Ireland in Bangladesh T20I Series 2023",
+          "Ireland in Bangladesh T20I Series 2025",
+          "Ireland in United Arab Emirates T20I Series 2026",
+          "Ireland in Zimbabwe T20I Series 2023",
+          "Ireland in Zimbabwe T20I Series 2023/24",
+          "Ireland in Zimbabwe T20I Series 2025",
+          "Ireland v South Africa T20I Series 2024",
+          "Mens T20 Emerging Teams Asia Cup 2024",
+          "Mens Twenty20 Asia Cup 2022",
+          "Nepal v West Indies T20I Series 2025",
+          "Netherlands Tri-Nation T20I Series 2024",
+          "Netherlands Tri-Nation T20I Series [Aug 2024] 2024",
+          "Netherlands in Bangladesh T20I Series 2025",
+          "New Zealand T20I Tri Series 2022/23",
+          "New Zealand in Bangladesh T20I Series 2026",
+          "New Zealand in England T20I Series 2023",
+          "New Zealand in India T20I Series 2023",
+          "New Zealand in India T20I Series 2026",
+          "New Zealand in Ireland T20I Series 2022",
+          "New Zealand in Netherlands T20I Series 2022",
+          "New Zealand in Pakistan T20I Series 2023",
+          "New Zealand in Pakistan T20I Series 2024",
+          "New Zealand in Sri Lanka T20I Series 2024",
+          "New Zealand in United Arab Emirates T20I Series 2023",
+          "New Zealand in West Indies T20I Series 2022",
+          "Pakistan T20I Tri-Series 2025",
+          "Pakistan in Australia T20I Series 2024",
+          "Pakistan in Bangladesh T20I Series 2025",
+          "Pakistan in England T20I Series 2024",
+          "Pakistan in Ireland T20I series 2024",
+          "Pakistan in New Zealand T20I Series 2025",
+          "Pakistan in New Zealand T20I series 2024",
+          "Pakistan in South Africa T20I Series 2024",
+          "Pakistan in Sri Lanka T20I Series 2026",
+          "Pakistan in West Indies T20I Series 2025",
+          "Pakistan in Zimbabwe T20I Series 2024",
+          "South Africa in Australia T20I Series 2025",
+          "South Africa in England T20I Series 2022",
+          "South Africa in England T20I Series 2025",
+          "South Africa in India T20I Series 2022",
+          "South Africa in India T20I Series 2022/23",
+          "South Africa in India T20I Series 2025",
+          "South Africa in New Zealand T20I Series 2026",
+          "South Africa in Pakistan T20I Series 2025",
+          "South Africa in West Indies T20I Series 2024",
+          "South Africa in West Indies T20I Series [May 2024] 2024",
+          "South Africa vs Ireland T20I Series 2022",
+          "Sri Lanka in Australia T20I Series 2022",
+          "Sri Lanka in Bangladesh T20I Series 2024",
+          "Sri Lanka in England T20I Series 2026",
+          "Sri Lanka in India T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2024/25",
+          "Sri Lanka in Pakistan T20I Series 2026",
+          "Sri Lanka in West Indies T20I Series 2026",
+          "Sri Lanka in Zimbabwe T20I Series 2025",
+          "United Arab Emirates T20I Tri-Series 2025",
+          "United Arab Emirates in Nepal T20I Series 2026",
+          "West Indies in Australia T20I Series 2022",
+          "West Indies in Australia T20I Series 2024",
+          "West Indies in Bangladesh T20I Series 2025",
+          "West Indies in England T20I Series 2025",
+          "West Indies in India T20I Series 2022",
+          "West Indies in India T20I Series 2026",
+          "West Indies in Ireland T20I Series 2025",
+          "West Indies in New Zealand T20I Series 2025",
+          "West Indies in South Africa T20I Series 2023",
+          "West Indies in South Africa T20I Series 2026",
+          "West Indies in Sri Lanka T20I Series 2024",
+          "Zimbabwe in Bangladesh T20I Series 2024",
+          "Zimbabwe in Sri Lanka T20I Series 2024"
+        ]
+      }
+    },
+    {
+      "table_name": "raw_competitions",
+      "path": "raw/competitions.csv",
+      "format": "csv",
+      "row_count": 141,
+      "column_count": 4,
+      "columns": [
+        {
+          "name": "comp_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0,
+          "candidate_key_column": true
+        },
+        {
+          "name": "comp_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "match_format",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "season",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [
+        "comp_id"
+      ],
+      "date_ranges": {},
+      "coverage": {
+        "comp_name": [
+          "Afghanistan in Bangladesh T20I Series 2023",
+          "Afghanistan in India T20I Series 2024",
+          "Afghanistan in Ireland T20I Series 2022",
+          "Afghanistan in Sri Lanka T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2022",
+          "Afghanistan in Zimbabwe T20I Series 2024",
+          "Afghanistan in Zimbabwe T20I Series 2025",
+          "Afghanistan v Bangladesh T20I Series 2025",
+          "Afghanistan v Ireland T20I Series 2024",
+          "Afghanistan v Pakistan T20I Series 2023",
+          "Afghanistan v Sri Lanka T20I Series 2026",
+          "Afghanistan v West Indies T20I Series 2026",
+          "Afghanistan v Zimbabwe T20I Series 2026",
+          "Afghanistan vs India in India T20I Series 2026",
+          "Asia Cup 2025",
+          "Asia Cup Rising Stars 2025",
+          "Asia Cup T20 Qualifiers 2022",
+          "Australia in Bangladesh T20I Series 2026",
+          "Australia in England T20I Series 2024",
+          "Australia in India T20I Series 2022",
+          "Australia in India T20I Series 2023",
+          "Australia in New Zealand T20I Series 2024",
+          "Australia in New Zealand T20I Series 2025",
+          "Australia in Pakistan T20I Series 2026",
+          "Australia in Scotland T20I Series 2024",
+          "Australia in South Africa T20I Series 2023",
+          "Australia in Sri Lanka T20I Series 2022",
+          "Australia in West Indies T20I Series 2025",
+          "Bangladesh in India T20I Series 2024",
+          "Bangladesh in New Zealand T20I Series 2023",
+          "Bangladesh in Pakistan T20I Series 2025",
+          "Bangladesh in Sri Lanka T20I Series 2025",
+          "Bangladesh in United Arab Emirates T20I Series 2022",
+          "Bangladesh in United Arab Emirates T20I Series 2025",
+          "Bangladesh in West Indies T20I Series 2022",
+          "Bangladesh in West Indies T20I Series 2024",
+          "Bangladesh in Zimbabwe T20I Series 2022",
+          "Bangladesh in Zimbabwe T20I Series 2026",
+          "England in Australia T20I Series 2022",
+          "England in Bangladesh T20I Series 2023",
+          "England in India T20I Series 2025",
+          "England in Ireland T20I series 2025",
+          "England in New Zealand T20I Series 2025",
+          "England in Pakistan T20I Series 2022",
+          "England in Sri Lanka T20I Series 2026",
+          "England in West Indies T20I Series 2022",
+          "England in West Indies T20I Series 2023",
+          "England in West Indies T20I Series 2024",
+          "IPL 2022",
+          "IPL 2023",
+          "IPL 2024",
+          "IPL 2025",
+          "IPL 2026",
+          "India in Australia T20I Series 2025",
+          "India in Bangladesh T20I Series 2025",
+          "India in England T20I Series 2022",
+          "India in England T20I Series 2026",
+          "India in Ireland T20I Series 2022",
+          "India in Ireland T20I Series 2023",
+          "India in Ireland T20I Series 2026",
+          "India in Japan T20I Match 2026",
+          "India in New Zealand T20I Series 2022/23",
+          "India in New Zealand T20I Series 2026",
+          "India in South Africa T20I Series 2023",
+          "India in South Africa T20I Series 2024",
+          "India in Sri Lanka T20I Series 2024",
+          "India in West Indies T20I Series 2022",
+          "India in West Indies T20I Series 2023",
+          "India in Zimbabwe T20I Series 2024",
+          "India in Zimbabwe T20I Series 2026",
+          "Ireland in Bangladesh T20I Series 2023",
+          "Ireland in Bangladesh T20I Series 2025",
+          "Ireland in United Arab Emirates T20I Series 2026",
+          "Ireland in Zimbabwe T20I Series 2023",
+          "Ireland in Zimbabwe T20I Series 2023/24",
+          "Ireland in Zimbabwe T20I Series 2025",
+          "Ireland v South Africa T20I Series 2024",
+          "Mens T20 Emerging Teams Asia Cup 2024",
+          "Mens Twenty20 Asia Cup 2022",
+          "Nepal v West Indies T20I Series 2025",
+          "Netherlands Tri-Nation T20I Series 2024",
+          "Netherlands Tri-Nation T20I Series [Aug 2024] 2024",
+          "Netherlands in Bangladesh T20I Series 2025",
+          "New Zealand T20I Tri Series 2022/23",
+          "New Zealand in Bangladesh T20I Series 2026",
+          "New Zealand in England T20I Series 2023",
+          "New Zealand in India T20I Series 2023",
+          "New Zealand in India T20I Series 2026",
+          "New Zealand in Ireland T20I Series 2022",
+          "New Zealand in Netherlands T20I Series 2022",
+          "New Zealand in Pakistan T20I Series 2023",
+          "New Zealand in Pakistan T20I Series 2024",
+          "New Zealand in Sri Lanka T20I Series 2024",
+          "New Zealand in United Arab Emirates T20I Series 2023",
+          "New Zealand in West Indies T20I Series 2022",
+          "Pakistan T20I Tri-Series 2025",
+          "Pakistan in Australia T20I Series 2024",
+          "Pakistan in Bangladesh T20I Series 2025",
+          "Pakistan in England T20I Series 2024",
+          "Pakistan in Ireland T20I series 2024",
+          "Pakistan in New Zealand T20I Series 2025",
+          "Pakistan in New Zealand T20I series 2024",
+          "Pakistan in South Africa T20I Series 2024",
+          "Pakistan in Sri Lanka T20I Series 2026",
+          "Pakistan in West Indies T20I Series 2025",
+          "Pakistan in Zimbabwe T20I Series 2024",
+          "South Africa in Australia T20I Series 2025",
+          "South Africa in England T20I Series 2022",
+          "South Africa in England T20I Series 2025",
+          "South Africa in India T20I Series 2022",
+          "South Africa in India T20I Series 2022/23",
+          "South Africa in India T20I Series 2025",
+          "South Africa in New Zealand T20I Series 2026",
+          "South Africa in Pakistan T20I Series 2025",
+          "South Africa in West Indies T20I Series 2024",
+          "South Africa in West Indies T20I Series [May 2024] 2024",
+          "South Africa vs Ireland T20I Series 2022",
+          "Sri Lanka in Australia T20I Series 2022",
+          "Sri Lanka in Bangladesh T20I Series 2024",
+          "Sri Lanka in England T20I Series 2026",
+          "Sri Lanka in India T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2023",
+          "Sri Lanka in New Zealand T20I Series 2024/25",
+          "Sri Lanka in Pakistan T20I Series 2026",
+          "Sri Lanka in West Indies T20I Series 2026",
+          "Sri Lanka in Zimbabwe T20I Series 2025",
+          "United Arab Emirates T20I Tri-Series 2025",
+          "United Arab Emirates in Nepal T20I Series 2026",
+          "West Indies in Australia T20I Series 2022",
+          "West Indies in Australia T20I Series 2024",
+          "West Indies in Bangladesh T20I Series 2025",
+          "West Indies in England T20I Series 2025",
+          "West Indies in India T20I Series 2022",
+          "West Indies in India T20I Series 2026",
+          "West Indies in Ireland T20I Series 2025",
+          "West Indies in New Zealand T20I Series 2025",
+          "West Indies in South Africa T20I Series 2023",
+          "West Indies in South Africa T20I Series 2026",
+          "West Indies in Sri Lanka T20I Series 2024",
+          "Zimbabwe in Bangladesh T20I Series 2024",
+          "Zimbabwe in Sri Lanka T20I Series 2024"
+        ],
+        "match_format": [
+          "T20",
+          "T20I"
+        ],
+        "season": [
+          "2022",
+          "2022/23",
+          "2023",
+          "2023/24",
+          "2024",
+          "2024/25",
+          "2025",
+          "2026"
+        ]
+      }
+    },
+    {
+      "table_name": "raw_matches",
+      "path": "raw/matches.csv",
+      "format": "csv",
+      "row_count": 883,
+      "column_count": 22,
+      "columns": [
+        {
+          "name": "match_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0,
+          "candidate_key_column": true
+        },
+        {
+          "name": "comp_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "match_number",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "match_date",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "stage",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "venue_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "venue_country",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "home_team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "home_team",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "away_team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "away_team",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "home_team_captain_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 44
+        },
+        {
+          "name": "away_team_captain_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 45
+        },
+        {
+          "name": "toss_win_team_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 15
+        },
+        {
+          "name": "toss_opted",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 15
+        },
+        {
+          "name": "man_of_the_match",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "first_inn_revised_overs",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 858
+        },
+        {
+          "name": "second_inn_revised_overs",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 858
+        },
+        {
+          "name": "revised_target",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 860
+        },
+        {
+          "name": "knock_out",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "win_team_id",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 41
+        },
+        {
+          "name": "result",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [
+        "match_id"
+      ],
+      "date_ranges": {
+        "match_date": {
+          "min": "2022-01-22T00:00:00",
+          "max": "2026-11-01T00:00:00"
+        }
+      },
+      "coverage": {
+        "venue_country": [
+          "Australia",
+          "Bangladesh",
+          "India",
+          "Ireland",
+          "Japan",
+          "Netherlands",
+          "New Zealand",
+          "Oman",
+          "Pakistan",
+          "Qatar",
+          "South Africa",
+          "Sri Lanka",
+          "United Arab Emirates",
+          "United Kingdom",
+          "United States",
+          "West Indies",
+          "Zimbabwe"
+        ]
+      }
+    },
+    {
+      "table_name": "raw_playing_eleven",
+      "path": "raw/playing_eleven.csv",
+      "format": "csv",
+      "row_count": 28381,
+      "column_count": 9,
+      "columns": [
+        {
+          "name": "match_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0,
+          "candidate_key_column": true
+        },
+        {
+          "name": "team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0,
+          "candidate_key_column": true
+        },
+        {
+          "name": "player_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0,
+          "candidate_key_column": true
+        },
+        {
+          "name": "batting_order",
+          "dtype": "float64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 8678
+        },
+        {
+          "name": "is_played",
+          "dtype": "bool",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_captain",
+          "dtype": "object",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 8667
+        },
+        {
+          "name": "is_wk",
+          "dtype": "object",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": true,
+          "missing_count": 8667
+        },
+        {
+          "name": "is_impact",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        },
+        {
+          "name": "is_impact_off",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [
+        "match_id",
+        "team_id",
+        "player_id"
+      ],
+      "date_ranges": {},
+      "coverage": {}
+    },
+    {
+      "table_name": "raw_teams",
+      "path": "raw/teams.csv",
+      "format": "csv",
+      "row_count": 353,
+      "column_count": 3,
+      "columns": [
+        {
+          "name": "comp_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0,
+          "candidate_key_column": true
+        },
+        {
+          "name": "team_id",
+          "dtype": "int64",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0,
+          "candidate_key_column": true
+        },
+        {
+          "name": "team_name",
+          "dtype": "str",
+          "description": "Observed field; the supplied dictionary does not define its semantics.",
+          "nullable": false,
+          "missing_count": 0
+        }
+      ],
+      "candidate_key": [
+        "comp_id",
+        "team_id"
+      ],
+      "date_ranges": {},
+      "coverage": {}
+    }
+  ],
+  "relationships": [
+    {
+      "from": "matches.csv.comp_id",
+      "to": "competitions.csv.comp_id",
+      "cardinality": "many-to-one",
+      "observed_validation": "all match competition IDs map"
+    },
+    {
+      "from": "ball_by_ball.csv.match_id",
+      "to": "matches.csv.match_id",
+      "cardinality": "many-to-one",
+      "observed_validation": "all delivery match IDs map; 16 matches have no delivery records"
+    },
+    {
+      "from": "teams.csv.comp_id",
+      "to": "competitions.csv.comp_id",
+      "cardinality": "many-to-one",
+      "observed_validation": "all team competition IDs map"
+    },
+    {
+      "from": "playing_eleven.csv.match_id",
+      "to": "matches.csv.match_id",
+      "cardinality": "many-to-one",
+      "observed_validation": "all lineup match IDs map"
+    },
+    {
+      "from": "competition_team_player_mapping.csv.comp_id",
+      "to": "competitions.csv.comp_id",
+      "cardinality": "many-to-one",
+      "observed_validation": "all player-mapping competition IDs map"
+    },
+    {
+      "from": "ball_by_ball.csv.(comp_id, batting_team_id/bowling_team_id)",
+      "to": "teams.csv.(comp_id, team_id)",
+      "cardinality": "many-to-one per role",
+      "observed_validation": "all observed competition/team pairs map"
+    },
+    {
+      "from": "ball_by_ball.csv.(comp_id, striker_id/bowler_id)",
+      "to": "competition_team_player_mapping.csv.(comp_id, player_id)",
+      "cardinality": "many-to-one per role",
+      "observed_validation": "all observed competition/player pairs map"
+    }
+  ],
+  "metric_definitions": {
+    "batter_runs": "Sum of source runs for the striker; source anomaly semantics remain documented.",
+    "strike_rate": "100 * batter runs / batter balls faced; wides are not balls faced.",
+    "batting_average": "Batter runs / observed striker dismissals.",
+    "boundary_percentage": "100 * source four/six flags / batter balls faced.",
+    "bowling_economy": "6 * bowler-conceded runs / legal balls; byes, leg-byes, and penalty extras are excluded.",
+    "bowling_average": "Bowler-conceded runs / bowler-credited wickets.",
+    "bowling_strike_rate": "Legal balls / bowler-credited wickets.",
+    "pressure_strike_rate": "100 * batter runs on batting-pressure balls / batter balls faced in batting pressure.",
+    "pressure_economy": "6 * bowler-conceded runs in bowling pressure / legal balls in bowling pressure.",
+    "SPI": "Existing role-specific score: 60% baseline-relative performance component, 20% match-level consistency, and 20% exposure reliability. Performance is a tanh-scaled competition-adjusted pressure-minus-normal difference; reliability is 100 * opportunities / (opportunities + 30). Rankings require at least 3 pressure matches and 12 role-specific pressure balls. All choices remain provisional.",
+    "consistency": "100 / (1 + sample coefficient of variation) of match-level pressure strike rates for batters or pressure economy rates for bowlers.",
+    "reliability": "100 * pressure opportunities / (pressure opportunities + 30).",
+    "pressure": "Existing role-specific weighted 0–100 heuristic with threshold 50; first-innings and chase states use separate normalizations. This is not a win probability.",
+    "dot_ball_percentage": "100 * source-defined batter dot balls / balls faced."
+  },
+  "pressure_methodology": {
+    "threshold": 50.0,
+    "score_range": [
+      0,
+      100
+    ],
+    "weights": {
+      "batting": {
+        "run_rate": 0.35,
+        "wickets": 0.25,
+        "time": 0.2,
+        "closeness": 0.2
+      },
+      "bowling": {
+        "run_rate": 0.3,
+        "wickets": 0.25,
+        "time": 0.2,
+        "closeness": 0.25
+      }
+    },
+    "normalization": "Run-rate, wickets, innings-time and match-closeness components are bounded or exponential pre-delivery state features. Chases compare required run rate with the reference rate; first innings compare current run rate with that reference.",
+    "reference_rate": "Historical median first-innings rate within format where available, with existing documented format fallback."
+  },
+  "known_limitations": [
+    "A foreign-key match confirms identifier coverage, not that player/team semantics are correct.",
+    "The playing_eleven candidate key is not unique and must not be used to drop records.",
+    "Sixteen match rows have no corresponding delivery rows.",
+    "No relationship is asserted between the player-map table and lineup table beyond identifier checks."
+  ]
+}

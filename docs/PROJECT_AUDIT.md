@@ -35,21 +35,27 @@ scope cannot be asserted.
 - A player-match graph based on observed deliveries produced 1,728 nodes,
   36,318 directed edges, PageRank results, and an HTML visualization.
 - The Streamlit app retains its original four views and adds Pressure
-  Analytics, Player Insights, and Methodology; filters, exported ranking
-  views, and both themes were checked in AppTest and the live browser.
+  Analytics, Player Insights, Methodology, Final Methodology & Validation,
+  and AI Cricket Analyst views. Filters, exported ranking views, and both
+  themes were checked in AppTest and the live browser.
+- The AI analyst has local supported-intent calculations and an optional
+  provider-backed tool loop. It discovers 20 datasets and exposes guarded,
+  bounded SELECT queries plus existing role metrics; live LLM behavior has
+  not been tested because credentials are unavailable.
 - The expanded methodology report, README, architecture diagrams, submission
   assessment, and presentation outline were generated.
 
 ## Test evidence
 
-- `python -m unittest discover -s tests -v`: **34 tests passed**, including
-  14 AI analyst tests and dashboard AppTest.
-- Python compilation of the analyst, dashboard, and their tests: **passed**.
+- `.venv/bin/python -m unittest discover -s tests -v`: **47 tests passed**,
+  including analyst-tool tests and dashboard AppTest.
+- Project-wide Python compilation: **passed**.
 - AppTest rendered all nine views, switched themes, and returned a real
   historical-player answer without app exceptions.
 - Live browser on port 8502 rendered the AI tab and verified a Rinku Singh
-  result with 14 match-level evidence rows. Port 8501 was already occupied by
-  the existing server and was not interrupted.
+  result with 14 match-level evidence rows. This checks local analytics, not
+  the external LLM. Port 8501 was already occupied by the existing server and
+  was not interrupted.
 - Ranking exports have exactly ten unique player IDs and sequential ranks for
   each role. A test independently recomputes one top batter’s pressure strike
   rate and one top bowler’s pressure economy from delivery rows.

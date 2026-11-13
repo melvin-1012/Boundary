@@ -53,9 +53,11 @@ validated selection criteria.
   and now adds Pressure Analytics, Player Insights, Methodology, and Final
   Methodology & Validation views plus the AI Cricket Analyst. Curated pressure
   events, exact exported top tens, independent raw calculation checks,
-  sensitivity, run provenance, and read-only evidence-backed question
-  answering are integrated. The supplied specification does not define 14
-  separate page names.
+  sensitivity, run provenance, and evidence-backed question answering are
+  integrated. The analyst has a local supported-intent mode and an optional
+  provider-backed dynamic tool mode with dataset discovery, existing metric
+  functions, bounded SQLite SELECT queries, and a finite tool-call loop. The
+  supplied specification does not define 14 separate page names.
 - **Raw data:** the ETL only reads `data/raw/`; original CSVs were not edited.
   An automated test compares every current raw CSV against the ETL SHA-256
   manifest.
@@ -154,11 +156,11 @@ validated selection criteria.
 | Player-level evidence and methodology/limitations | **TESTED** | Player Insights shows filtered metrics and match histories; Methodology includes formula/limitations and generated report download. |
 | Final methodology and validation tab | **IMPLEMENTED** | The eighth view exposes scope, pressure indicators/contributions, SPI, independent checks, sensitivity/correlation diagnostics, exact CSVs/downloads, evidence, hashes, and readiness; browser verification is in progress. |
 | AI Cricket Analyst tab with session chat, examples, charts, evidence, scope, and limitations | **TESTED** | Ninth view is integrated with curated historical data and existing metrics; AppTest and live browser show a source-verified player query with match evidence. External-provider verification remains open. |
-| Natural-language interpretation, filter validation, and safe analytics execution | **TESTED** | Deterministic parser plus optional allowlisted LLM classification; entity filters are checked against the archive. SQL/command inputs are rejected and no SQL execution path exists. |
+| Natural-language interpretation, filter validation, and safe analytics execution | **TESTED** | Local deterministic parser plus optional provider-backed tool calling; tools validate registered datasets, filters, and metric arguments. SQL is limited to bounded SELECT/WITH...SELECT queries over registered tables; mutation and command-like inputs are rejected. Live provider behavior remains unverified. |
 | Evidence verification and numeric LLM-output protection | **TESTED** | Pressure rates/baselines are recomputed from filtered deliveries; player/match IDs are validated; numeric commentary is rejected. |
 | Optional OpenAI-compatible provider configuration | **IMPLEMENTED** | Standard-library HTTP client reads `SUPERR_LLM_API_KEY`, `SUPERR_LLM_MODEL`, and optional `SUPERR_LLM_BASE_URL`; no provider credentials are configured, so live external behavior is not tested. |
 | Downloadable/inspectable generated rankings | **TESTED** | Dashboard loads `reports/top_10_*.csv` and downloads the same rows; full rankings remain available in reports. |
-| Preserve original tabs, theme selection, and cricket animations | **TESTED** | AppTest and browser checks cover the original views and theme switching; the new eighth view reuses the same app, theme and animations. |
+| Preserve original tabs, theme selection, and cricket animations | **TESTED** | AppTest and browser checks cover the original views and theme switching; added views reuse the same app, theme, and animations. |
 | Respect reduced motion and accessibility | **IMPLEMENTED** | Existing animation CSS includes reduced-motion behavior; full browser/accessibility verification is not complete. |
 | Separate raw, ingestion, analytics, big-data, dashboard, tests, reports | **TESTED** | Current modules follow those boundaries; no wholesale reorganization is needed. |
 | Fourteen separate dashboard pages | **BLOCKED** | The supplied project specification describes capabilities but names no 14 pages or per-page criteria. The implementation preserves the original four tabs and adds three requested views; the remaining page names cannot be invented. |
@@ -243,7 +245,7 @@ single-machine `local[2]`.
 
 | Command/check | Result |
 |---|---|
-| `python -m unittest discover -s tests -v` | **34 tests passed**, including 14 AI analyst tests and dashboard AppTest. |
+| `.venv/bin/python -m unittest discover -s tests -v` | **47 tests passed**, including dynamic analyst-tool tests and dashboard AppTest. |
 | `.venv/bin/python -m py_compile analytics/*.py dashboard/*.py graph_analytics/*.py ingestion/*.py machine_learning/*.py streaming/*.py tests/*.py` | **Passed.** |
 | `.venv/bin/python -m ingestion.run_etl` | **38 checks passed, 5 warnings, 0 failures**; selected 853 matches and 194,014 deliveries; generated source/curated Parquet and report. |
 | `.venv/bin/python -m analytics.build_rankings` | **10 batters / 10 bowlers**, 272 / 336 eligible; ranking status remains provisional. |
@@ -255,7 +257,9 @@ single-machine `local[2]`.
 | `.venv/bin/python -m analytics.build_methodology_report` | Generated provisional report after validating ranking manifest, IDs, and ranks. |
 | Streamlit `AppTest` on `dashboard/app.py` | **0 app exceptions; 9 views rendered; theme switch and real historical analyst query passed.** |
 | Live browser on port 8501 | Earlier browser check covered both themes and seven pre-existing views. |
-| Live browser on port 8502 | Updated AI tab rendered; a Rinku Singh IPL 2023 query returned a source-verified answer with 14 match evidence rows, and the tab remained selected after submission. Final Methodology & Validation browser check remains incomplete. |
+| Live browser on port 8502 | Earlier check: updated AI tab rendered; a Rinku Singh IPL 2023 query returned a source-verified answer with 14 match evidence rows, and the tab remained selected after submission. Final Methodology & Validation browser check remains incomplete. This does not test the external LLM provider. |
+| AI analyst archive smoke test | **Passed:** discovered 20 datasets, checked six raw-source counts, looked up player/match records, computed a filtered IPL 2023 batter result with independent rate/baseline checks, and ran a bounded SELECT aggregate. |
+| Dynamic provider integration | **Mock-tested only:** structured tools, multi-step dispatch, follow-up context, provider serialization, and numerical-claim withholding. No live provider credentials were configured. |
 
 During implementation, early unit/Spark runs exposed a fixture metadata
 dependency and parity differences in the exact prior-rate median and clipped
@@ -280,7 +284,7 @@ constitute a Hadoop/HDFS test.
 | 11 | Kafka and Spark Streaming | **TESTED** | Local historical replay validates incremental state and pressure; Kafka integration is blocked. |
 | 12 | Graph analytics and PageRank | **TESTED** | Player-match graph, PageRank output, HTML visualization, and interpretation generated. |
 | 13 | Complete dashboard integration | **TESTED** | Seven integrated views, selected filters, exact exported top tens, and both themes verified in browser/AppTest. |
-| 14 | Final testing and documentation | **IN PROGRESS** | 34 tests pass and AI analyst documentation is added. Official approval and remaining browser verification are outstanding. |
+| 14 | Final testing and documentation | **IN PROGRESS** | 47 tests pass; AI analyst tool architecture, setup, safety, and test limitations are documented. Official approval and remaining browser verification are outstanding. |
 
 ## Remaining blockers and review decisions
 

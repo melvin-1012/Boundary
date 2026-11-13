@@ -1201,6 +1201,60 @@ class OpenAICompatibleProvider:
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
 
+    def chat_with_tools(self, messages, tools):
+        """Request one OpenAI-compatible function/tool-calling turn."""
+        url = f"{self.base_url}/chat/completions"
+        body = json.dumps(
+            {
+                "model": self.model,
+                "temperature": 0,
+                "messages": messages,
+                "tools": tools,
+                "tool_choice": "auto",
+            }
+        ).encode("utf-8")
+        request = urllib.request.Request(
+            url,
+            data=body,
+            headers={
+                "Authorization": f"******",
+                "Content-Type": "application/json",
+            },
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                raw_response = response.read(1_000_001)
+            if len(raw_response) > 1_000_000:
+                raise LLMProviderError(
+                    "LLM provider response exceeded the size limit; local analytics remain available."
+                )
+            payload = json.loads(raw_response.decode("utf-8"))
+            message = payload["choices"][0]["message"]
+        except urllib.error.HTTPError as error:
+            raise LLMProviderError(
+                f"LLM provider returned HTTP {error.code}; local analytics remain available."
+            ) from error
+        except (urllib.error.URLError, TimeoutError) as error:
+            raise LLMProviderError(
+                "LLM provider is unavailable; local analytics remain available."
+            ) from error
+        except (json.JSONDecodeError, KeyError, IndexError, TypeError) as error:
+            raise LLMProviderError(
+                "LLM provider returned an invalid tool-calling response; local analytics remain available."
+            ) from error
+        content = message.get("content")
+        if content is not None and not isinstance(content, str):
+            raise LLMProviderError("LLM provider returned invalid response text.")
+        tool_calls = message.get("tool_calls") or []
+        if not isinstance(tool_calls, list):
+            raise LLMProviderError("LLM provider returned an invalid tool-call list.")
+        if len(tool_calls) > 4:
+            raise LLMProviderError(
+                "LLM provider exceeded the per-turn tool-call limit; local analytics remain available."
+            )
+        return {"content": content or "", "tool_calls": tool_calls}
+
     def interpret_question(self, question, allowed_context):
         url = f"{self.base_url}/chat/completions"
         body = json.dumps(

@@ -20,6 +20,7 @@ from analytics.cricket_analyst import (
     generate_commentary,
     provider_from_environment,
 )
+from analytics.analyst_tools import CricketToolbox, analyze_with_tools
 
 
 DATA = ROOT / "data" / "raw"
@@ -1268,14 +1269,15 @@ with ai_analyst_tab:
         st.warning(str(error))
     if analyst_provider is None:
         st.caption(
-            "Question parsing and calculations run locally. Optional qualitative "
-            "commentary can be enabled with SUPERR_LLM_API_KEY and SUPERR_LLM_MODEL."
+            "The local evidence-backed analyst is active. Enable SUPERR_LLM_API_KEY "
+            "and SUPERR_LLM_MODEL for dynamic multi-step tool calling and follow-up "
+            "interpretation; no external provider is configured."
         )
     else:
         st.caption(
-            f"Optional question interpretation and qualitative commentary are "
-            f"enabled with model `{analyst_provider.model}`. Calculated statistics "
-            "remain application-owned."
+            f"Dynamic multi-step tool calling is enabled with model "
+            f"`{analyst_provider.model}`. All calculations run through the "
+            "validated local analytics tools."
         )
 
     analyst_state_key = "cricket_analyst_conversation"
@@ -1306,29 +1308,37 @@ with ai_analyst_tab:
     pending_prompt = st.session_state.pop("analyst_pending_question", None)
     submitted_prompt = pending_prompt or prompt
     if submitted_prompt:
-        with st.spinner("Calculating and verifying against historical deliveries…"):
+        with st.spinner("Investigating the archive and verifying analytical evidence…"):
             deliveries = load_pressure_data()
             analyst_teams = roster[["comp_id", "team_id", "team_name"]].drop_duplicates()
             active_provider = analyst_provider
-            try:
+            if active_provider is not None:
+                try:
+                    toolbox = CricketToolbox(curated_deliveries=deliveries)
+                    result = analyze_with_tools(
+                        submitted_prompt,
+                        active_provider,
+                        toolbox,
+                        conversation=st.session_state[analyst_state_key],
+                    )
+                except LLMProviderError as error:
+                    active_provider = None
+                    st.warning(
+                        f"Dynamic provider analysis was unavailable; using the "
+                        f"local evidence-backed parser instead. {error}"
+                    )
+                    result = analyze_question(
+                        submitted_prompt,
+                        deliveries,
+                        teams=analyst_teams,
+                    )
+            else:
                 result = analyze_question(
                     submitted_prompt,
                     deliveries,
                     teams=analyst_teams,
-                    provider=active_provider,
                 )
-            except LLMProviderError as error:
-                active_provider = None
-                st.warning(
-                    f"LLM question interpretation was unavailable; using the "
-                    f"validated local parser instead. {error}"
-                )
-                result = analyze_question(
-                    submitted_prompt,
-                    deliveries,
-                    teams=analyst_teams,
-                )
-            if active_provider is not None and result["status"] == "answer":
+            if active_provider is not None and not result.get("tool_trace") and result["status"] == "answer":
                 try:
                     result["commentary"] = generate_commentary(
                         active_provider, result
@@ -1339,7 +1349,9 @@ with ai_analyst_tab:
             {"question": submitted_prompt, "result": result}
         )
 
-    for conversation_item in st.session_state[analyst_state_key]:
+    for conversation_index, conversation_item in enumerate(
+        st.session_state[analyst_state_key]
+    ):
         with st.chat_message("user"):
             st.markdown(conversation_item["question"])
         result = conversation_item["result"]
@@ -1414,8 +1426,70 @@ with ai_analyst_tab:
                 with st.expander("Limitations and uncertainty"):
                     for limitation in result["limitations"]:
                         st.markdown(f"- {limitation}")
+            if result.get("tool_trace"):
+                with st.expander(
+                    f"Analysis tools used ({len(result['tool_trace'])})"
+                ):
+                    st.dataframe(
+                        pd.DataFrame(result["tool_trace"]),
+                        hide_index=True,
+                        width="stretch",
+                    )
+                    for tool_index, tool_result in enumerate(
+                        result.get("tool_results", [])
+                    ):
+                        tool_name = tool_result.get("tool", "Tool result")
+                        with st.expander(f"{tool_index + 1}. {tool_name}"):
+                            payload = tool_result.get("result", tool_result)
+                            if isinstance(payload, dict) and isinstance(payload.get("rows"), list):
+                                rows = payload["rows"]
+                                if rows:
+                                    st.dataframe(
+                                        pd.DataFrame(rows),
+                                        hide_index=True,
+                                        width="stretch",
+                                    )
+                                st.caption(
+                                    f"Read-only query · row limit {payload.get('row_limit', 'not applicable')} · "
+                                    f"truncated: {payload.get('truncated', False)}"
+                                )
+                                remaining = {
+                                    key: value
+                                    for key, value in payload.items()
+                                    if key != "rows"
+                                }
+                                if remaining:
+                                    st.json(remaining, expanded=False)
+                            elif isinstance(payload, dict) and (
+                                isinstance(payload.get("metrics"), list)
+                                or isinstance(payload.get("evidence"), list)
+                            ):
+                                for key in ("metrics", "evidence"):
+                                    if payload.get(key):
+                                        st.markdown(f"**{key.replace('_', ' ').title()}**")
+                                        st.dataframe(
+                                            pd.DataFrame(payload[key]),
+                                            hide_index=True,
+                                            width="stretch",
+                                        )
+                                st.json(
+                                    {
+                                        key: value
+                                        for key, value in payload.items()
+                                        if key not in {"metrics", "evidence"}
+                                    },
+                                    expanded=False,
+                                )
+                            else:
+                                st.json(payload, expanded=False)
             if result["status"] != "answer":
                 st.warning(f"Answer status: {result['status']}")
+                if st.button(
+                    "Retry analysis",
+                    key=f"analyst_retry_{conversation_index}",
+                ):
+                    st.session_state["analyst_pending_question"] = conversation_item["question"]
+                    st.rerun()
 
     with st.expander("Supported question categories"):
         for category, description in SUPPORTED_QUESTION_CATEGORIES.items():
