@@ -51,7 +51,7 @@ validated selection criteria.
   CAP documentation exist; no live service or operation is available.
 - **Dashboard:** the existing Streamlit app retains its original four tabs
   and now adds Pressure Analytics, Player Insights, Methodology, and Final
-  Methodology & Validation views plus the AI Cricket Analyst. Curated pressure
+  Methodology & Validation views plus the Cricket Analyst. Curated pressure
   events, exact exported top tens, independent raw calculation checks,
   sensitivity, run provenance, and evidence-backed question answering are
   integrated. The analyst has a local supported-intent mode and an optional
@@ -155,7 +155,7 @@ validated selection criteria.
 | Batter/bowler pressure analytics and Top 10 views | **TESTED** | Batting Room and Bowling Lab display exact top-ten exports, supporting SPI/reliability/evidence, downloads, and filter-scoped metrics. |
 | Player-level evidence and methodology/limitations | **TESTED** | Player Insights shows filtered metrics and match histories; Methodology includes formula/limitations and generated report download. |
 | Final methodology and validation tab | **IMPLEMENTED** | The eighth view exposes scope, pressure indicators/contributions, SPI, independent checks, sensitivity/correlation diagnostics, exact CSVs/downloads, evidence, hashes, and readiness; browser verification is in progress. |
-| AI Cricket Analyst tab with session chat, examples, charts, evidence, scope, and limitations | **TESTED** | Ninth view is integrated with curated historical data and existing metrics; AppTest and live browser show a source-verified player query with match evidence. External-provider verification remains open. |
+| Cricket Analyst tab with session chat, examples, charts, evidence, scope, and limitations | **TESTED** | Ninth view is integrated with curated historical data and existing metrics; AppTest and live browser show a source-verified player query with match evidence. External-provider verification remains open. |
 | Natural-language interpretation, filter validation, and safe analytics execution | **TESTED** | Local deterministic parser plus optional provider-backed tool calling; tools validate registered datasets, filters, and metric arguments. SQL is limited to bounded SELECT/WITH...SELECT queries over registered tables; mutation and command-like inputs are rejected. Live provider behavior remains unverified. |
 | Evidence verification and numeric LLM-output protection | **TESTED** | Pressure rates/baselines are recomputed from filtered deliveries; player/match IDs are validated; numeric commentary is rejected. |
 | Optional OpenAI-compatible provider configuration | **IMPLEMENTED** | Standard-library HTTP client reads `SUPERR_LLM_API_KEY`, `SUPERR_LLM_MODEL`, and optional `SUPERR_LLM_BASE_URL`; no provider credentials are configured, so live external behavior is not tested. |

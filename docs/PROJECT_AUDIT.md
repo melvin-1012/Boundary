@@ -36,7 +36,7 @@ scope cannot be asserted.
   36,318 directed edges, PageRank results, and an HTML visualization.
 - The Streamlit app retains its original four views and adds Pressure
   Analytics, Player Insights, Methodology, Final Methodology & Validation,
-  and AI Cricket Analyst views. Filters, exported ranking views, and both
+  and Cricket Analyst views. Filters, exported ranking views, and both
   themes were checked in AppTest and the live browser.
 - The AI analyst has local supported-intent calculations and an optional
   provider-backed tool loop. It discovers 20 datasets and exposes guarded,
@@ -120,7 +120,7 @@ the current scope or methodology is officially approved.
 Generated evidence: `reports/final_validation.json` and the updated
 `reports/methodology_report.md`. The official approval remains blocked.
 
-## AI Cricket Analyst increment
+## Cricket Analyst increment
 
 - Added `analytics/cricket_analyst.py` and the ninth dashboard view in
   `dashboard/app.py`. It reuses the curated pressure-delivery data and

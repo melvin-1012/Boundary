@@ -1,12 +1,12 @@
 
 # SupeRR Intelligence — Project Progress
 
-## Latest increment: AI Cricket Analyst
+## Latest increment: Cricket Analyst
 
 **Status:** Implemented and locally tested, but **not an officially validated
 final submission**. The official Rajasthan Royals Round 1 Problem Statement
 and `MASTER_SPECIFICATION.md` are not in the repository/workspace. The latest
-increment adds the tested AI Cricket Analyst tab and safe read-only analytics.
+increment adds the tested Cricket Analyst tab and safe read-only analytics.
 The existing pressure/SPI methodology remains provisional and needs domain
 approval.
 
@@ -76,7 +76,7 @@ viewport. This is a known verification gap.
    flag disagreements, and official batting opportunity/not-out semantics.
 5. Local arithmetic validation cannot replace an independent scorecard oracle.
 
-## AI Cricket Analyst increment
+## Cricket Analyst increment
 
 - The existing `analytics/cricket_analyst.py` local parser and evidence
   calculations remain available. Provider-backed dynamic analysis is
