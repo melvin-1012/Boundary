@@ -2,7 +2,7 @@
   "status": "provisional",
   "methodology_version": "pressure-spi-v1-provisional",
   "ranking_run_id": "9f00984a3cdd119a3b48",
-  "created_at_utc": "2026-11-14T00:15:23.057252+00:00",
+  "created_at_utc": "2026-11-14T01:47:50.615932+00:00",
   "input_sha256": {
     "ball_by_ball.csv": "01e2b4379edfbab6a6e456d304cb3c70f554cb312ef93d9588f3f32a82cb396e",
     "competition_team_player_mapping.csv": "1ded4e42a933618572d6e2c3a521c3257eb1844fab4456d567d77cbb2d3bbb12",
@@ -12,8 +12,8 @@
     "teams.csv": "a65e5922a9b3bf49247b24fc9471782e700efb31f8dcc5042923238b87c50a5d"
   },
   "ranking_file_sha256": {
-    "batters": "47d674ed601df82473f1524178a217069599f9ebf87d070be0f3777e1c1881b9",
-    "bowlers": "3d252f5782699bcd823117f0a127eeea89a6d931beb8daee73394df8cd59293d"
+    "batters": "6644ac9a52718c8f7e166ffdcc1b5b0d684f0b4be46ad87e97eb7f139a5099b5",
+    "bowlers": "881e7b4dbf73c1ef1a6f5f2eb759fbfe8a6bcea0d156a0d723bd6066098e2825"
   },
   "methodology_note": "Exploratory rankings based on a transparent, unvalidated pressure heuristic. Do not treat as official/final until the pressure model, weights, eligibility, and source-field semantics are reviewed.",
   "source_outputs": {
@@ -1861,8 +1861,8 @@
             "baseline_rank": 11,
             "scenario_rank": 9,
             "baseline_spi": 65.27613472329544,
-            "scenario_spi": 64.91665268132238,
-            "spi_delta": -0.35948204197306666,
+            "scenario_spi": 64.91665268132236,
+            "spi_delta": -0.35948204197308087,
             "rank_delta": 2
           },
           {
@@ -1887,9 +1887,9 @@
             "player_id": 4716,
             "baseline_rank": 7,
             "scenario_rank": 8,
-            "baseline_spi": 69.8192909698171,
+            "baseline_spi": 69.81929096981709,
             "scenario_spi": 69.54730736630457,
-            "spi_delta": -0.27198360351253825,
+            "spi_delta": -0.27198360351252404,
             "rank_delta": -1
           },
           {
@@ -1932,8 +1932,8 @@
             "player_id": 48616,
             "baseline_rank": 8,
             "scenario_rank": 6,
-            "baseline_spi": 67.99161832658355,
-            "scenario_spi": 70.316862780451,
+            "baseline_spi": 67.99161832658353,
+            "scenario_spi": 70.31686278045099,
             "spi_delta": 2.3252444538674553,
             "rank_delta": 2
           },
@@ -1942,8 +1942,8 @@
             "baseline_rank": 2,
             "scenario_rank": 2,
             "baseline_spi": 80.02140154276933,
-            "scenario_spi": 82.58960160602064,
-            "spi_delta": 2.568200063251311,
+            "scenario_spi": 82.58960160602062,
+            "spi_delta": 2.5682000632512967,
             "rank_delta": 0
           }
         ],
@@ -2012,9 +2012,9 @@
             "player_id": 4716,
             "baseline_rank": 7,
             "scenario_rank": 7,
-            "baseline_spi": 69.8192909698171,
+            "baseline_spi": 69.81929096981709,
             "scenario_spi": 70.09127457332963,
-            "spi_delta": 0.27198360351252404,
+            "spi_delta": 0.27198360351253825,
             "rank_delta": 0
           },
           {
@@ -2057,9 +2057,9 @@
             "player_id": 48616,
             "baseline_rank": 8,
             "scenario_rank": 11,
-            "baseline_spi": 67.99161832658355,
+            "baseline_spi": 67.99161832658353,
             "scenario_spi": 65.6663738727161,
-            "spi_delta": -2.3252444538674553,
+            "spi_delta": -2.325244453867441,
             "rank_delta": -3
           },
           {
@@ -2111,8 +2111,8 @@
             "baseline_rank": 11,
             "scenario_rank": 10,
             "baseline_spi": 65.27613472329544,
-            "scenario_spi": 68.1773563761814,
-            "spi_delta": 2.901221652885951,
+            "scenario_spi": 68.17735637618138,
+            "spi_delta": 2.901221652885937,
             "rank_delta": 1
           },
           {
@@ -2137,8 +2137,8 @@
             "player_id": 4716,
             "baseline_rank": 7,
             "scenario_rank": 7,
-            "baseline_spi": 69.8192909698171,
-            "scenario_spi": 69.30465948571829,
+            "baseline_spi": 69.81929096981709,
+            "scenario_spi": 69.30465948571828,
             "spi_delta": -0.514631484098814,
             "rank_delta": 0
           },
@@ -2182,9 +2182,9 @@
             "player_id": 48616,
             "baseline_rank": 8,
             "scenario_rank": 22,
-            "baseline_spi": 67.99161832658355,
+            "baseline_spi": 67.99161832658353,
             "scenario_spi": 64.1491597395244,
-            "spi_delta": -3.8424585870591415,
+            "spi_delta": -3.8424585870591272,
             "rank_delta": -14
           },
           {
@@ -2262,9 +2262,9 @@
             "player_id": 4716,
             "baseline_rank": 7,
             "scenario_rank": 9,
-            "baseline_spi": 69.8192909698171,
+            "baseline_spi": 69.81929096981709,
             "scenario_spi": 71.42185686796603,
-            "spi_delta": 1.6025658981489244,
+            "spi_delta": 1.6025658981489386,
             "rank_delta": -2
           },
           {
@@ -2307,9 +2307,9 @@
             "player_id": 48616,
             "baseline_rank": 8,
             "scenario_rank": 47,
-            "baseline_spi": 67.99161832658355,
-            "scenario_spi": 62.53309909817288,
-            "spi_delta": -5.458519228410665,
+            "baseline_spi": 67.99161832658353,
+            "scenario_spi": 62.533099098172876,
+            "spi_delta": -5.458519228410658,
             "rank_delta": -39
           },
           {
@@ -2387,9 +2387,9 @@
             "player_id": 4716,
             "baseline_rank": 7,
             "scenario_rank": 7,
-            "baseline_spi": 69.8192909698171,
-            "scenario_spi": 68.08806720064348,
-            "spi_delta": -1.7312237691736243,
+            "baseline_spi": 69.81929096981709,
+            "scenario_spi": 68.08806720064345,
+            "spi_delta": -1.7312237691736385,
             "rank_delta": 0
           },
           {
@@ -2441,8 +2441,8 @@
             "player_id": 48616,
             "baseline_rank": 8,
             "scenario_rank": 5,
-            "baseline_spi": 67.99161832658355,
-            "scenario_spi": 72.48952290822945,
+            "baseline_spi": 67.99161832658353,
+            "scenario_spi": 72.48952290822943,
             "spi_delta": 4.497904581645898,
             "rank_delta": 3
           },
@@ -2451,8 +2451,8 @@
             "baseline_rank": 2,
             "scenario_rank": 2,
             "baseline_spi": 80.02140154276933,
-            "scenario_spi": 81.6056992968827,
-            "spi_delta": 1.5842977541133791,
+            "scenario_spi": 81.60569929688269,
+            "spi_delta": 1.584297754113365,
             "rank_delta": 0
           }
         ],
@@ -2512,9 +2512,9 @@
             "player_id": 4716,
             "baseline_rank": 7,
             "scenario_rank": 7,
-            "baseline_spi": 69.8192909698171,
+            "baseline_spi": 69.81929096981709,
             "scenario_spi": 70.51327692766122,
-            "spi_delta": 0.6939859578441201,
+            "spi_delta": 0.6939859578441343,
             "rank_delta": 0
           },
           {
@@ -2557,9 +2557,9 @@
             "player_id": 48616,
             "baseline_rank": 8,
             "scenario_rank": 8,
-            "baseline_spi": 67.99161832658355,
+            "baseline_spi": 67.99161832658353,
             "scenario_spi": 68.8616575147988,
-            "spi_delta": 0.8700391882152445,
+            "spi_delta": 0.8700391882152587,
             "rank_delta": 0
           },
           {
@@ -2634,9 +2634,9 @@
             "player_id": 4716,
             "baseline_rank": 7,
             "scenario_rank": 6,
-            "baseline_spi": 69.8192909698171,
+            "baseline_spi": 69.81929096981709,
             "scenario_spi": 68.80585937918396,
-            "spi_delta": -1.0134315906331466,
+            "spi_delta": -1.0134315906331324,
             "rank_delta": 1
           },
           {
@@ -2688,7 +2688,7 @@
             "player_id": 48616,
             "baseline_rank": 8,
             "scenario_rank": null,
-            "baseline_spi": 67.99161832658355,
+            "baseline_spi": 67.99161832658353,
             "scenario_spi": null,
             "spi_delta": null,
             "rank_delta": null
@@ -2747,9 +2747,9 @@
             "player_id": 829,
             "baseline_rank": 78,
             "scenario_rank": 7,
-            "baseline_spi": 51.68712522902976,
+            "baseline_spi": 51.68712522902977,
             "scenario_spi": 72.30463782368862,
-            "spi_delta": 20.617512594658862,
+            "spi_delta": 20.617512594658855,
             "rank_delta": 71
           },
           {
@@ -2819,18 +2819,18 @@
             "player_id": 4499,
             "baseline_rank": 177,
             "scenario_rank": 2,
-            "baseline_spi": 44.076309492467345,
+            "baseline_spi": 44.07630949246736,
             "scenario_spi": 78.83067230877184,
-            "spi_delta": 34.75436281630449,
+            "spi_delta": 34.75436281630448,
             "rank_delta": 175
           },
           {
             "player_id": 4716,
             "baseline_rank": 7,
             "scenario_rank": 69,
-            "baseline_spi": 69.8192909698171,
+            "baseline_spi": 69.81929096981709,
             "scenario_spi": 57.388233004316064,
-            "spi_delta": -12.43105796550104,
+            "spi_delta": -12.431057965501026,
             "rank_delta": -62
           },
           {
@@ -2882,9 +2882,9 @@
             "player_id": 48616,
             "baseline_rank": 8,
             "scenario_rank": 17,
-            "baseline_spi": 67.99161832658355,
+            "baseline_spi": 67.99161832658353,
             "scenario_spi": 67.15833069102207,
-            "spi_delta": -0.8332876355614758,
+            "spi_delta": -0.8332876355614616,
             "rank_delta": -9
           },
           {
@@ -2931,18 +2931,18 @@
             "player_id": 786,
             "baseline_rank": 251,
             "scenario_rank": 8,
-            "baseline_spi": 39.27239654217375,
+            "baseline_spi": 39.272396542173766,
             "scenario_spi": 48.31444160673712,
-            "spi_delta": 9.042045064563368,
+            "spi_delta": 9.042045064563354,
             "rank_delta": 243
           },
           {
             "player_id": 1107,
             "baseline_rank": 135,
             "scenario_rank": 5,
-            "baseline_spi": 46.73963983063617,
+            "baseline_spi": 46.73963983063618,
             "scenario_spi": 52.531458736560964,
-            "spi_delta": 5.791818905924792,
+            "spi_delta": 5.791818905924785,
             "rank_delta": 130
           },
           {
@@ -2994,9 +2994,9 @@
             "player_id": 4716,
             "baseline_rank": 7,
             "scenario_rank": 45,
-            "baseline_spi": 69.8192909698171,
+            "baseline_spi": 69.81929096981709,
             "scenario_spi": 40.22175148706111,
-            "spi_delta": -29.59753948275599,
+            "spi_delta": -29.597539482755977,
             "rank_delta": -38
           },
           {
@@ -3066,7 +3066,7 @@
             "player_id": 48616,
             "baseline_rank": 8,
             "scenario_rank": null,
-            "baseline_spi": 67.99161832658355,
+            "baseline_spi": 67.99161832658353,
             "scenario_spi": null,
             "spi_delta": null,
             "rank_delta": null
@@ -3151,9 +3151,9 @@
             "player_id": 4716,
             "baseline_rank": 7,
             "scenario_rank": 32,
-            "baseline_spi": 69.8192909698171,
-            "scenario_spi": 57.973620289753846,
-            "spi_delta": -11.845670680063257,
+            "baseline_spi": 69.81929096981709,
+            "scenario_spi": 57.97362028975385,
+            "spi_delta": -11.845670680063236,
             "rank_delta": -25
           },
           {
@@ -3197,8 +3197,8 @@
             "baseline_rank": 5,
             "scenario_rank": 70,
             "baseline_spi": 71.6877029986523,
-            "scenario_spi": 53.22590084097031,
-            "spi_delta": -18.461802157681987,
+            "scenario_spi": 53.2259008409703,
+            "spi_delta": -18.461802157682,
             "rank_delta": -65
           },
           {
@@ -3223,9 +3223,9 @@
             "player_id": 48616,
             "baseline_rank": 8,
             "scenario_rank": 9,
-            "baseline_spi": 67.99161832658355,
+            "baseline_spi": 67.99161832658353,
             "scenario_spi": 67.20186906921784,
-            "spi_delta": -0.7897492573657132,
+            "spi_delta": -0.789749257365699,
             "rank_delta": -1
           },
           {
@@ -3233,8 +3233,8 @@
             "baseline_rank": 2,
             "scenario_rank": 2,
             "baseline_spi": 80.02140154276933,
-            "scenario_spi": 78.94165255448378,
-            "spi_delta": -1.0797489882855444,
+            "scenario_spi": 78.9416525544838,
+            "spi_delta": -1.0797489882855302,
             "rank_delta": 0
           }
         ],
@@ -3285,9 +3285,9 @@
             "player_id": 1107,
             "baseline_rank": 135,
             "scenario_rank": 4,
-            "baseline_spi": 46.73963983063617,
+            "baseline_spi": 46.73963983063618,
             "scenario_spi": 61.80389239165862,
-            "spi_delta": 15.06425256102245,
+            "spi_delta": 15.064252561022442,
             "rank_delta": 131
           },
           {
@@ -3339,18 +3339,18 @@
             "player_id": 4460,
             "baseline_rank": 147,
             "scenario_rank": 1,
-            "baseline_spi": 46.13411472408505,
+            "baseline_spi": 46.13411472408506,
             "scenario_spi": 71.56714135166011,
-            "spi_delta": 25.43302662757506,
+            "spi_delta": 25.433026627575053,
             "rank_delta": 146
           },
           {
             "player_id": 4716,
             "baseline_rank": 7,
             "scenario_rank": 56,
-            "baseline_spi": 69.8192909698171,
+            "baseline_spi": 69.81929096981709,
             "scenario_spi": 47.018348905041464,
-            "spi_delta": -22.80094206477564,
+            "spi_delta": -22.800942064775626,
             "rank_delta": -49
           },
           {
@@ -3393,9 +3393,9 @@
             "player_id": 21784,
             "baseline_rank": 273,
             "scenario_rank": 6,
-            "baseline_spi": 37.94246941869982,
+            "baseline_spi": 37.94246941869983,
             "scenario_spi": 58.542432014157875,
-            "spi_delta": 20.599962595458052,
+            "spi_delta": 20.599962595458045,
             "rank_delta": 267
           },
           {
@@ -3438,7 +3438,7 @@
             "player_id": 48616,
             "baseline_rank": 8,
             "scenario_rank": null,
-            "baseline_spi": 67.99161832658355,
+            "baseline_spi": 67.99161832658353,
             "scenario_spi": null,
             "spi_delta": null,
             "rank_delta": null
@@ -3536,9 +3536,9 @@
             "player_id": 4716,
             "baseline_rank": 7,
             "scenario_rank": 64,
-            "baseline_spi": 69.8192909698171,
+            "baseline_spi": 69.81929096981709,
             "scenario_spi": 46.850968721365305,
-            "spi_delta": -22.9683222484518,
+            "spi_delta": -22.968322248451784,
             "rank_delta": -57
           },
           {
@@ -3554,9 +3554,9 @@
             "player_id": 5738,
             "baseline_rank": 46,
             "scenario_rank": 9,
-            "baseline_spi": 56.01747118141722,
+            "baseline_spi": 56.01747118141723,
             "scenario_spi": 59.5915392676033,
-            "spi_delta": 3.574068086186081,
+            "spi_delta": 3.574068086186074,
             "rank_delta": 37
           },
           {
@@ -3572,9 +3572,9 @@
             "player_id": 7327,
             "baseline_rank": 144,
             "scenario_rank": 6,
-            "baseline_spi": 46.32660584959829,
+            "baseline_spi": 46.326605849598295,
             "scenario_spi": 62.84879912153353,
-            "spi_delta": 16.522193271935244,
+            "spi_delta": 16.522193271935237,
             "rank_delta": 138
           },
           {
@@ -3635,7 +3635,7 @@
             "player_id": 48616,
             "baseline_rank": 8,
             "scenario_rank": null,
-            "baseline_spi": 67.99161832658355,
+            "baseline_spi": 67.99161832658353,
             "scenario_spi": null,
             "spi_delta": null,
             "rank_delta": null
@@ -3829,7 +3829,7 @@
         {
           "left": "run_rate",
           "right": "closeness",
-          "spearman_rho": -0.08672355155719115,
+          "spearman_rho": -0.08672356441446721,
           "high_overlap_flag": false
         },
         {
@@ -3841,13 +3841,13 @@
         {
           "left": "wickets",
           "right": "closeness",
-          "spearman_rho": 0.1066963567173086,
+          "spearman_rho": 0.10669635235005469,
           "high_overlap_flag": false
         },
         {
           "left": "time",
           "right": "closeness",
-          "spearman_rho": 0.21143399628870888,
+          "spearman_rho": 0.2114340002837314,
           "high_overlap_flag": false
         }
       ],
@@ -3997,7 +3997,7 @@
         {
           "left": "run_rate",
           "right": "closeness",
-          "spearman_rho": 0.10372554044023974,
+          "spearman_rho": 0.1037255548348991,
           "high_overlap_flag": false
         },
         {
@@ -4009,13 +4009,13 @@
         {
           "left": "wickets",
           "right": "closeness",
-          "spearman_rho": -0.1066963567173086,
+          "spearman_rho": -0.10669635235005469,
           "high_overlap_flag": false
         },
         {
           "left": "time",
           "right": "closeness",
-          "spearman_rho": 0.21143399628870888,
+          "spearman_rho": 0.2114340002837314,
           "high_overlap_flag": false
         }
       ],
@@ -4186,15 +4186,15 @@
         {
           "player_id": 4716,
           "player_name": "Mayank Dagar",
-          "spi": 69.8192909698171,
-          "spi_independent": 69.8192909698171,
+          "spi": 69.81929096981709,
+          "spi_independent": 69.81929096981709,
           "spi_absolute_error": 0.0
         },
         {
           "player_id": 48616,
           "player_name": "Abdul Saqlain",
-          "spi": 67.99161832658355,
-          "spi_independent": 67.99161832658355,
+          "spi": 67.99161832658353,
+          "spi_independent": 67.99161832658353,
           "spi_absolute_error": 0.0
         },
         {

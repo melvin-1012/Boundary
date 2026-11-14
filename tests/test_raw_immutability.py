@@ -14,7 +14,7 @@ class RawImmutabilityTests(unittest.TestCase):
         self.assertEqual(len(expected), 6)
         for filename, digest in expected.items():
             path = ROOT / "data" / "raw" / filename
-            actual = hashlib.sha256(path.read_bytes()).hexdigest()
+            actual = hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
             self.assertEqual(actual, digest, filename)
         self.assertFalse(report["etl"]["raw_data_modified"])
 

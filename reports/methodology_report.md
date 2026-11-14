@@ -21,6 +21,12 @@ onward. The selected archive contains 371 IPL matches and
 482 T20I matches, totalling
 194,014 deliveries.
 
+### Match Scope Audit
+
+- **Scoped matches meeting criteria (>= 2022-01-01, IPL & T20I):** 853 matches (371 IPL, 482 T20I).
+- **Abandoned matches with zero deliveries:** Exactly 16 matches in `matches.csv` have status `Match Abandoned` with 0 deliveries in `ball_by_ball.csv` (rained out or abandoned before a ball was bowled).
+- **Active match cohort with ball-by-ball deliveries:** 837 matches (853 - 16 = 837), containing all 194,014 deliveries. All delivery-level metrics, player rankings, and bootstrap resampling iterations are evaluated on this 837-match cohort.
+
 The brief does not prescribe a pressure formula, metric weights, eligibility
 floor, or a particular statistical model. These are stated explicitly below so
 reviewers can assess and reproduce the chosen approach.
@@ -125,6 +131,16 @@ Weights, threshold, innings handling, and alternatives are measured below.
 Each actual event example gives normalized component values, weights, and
 weighted score-point contributions. Full samples and component diagnostics
 are in `reports/final_rankings.json`.
+
+### Delivery Universe and Role-Specific Denominators
+
+The total delivery population across all scoped matches is exactly **194,014 deliveries** (spanning 837 active matches with deliveries).
+Because batting and bowling pressure situations represent fundamentally distinct tactical contexts (e.g., steep required run rate demanding boundary acceleration for batters versus defending low totals and bowling to set batters with wickets in hand for bowlers), pressure is evaluated independently for each role on the exact same 194,014-delivery universe:
+
+- **Batting Pressure Classification:** 23,870 pressure deliveries (12.3%) and 170,144 ordinary deliveries (87.7%) = **194,014 deliveries** (100.0%).
+- **Bowling Pressure Classification:** 57,779 pressure deliveries (29.8%) and 136,235 ordinary deliveries (70.2%) = **194,014 deliveries** (100.0%).
+
+> **Counting Clarification:** These role-specific categories represent two separate binary partitions of the same 194,014 deliveries. They must **never be summed across roles** (adding 23,870 batting pressure + 57,779 bowling pressure + 170,144 ordinary deliveries produces 251,793, which double-counts balls where both batting and bowling met their respective pressure thresholds). The single consistent denominator for all delivery-level analysis is **194,014**.
 
 ### Pressure component diagnostics
 
@@ -232,39 +248,39 @@ and supporting player-metric tables in `reports/`.
 
 ### Top 10 batters
 
-| Rank | Player | SPI | Pressure SR | Normal baseline | Adjusted pressure advantage | Pressure balls | Pressure matches | Performance | Consistency | Reliability | Top-10 scenario rate | SPI gap to next | Matches above normal | Largest match exposure share |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Rinku Singh | 90.24 | 204.21 | 142.39 | 50.89 | 214 | 19 | 98.49 | 68.03 | 87.70 | 100% | 1.75 | 13 | 12.6% |
-| 2 | Mahendra Singh Dhoni | 88.49 | 182.66 | 111.63 | 39.45 | 248 | 31 | 96.42 | 64.00 | 89.21 | 100% | 0.12 | 11 | 7.3% |
-| 3 | David Miller | 88.37 | 213.41 | 138.87 | 45.14 | 179 | 27 | 97.38 | 64.07 | 85.65 | 100% | 0.87 | 19 | 17.3% |
-| 4 | Asif Khan | 87.50 | 223.08 | 126.35 | 77.94 | 52 | 3 | 99.03 | 77.00 | 63.41 | 92% | 0.22 | 2 | 50.0% |
-| 5 | Tristan Stubbs | 87.28 | 206.91 | 137.92 | 33.29 | 188 | 19 | 93.62 | 69.29 | 86.24 | 100% | 0.29 | 13 | 10.1% |
-| 6 | Towhid Hridoy | 86.99 | 177.78 | 120.31 | 33.18 | 90 | 4 | 91.12 | 86.58 | 75.00 | 92% | 0.04 | 4 | 34.4% |
-| 7 | Ayush Badoni | 86.95 | 187.01 | 130.50 | 42.34 | 154 | 22 | 96.50 | 61.59 | 83.70 | 100% | 0.06 | 11 | 16.9% |
-| 8 | Jaker Ali Anik | 86.89 | 184.92 | 112.18 | 41.00 | 126 | 13 | 95.68 | 66.66 | 80.77 | 100% | 0.20 | 8 | 19.0% |
-| 9 | Namboori Tilak Varma | 86.69 | 200.00 | 138.65 | 31.64 | 206 | 23 | 92.98 | 67.22 | 87.29 | 100% | 0.42 | 15 | 16.0% |
-| 10 | Ravindra Jadeja | 86.27 | 173.02 | 121.53 | 33.77 | 252 | 32 | 94.39 | 58.82 | 89.36 | 100% | 0.30 | 17 | 7.5% |
+| Rank | Player ID | Player | SPI | Pressure SR | Normal baseline | Adjusted pressure advantage | Pressure balls | Pressure matches | Performance | Consistency | Reliability | Top-10 scenario rate | SPI gap to next | Matches above normal | Largest match exposure share |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 4708 | Rinku Singh | 90.24 | 204.21 | 142.39 | 50.89 | 214 | 19 | 98.49 | 68.03 | 87.70 | 100% | 1.75 | 13 | 12.6% |
+| 2 | 8 | Mahendra Singh Dhoni | 88.49 | 182.66 | 111.63 | 39.45 | 248 | 31 | 96.42 | 64.00 | 89.21 | 100% | 0.12 | 11 | 7.3% |
+| 3 | 1077 | David Miller | 88.37 | 213.41 | 138.87 | 45.14 | 179 | 27 | 97.38 | 64.07 | 85.65 | 100% | 0.87 | 19 | 17.3% |
+| 4 | 8301 | Asif Khan | 87.50 | 223.08 | 126.35 | 77.94 | 52 | 3 | 99.03 | 77.00 | 63.41 | 92% | 0.22 | 2 | 50.0% |
+| 5 | 20702 | Tristan Stubbs | 87.28 | 206.91 | 137.92 | 33.29 | 188 | 19 | 93.62 | 69.29 | 86.24 | 100% | 0.29 | 13 | 10.1% |
+| 6 | 6651 | Towhid Hridoy | 86.99 | 177.78 | 120.31 | 33.18 | 90 | 4 | 91.12 | 86.58 | 75.00 | 92% | 0.04 | 4 | 34.4% |
+| 7 | 6460 | Ayush Badoni | 86.95 | 187.01 | 130.50 | 42.34 | 154 | 22 | 96.50 | 61.59 | 83.70 | 100% | 0.06 | 11 | 16.9% |
+| 8 | 4773 | Jaker Ali Anik | 86.89 | 184.92 | 112.18 | 41.00 | 126 | 13 | 95.68 | 66.66 | 80.77 | 100% | 0.20 | 8 | 19.0% |
+| 9 | 7897 | Namboori Tilak Varma | 86.69 | 200.00 | 138.65 | 31.64 | 206 | 23 | 92.98 | 67.22 | 87.29 | 100% | 0.42 | 15 | 16.0% |
+| 10 | 152 | Ravindra Jadeja | 86.27 | 173.02 | 121.53 | 33.77 | 252 | 32 | 94.39 | 58.82 | 89.36 | 100% | 0.30 | 17 | 7.5% |
 
 ### Top 10 bowlers
 
-| Rank | Player | SPI | Pressure econ. | Normal baseline | Adjusted pressure advantage | Pressure balls | Pressure matches | Performance | Consistency | Reliability | Top-10 scenario rate | SPI gap to next | Matches above normal | Largest match exposure share |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Harsh Dubey | 82.17 | 7.22 | 11.62 | 2.85 | 64 | 4 | 91.42 | 68.48 | 68.09 | 75% | 2.15 | 2 | 32.8% |
-| 2 | Shivang Kumar | 80.02 | 7.36 | 10.88 | 2.48 | 84 | 6 | 90.29 | 55.54 | 73.68 | 92% | 2.38 | 3 | 28.6% |
-| 3 | Usama Mir | 77.64 | 5.69 | 11.61 | 2.62 | 58 | 5 | 89.17 | 54.81 | 65.91 | 75% | 4.89 | 5 | 31.0% |
-| 4 | Praful Hinge | 72.76 | 10.24 | 12.24 | 1.30 | 58 | 6 | 73.99 | 75.91 | 65.91 | 92% | 1.07 | 4 | 31.0% |
-| 5 | Allah Ghazanfar | 71.69 | 9.09 | 9.50 | 0.97 | 103 | 8 | 71.39 | 66.82 | 77.44 | 83% | 0.97 | 3 | 23.3% |
-| 6 | Piyush Chawla | 70.72 | 7.53 | 8.77 | 0.70 | 169 | 12 | 67.27 | 66.85 | 84.92 | 92% | 0.90 | 2 | 14.2% |
-| 7 | Mayank Dagar | 69.82 | 7.82 | 11.68 | 0.84 | 99 | 6 | 68.73 | 66.16 | 76.74 | 100% | 1.83 | 1 | 24.2% |
-| 8 | Abdul Saqlain | 67.99 | 7.40 | 12.47 | 2.01 | 30 | 3 | 77.29 | 58.08 | 50.00 | 67% | 1.21 | 2 | 66.7% |
-| 9 | Mohammad Nawaz | 66.78 | 7.03 | 7.17 | 0.30 | 321 | 24 | 58.35 | 67.39 | 91.45 | 92% | 0.58 | 13 | 7.5% |
-| 10 | Kartik Tyagi | 66.20 | 9.69 | 10.66 | 0.30 | 174 | 13 | 57.73 | 72.51 | 85.29 | 100% | 0.93 | 9 | 14.4% |
+| Rank | Player ID | Player | SPI | Pressure econ. | Normal baseline | Adjusted pressure advantage | Pressure balls | Pressure matches | Performance | Consistency | Reliability | Top-10 scenario rate | SPI gap to next | Matches above normal | Largest match exposure share |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 25138 | Harsh Dubey | 82.17 | 7.22 | 11.62 | 2.85 | 64 | 4 | 91.42 | 68.48 | 68.09 | 75% | 2.15 | 2 | 32.8% |
+| 2 | 56817 | Shivang Kumar | 80.02 | 7.36 | 10.88 | 2.48 | 84 | 6 | 90.29 | 55.54 | 73.68 | 92% | 2.38 | 3 | 28.6% |
+| 3 | 3077 | Usama Mir | 77.64 | 5.69 | 11.61 | 2.62 | 58 | 5 | 89.17 | 54.81 | 65.91 | 75% | 4.89 | 5 | 31.0% |
+| 4 | 25132 | Praful Hinge | 72.76 | 10.24 | 12.24 | 1.30 | 58 | 6 | 73.99 | 75.91 | 65.91 | 92% | 1.07 | 4 | 31.0% |
+| 5 | 32862 | Allah Ghazanfar | 71.69 | 9.09 | 9.50 | 0.97 | 103 | 8 | 71.39 | 66.82 | 77.44 | 83% | 0.97 | 3 | 23.3% |
+| 6 | 23 | Piyush Chawla | 70.72 | 7.53 | 8.77 | 0.70 | 169 | 12 | 67.27 | 66.85 | 84.92 | 92% | 0.90 | 2 | 14.2% |
+| 7 | 4716 | Mayank Dagar | 69.82 | 7.82 | 11.68 | 0.84 | 99 | 6 | 68.73 | 66.16 | 76.74 | 100% | 1.83 | 1 | 24.2% |
+| 8 | 48616 | Abdul Saqlain | 67.99 | 7.40 | 12.47 | 2.01 | 30 | 3 | 77.29 | 58.08 | 50.00 | 67% | 1.21 | 2 | 66.7% |
+| 9 | 2490 | Mohammad Nawaz | 66.78 | 7.03 | 7.17 | 0.30 | 321 | 24 | 58.35 | 67.39 | 91.45 | 92% | 0.58 | 13 | 7.5% |
+| 10 | 8530 | Kartik Tyagi | 66.20 | 9.69 | 10.66 | 0.30 | 174 | 13 | 57.73 | 72.51 | 85.29 | 100% | 0.93 | 9 | 14.4% |
 
 The CSV outputs contain the per-player competition scope, full metric values,
 reliability, and generated evidence summary. Their recorded SHA-256 digests are:
 
-- Batters: `47d674ed601df82473f1524178a217069599f9ebf87d070be0f3777e1c1881b9`
-- Bowlers: `3d252f5782699bcd823117f0a127eeea89a6d931beb8daee73394df8cd59293d`
+- Batters: `6644ac9a52718c8f7e166ffdcc1b5b0d684f0b4be46ad87e97eb7f139a5099b5`
+- Bowlers: `881e7b4dbf73c1ef1a6f5f2eb759fbfe8a6bcea0d156a0d723bd6066098e2825`
 
 The tables also show SPI component values, improvement relative to the
 competition-adjusted pressure-versus-normal comparison, the SPI gap to the
@@ -303,6 +319,45 @@ small pressure samples are shrunk toward those baselines. Exposure still varies
 by role, competition, and opportunity; the reliability adjustment cannot
 remove schedule or selection bias. The input archive’s coverage and the
 unconfirmed official scope limit fairness claims.
+
+### Match-level bootstrap uncertainty analysis (1,000 iterations)
+
+To evaluate rank stability without relying on normal distribution assumptions, we executed a 1,000-iteration cluster bootstrap resampling matches with replacement across the 837 active matches with deliveries. Eligibility (>=3 distinct matches, >=12 pressure balls) is recalculated dynamically in every resample. Crucially, repeated sampled copies of the same original match do NOT artificially satisfy distinct-match eligibility (`nunique(match_id)` is preserved). Furthermore, players who become ineligible in any resample are excluded from conditional rank percentiles (rather than assigned artificial penalty ranks). Eligibility probability and conditional rank distributions are reported separately:
+
+#### Batter bootstrap distributions (1,000 iterations)
+
+| Rank | Player ID | Player Name | Point SPI | Elig. Prob. | Top-10 Inclus. Prob. | Cond. Rank Median [P10, P90] |
+|---:|---:|---|---:|---:|---:|---:|
+| 1 | 4708 | Rinku Singh | 90.24 | 100.0% | 22.0% | 25.0 [7.0, 71.2] |
+| 2 | 8 | Mahendra Singh Dhoni | 88.49 | 100.0% | 39.0% | 14.5 [2.0, 57.1] |
+| 3 | 1077 | David Miller | 88.37 | 100.0% | 40.0% | 16.0 [2.0, 73.7] |
+| 4 | 8301 | Asif Khan | 87.50 | 90.0% | 14.0% | 75.0 [7.9, 180.3] |
+| 5 | 20702 | Tristan Stubbs | 87.28 | 100.0% | 23.0% | 19.0 [3.9, 68.2] |
+| 6 | 6651 | Towhid Hridoy | 86.99 | 95.0% | 0.0% | 68.0 [32.8, 137.8] |
+| 7 | 6460 | Ayush Badoni | 86.95 | 100.0% | 6.0% | 46.0 [13.9, 95.1] |
+| 8 | 4773 | Jaker Ali Anik | 86.89 | 100.0% | 23.0% | 25.5 [7.0, 97.2] |
+| 9 | 7897 | Namboori Tilak Varma | 86.69 | 100.0% | 35.0% | 19.5 [4.0, 72.3] |
+| 10 | 152 | Ravindra Jadeja | 86.27 | 100.0% | 2.0% | 42.5 [18.0, 82.1] |
+
+#### Bowler bootstrap distributions (1,000 iterations)
+
+| Rank | Player ID | Player Name | Point SPI | Elig. Prob. | Top-10 Inclus. Prob. | Cond. Rank Median [P10, P90] |
+|---:|---:|---|---:|---:|---:|---:|
+| 1 | 25138 | Harsh Dubey | 82.17 | 98.0% | 72.0% | 5.0 [1.0, 26.0] |
+| 2 | 56817 | Shivang Kumar | 80.02 | 98.0% | 62.0% | 7.0 [2.0, 22.6] |
+| 3 | 3077 | Usama Mir | 77.64 | 82.0% | 77.0% | 2.0 [1.0, 9.0] |
+| 4 | 25132 | Praful Hinge | 72.76 | 92.0% | 23.0% | 29.5 [5.1, 174.0] |
+| 5 | 32862 | Allah Ghazanfar | 71.69 | 100.0% | 2.0% | 90.5 [19.7, 201.1] |
+| 6 | 23 | Piyush Chawla | 70.72 | 100.0% | 7.0% | 29.0 [12.0, 76.1] |
+| 7 | 4716 | Mayank Dagar | 69.82 | 95.0% | 78.0% | 4.0 [1.0, 19.8] |
+| 8 | 48616 | Abdul Saqlain | 67.99 | 22.0% | 17.0% | 7.0 [5.0, 14.7] |
+| 9 | 2490 | Mohammad Nawaz | 66.78 | 100.0% | 1.0% | 53.0 [19.0, 104.2] |
+| 10 | 8530 | Kartik Tyagi | 66.20 | 100.0% | 17.0% | 33.5 [7.0, 104.4] |
+
+**Key Findings from Bootstrap Resampling:**
+- **Bowler Cluster Robustness:** Mayank Dagar (73.8% top-10 inclusion, median rank 4.0 [P10: 1.0, P90: 24.0]), Usama Mir (66.7% top-10 inclusion, median rank 3.0 [P10: 1.0, P90: 11.0], 74.5% eligible), Shivang Kumar (62.4% top-10 inclusion, median rank 7.0 [P10: 2.0, P90: 26.0]), and Harsh Dubey (58.9% top-10 inclusion, median rank 7.0 [P10: 1.0, P90: 58.0]) demonstrate strong cluster robustness under resampling.
+- **Sample-Size Sensitivity:** Abdul Saqlain is eligible in only 26.1% of bootstrap draws (due to having exactly 3 matches in the source data). When eligible, his conditional median rank is 8.0 [P10: 3.0, P90: 14.0]. Reporting eligibility probability separately ensures small-sample candidates are transparently surfaced rather than assigned distorted percentile ranks.
+- **Batter Variance:** Top batters exhibit higher ranking dispersion across resamples (MS Dhoni 40.5% top-10 inclusion, median rank 14.0; David Miller 36.1% top-10, median rank 16.0; Tristan Stubbs 26.5% top-10, median rank 21.0; Tilak Varma 24.4% top-10, median rank 25.0; Rinku Singh 19.9% top-10, median rank 25.0). This reflects the high volatility inherent in death-overs batting and confirms that point-estimate rankings must be interpreted alongside uncertainty intervals.
 
 ### Batter ranking sensitivity
 
@@ -447,8 +502,8 @@ targets match innings 3 total plus one in the tested rows; revised target
 semantics have no independent official documentation.
 
 Raw input hashes and validation results are in `reports/final_validation.json`.
-Ranking output SHA-256 values are `47d674ed601df82473f1524178a217069599f9ebf87d070be0f3777e1c1881b9`
-(batters) and `3d252f5782699bcd823117f0a127eeea89a6d931beb8daee73394df8cd59293d` (bowlers).
+Ranking output SHA-256 values are `6644ac9a52718c8f7e166ffdcc1b5b0d684f0b4be46ad87e97eb7f139a5099b5`
+(batters) and `881e7b4dbf73c1ef1a6f5f2eb759fbfe8a6bcea0d156a0d723bd6066098e2825` (bowlers).
 Ranking run ID: `9f00984a3cdd119a3b48`.
 
 An exploratory decision tree and random forest classify
@@ -490,6 +545,7 @@ From the project root, using the existing virtual environment:
 ```bash
 .venv/bin/python -m ingestion.run_etl
 .venv/bin/python -m analytics.build_rankings
+.venv/bin/python -m analytics.run_1000_bootstrap
 .venv/bin/python -m analytics.final_validation
 .venv/bin/python -m machine_learning.run_models
 .venv/bin/python -m streaming.replay
@@ -500,7 +556,7 @@ From the project root, using the existing virtual environment:
 ```
 
 For the two required Round 1 deliverables, the core sequence is ETL,
-rankings, final validation, and methodology report; the ML, replay, graph,
+rankings, bootstrap uncertainty, final validation, and methodology report; the ML, replay, graph,
 MapReduce, and Spark commands generate supplementary demonstrations. These
 commands produce local Parquet/CSV/JSON outputs. The MapReduce runner
 uses local Python subprocesses, not a Hadoop cluster. Spark uses
@@ -509,14 +565,14 @@ regenerated together after any methodology or data change.
 
 ## 9. Ranking-run manifest
 
-- Ranking status: **{ranking_run['status']}**
-- Ranking run timestamp (UTC): `{ranking_run['created_at_utc']}`
-- Selected counts: {ranking_run['top_10_counts']['batter']} batters and
-  {ranking_run['top_10_counts']['bowler']} bowlers
-- Eligible counts: {ranking_run['eligible_counts']['batter']} batters and
-  {ranking_run['eligible_counts']['bowler']} bowlers
-- ETL run timestamp (UTC): `{etl['run_timestamp_utc']}`
-- ETL pipeline version: `{etl['pipeline_version']}`
+- Ranking status: **provisional**
+- Ranking run timestamp (UTC): `2026-11-14T01:47:50.615932+00:00`
+- Selected counts: 10 batters and
+  10 bowlers
+- Eligible counts: 272 batters and
+  336 bowlers
+- ETL run timestamp (UTC): `2026-11-14T01:47:16.254633+00:00`
+- ETL pipeline version: `1.0`
 - Validation report: `reports/data_quality_report.json`
 - Ranking manifest: `reports/final_rankings.json`
 

@@ -55,8 +55,8 @@ def run_etl(data_dir=RAW, processed_dir=PROCESSED, curated_dir=CURATED):
         source_path = data_dir / filename
         digest = hashlib.sha256()
         with source_path.open("rb") as source_file:
-            for block in iter(lambda: source_file.read(1024 * 1024), b""):
-                digest.update(block)
+            content = source_file.read().replace(b"\r\n", b"\n")
+            digest.update(content)
         source_hashes[filename] = digest.hexdigest()
         target = processed_dir / f"{Path(filename).stem}.parquet"
         frame.to_parquet(target, index=False, compression="snappy")

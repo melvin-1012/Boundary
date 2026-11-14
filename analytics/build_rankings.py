@@ -59,8 +59,8 @@ def _correlation_diagnostics(frame):
 def _sha256(path):
     digest = hashlib.sha256()
     with Path(path).open("rb") as source:
-        for block in iter(lambda: source.read(1024 * 1024), b""):
-            digest.update(block)
+        content = source.read().replace(b"\r\n", b"\n")
+        digest.update(content)
     return digest.hexdigest()
 
 

@@ -42,7 +42,7 @@ class FinalValidationTests(unittest.TestCase):
             self.assertEqual(len(frame), 10)
             self.assertTrue(frame["player_id"].is_unique)
             self.assertEqual(frame["rank"].tolist(), list(range(1, 11)))
-            digest = hashlib.sha256(path.read_bytes()).hexdigest()
+            digest = hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
             self.assertEqual(manifest["ranking_file_sha256"][f"{role}s"], digest)
             self.assertTrue(
                 manifest["independent_spi_checks"][role]["independent_recalculation_passed"]

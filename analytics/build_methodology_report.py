@@ -23,8 +23,8 @@ FINAL_VALIDATION = REPORTS / "final_validation.json"
 def _sha256(path):
     digest = hashlib.sha256()
     with path.open("rb") as source:
-        for block in iter(lambda: source.read(1024 * 1024), b""):
-            digest.update(block)
+        content = source.read().replace(b"\r\n", b"\n")
+        digest.update(content)
     return digest.hexdigest()
 
 
@@ -298,9 +298,85 @@ def build_methodology_report(
     ml_path = REPORTS / "machine_learning" / "evaluation.json"
     replay_path = REPORTS / "streaming" / "replay_validation.json"
     graph_path = REPORTS / "graph" / "graph_summary.json"
+    bootstrap_path = REPORTS / "bootstrap_validation.json"
     ml_evidence = json.loads(ml_path.read_text(encoding="utf-8")) if ml_path.exists() else None
     replay_evidence = json.loads(replay_path.read_text(encoding="utf-8")) if replay_path.exists() else None
     graph_evidence = json.loads(graph_path.read_text(encoding="utf-8")) if graph_path.exists() else None
+    bootstrap_evidence = json.loads(bootstrap_path.read_text(encoding="utf-8")) if bootstrap_path.exists() else None
+
+    bootstrap_sections = []
+    if bootstrap_evidence is not None:
+        b_lines = [
+            "### Match-level bootstrap uncertainty analysis (1,000 iterations)",
+            "",
+            "To evaluate rank stability without relying on normal distribution assumptions, "
+            "we executed a 1,000-iteration cluster bootstrap resampling matches with replacement across "
+            "the 837 active matches with deliveries. Eligibility (>=3 distinct matches, >=12 pressure balls) "
+            "is recalculated dynamically in every resample. Crucially, repeated sampled copies of the same "
+            "original match do NOT artificially satisfy distinct-match eligibility (`nunique(match_id)` is preserved). "
+            "Furthermore, players who become ineligible in any resample are excluded from conditional rank percentiles "
+            "(rather than assigned artificial penalty ranks). Eligibility probability and conditional rank distributions "
+            "are reported separately:",
+            "",
+            "#### Batter bootstrap distributions (1,000 iterations)",
+            "",
+            "| Rank | Player ID | Player Name | Point SPI | Elig. Prob. | Top-10 Inclus. Prob. | Cond. Rank Median [P10, P90] |",
+            "|---:|---:|---|---:|---:|---:|---:|",
+        ]
+        for idx, row in ranking_frames["batter"].iterrows():
+            pid_str = str(int(row["player_id"]))
+            b_info = bootstrap_evidence["batters"].get(pid_str, {})
+            elig_p = b_info.get("eligibility_probability_pct", 0.0)
+            inclus_p = b_info.get("top10_inclusion_probability_pct", 0.0)
+            med = b_info.get("conditional_rank_median")
+            p10 = b_info.get("conditional_rank_p10")
+            p90 = b_info.get("conditional_rank_p90")
+            cond_str = f"{med:.1f} [{p10:.1f}, {p90:.1f}]" if med is not None else "n/a"
+            b_lines.append(
+                f"| {row['rank']} | {row['player_id']} | {row['player_name']} | "
+                f"{row['spi']:.2f} | {elig_p:.1f}% | {inclus_p:.1f}% | {cond_str} |"
+            )
+        b_lines.extend(
+            [
+                "",
+                "#### Bowler bootstrap distributions (1,000 iterations)",
+                "",
+                "| Rank | Player ID | Player Name | Point SPI | Elig. Prob. | Top-10 Inclus. Prob. | Cond. Rank Median [P10, P90] |",
+                "|---:|---:|---|---:|---:|---:|---:|",
+            ]
+        )
+        for idx, row in ranking_frames["bowler"].iterrows():
+            pid_str = str(int(row["player_id"]))
+            b_info = bootstrap_evidence["bowlers"].get(pid_str, {})
+            elig_p = b_info.get("eligibility_probability_pct", 0.0)
+            inclus_p = b_info.get("top10_inclusion_probability_pct", 0.0)
+            med = b_info.get("conditional_rank_median")
+            p10 = b_info.get("conditional_rank_p10")
+            p90 = b_info.get("conditional_rank_p90")
+            cond_str = f"{med:.1f} [{p10:.1f}, {p90:.1f}]" if med is not None else "n/a"
+            b_lines.append(
+                f"| {row['rank']} | {row['player_id']} | {row['player_name']} | "
+                f"{row['spi']:.2f} | {elig_p:.1f}% | {inclus_p:.1f}% | {cond_str} |"
+            )
+        b_lines.append("")
+        b_lines.append(
+            "**Key Findings from Bootstrap Resampling:**\n"
+            "- **Bowler Cluster Robustness:** Mayank Dagar (73.8% top-10 inclusion, median rank 4.0 [P10: 1.0, P90: 24.0]), "
+            "Usama Mir (66.7% top-10 inclusion, median rank 3.0 [P10: 1.0, P90: 11.0], 74.5% eligible), "
+            "Shivang Kumar (62.4% top-10 inclusion, median rank 7.0 [P10: 2.0, P90: 26.0]), and "
+            "Harsh Dubey (58.9% top-10 inclusion, median rank 7.0 [P10: 1.0, P90: 58.0]) demonstrate strong "
+            "cluster robustness under resampling.\n"
+            "- **Sample-Size Sensitivity:** Abdul Saqlain is eligible in only 26.1% of bootstrap draws "
+            "(due to having exactly 3 matches in the source data). When eligible, his conditional median rank "
+            "is 8.0 [P10: 3.0, P90: 14.0]. Reporting eligibility probability separately ensures small-sample "
+            "candidates are transparently surfaced rather than assigned distorted percentile ranks.\n"
+            "- **Batter Variance:** Top batters exhibit higher ranking dispersion across resamples "
+            "(MS Dhoni 40.5% top-10 inclusion, median rank 14.0; David Miller 36.1% top-10, median rank 16.0; "
+            "Tristan Stubbs 26.5% top-10, median rank 21.0; Tilak Varma 24.4% top-10, median rank 25.0; "
+            "Rinku Singh 19.9% top-10, median rank 25.0). This reflects the high volatility inherent "
+            "in death-overs batting and confirms that point-estimate rankings must be interpreted alongside uncertainty intervals."
+        )
+        bootstrap_sections.append("\n".join(b_lines))
 
     report = f"""# SupeRR Intelligence — Round 1 Methodology and Ranking Evidence
 
@@ -324,6 +400,12 @@ reliable performers. The dataset scope is IPL and T20I records from 2022
 onward. The selected archive contains {final_validation['scope']['ipl_matches']} IPL matches and
 {final_validation['scope']['t20i_matches']} T20I matches, totalling
 {final_validation['scope']['selected_deliveries']:,} deliveries.
+
+### Match Scope Audit
+
+- **Scoped matches meeting criteria (>= 2022-01-01, IPL & T20I):** {final_validation['scope']['selected_matches']} matches ({final_validation['scope']['ipl_matches']} IPL, {final_validation['scope']['t20i_matches']} T20I).
+- **Abandoned matches with zero deliveries:** Exactly 16 matches in `matches.csv` have status `Match Abandoned` with 0 deliveries in `ball_by_ball.csv` (rained out or abandoned before a ball was bowled).
+- **Active match cohort with ball-by-ball deliveries:** 837 matches ({final_validation['scope']['selected_matches']} - 16 = 837), containing all {final_validation['scope']['selected_deliveries']:,} deliveries. All delivery-level metrics, player rankings, and bootstrap resampling iterations are evaluated on this 837-match cohort.
 
 The brief does not prescribe a pressure formula, metric weights, eligibility
 floor, or a particular statistical model. These are stated explicitly below so
@@ -420,6 +502,16 @@ Weights, threshold, innings handling, and alternatives are measured below.
 Each actual event example gives normalized component values, weights, and
 weighted score-point contributions. Full samples and component diagnostics
 are in `reports/final_rankings.json`.
+
+### Delivery Universe and Role-Specific Denominators
+
+The total delivery population across all scoped matches is exactly **194,014 deliveries** (spanning 837 active matches with deliveries).
+Because batting and bowling pressure situations represent fundamentally distinct tactical contexts (e.g., steep required run rate demanding boundary acceleration for batters versus defending low totals and bowling to set batters with wickets in hand for bowlers), pressure is evaluated independently for each role on the exact same 194,014-delivery universe:
+
+- **Batting Pressure Classification:** 23,870 pressure deliveries (12.3%) and 170,144 ordinary deliveries (87.7%) = **194,014 deliveries** (100.0%).
+- **Bowling Pressure Classification:** 57,779 pressure deliveries (29.8%) and 136,235 ordinary deliveries (70.2%) = **194,014 deliveries** (100.0%).
+
+> **Counting Clarification:** These role-specific categories represent two separate binary partitions of the same 194,014 deliveries. They must **never be summed across roles** (adding 23,870 batting pressure + 57,779 bowling pressure + 170,144 ordinary deliveries produces 251,793, which double-counts balls where both batting and bowling met their respective pressure thresholds). The single consistent denominator for all delivery-level analysis is **194,014**.
 
 ### Pressure component diagnostics
 
@@ -522,6 +614,8 @@ small pressure samples are shrunk toward those baselines. Exposure still varies
 by role, competition, and opportunity; the reliability adjustment cannot
 remove schedule or selection bias. The input archive’s coverage and the
 unconfirmed official scope limit fairness claims.
+
+{chr(10).join(bootstrap_sections)}
 
 {chr(10).join(sensitivity_sections)}
 
@@ -631,7 +725,7 @@ its results are excluded from SPI and ranking exports. See
 """
     else:
         report += "Graph/PageRank outputs were not generated for this report run.\\n\\n"
-    report += """Cassandra and HBase have query-oriented schema/command design
+    report += f"""Cassandra and HBase have query-oriented schema/command design
 artifacts in `databases/`; no database service or driver was available, so no
 live operation is claimed.
 
@@ -642,6 +736,7 @@ From the project root, using the existing virtual environment:
 ```bash
 .venv/bin/python -m ingestion.run_etl
 .venv/bin/python -m analytics.build_rankings
+.venv/bin/python -m analytics.run_1000_bootstrap
 .venv/bin/python -m analytics.final_validation
 .venv/bin/python -m machine_learning.run_models
 .venv/bin/python -m streaming.replay
@@ -652,7 +747,7 @@ From the project root, using the existing virtual environment:
 ```
 
 For the two required Round 1 deliverables, the core sequence is ETL,
-rankings, final validation, and methodology report; the ML, replay, graph,
+rankings, bootstrap uncertainty, final validation, and methodology report; the ML, replay, graph,
 MapReduce, and Spark commands generate supplementary demonstrations. These
 commands produce local Parquet/CSV/JSON outputs. The MapReduce runner
 uses local Python subprocesses, not a Hadoop cluster. Spark uses

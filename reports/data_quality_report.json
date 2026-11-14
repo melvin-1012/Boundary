@@ -1336,7 +1336,7 @@
   "etl": {
     "status": "completed_with_warnings",
     "pipeline_version": "1.0",
-    "run_timestamp_utc": "2026-11-13T08:09:36.369849+00:00",
+    "run_timestamp_utc": "2026-11-14T01:47:16.254633+00:00",
     "input_files": [
       "ball_by_ball.csv",
       "competition_team_player_mapping.csv",
@@ -1509,63 +1509,63 @@
       "unknown_extras": "other extras remain included in bowler runs and legal-ball treatment is provisional"
     },
     "outputs": {
-      "data/processed/ball_by_ball.parquet": {
+      "data\\processed\\ball_by_ball.parquet": {
         "rows": 200999,
         "columns": 33,
         "bytes": 3398321,
         "content": "source values retained; no row-level cleaning or deduplication"
       },
-      "data/processed/matches.parquet": {
+      "data\\processed\\matches.parquet": {
         "rows": 883,
         "columns": 22,
         "bytes": 44354,
         "content": "source values retained; no row-level cleaning or deduplication"
       },
-      "data/processed/competitions.parquet": {
+      "data\\processed\\competitions.parquet": {
         "rows": 141,
         "columns": 4,
         "bytes": 5431,
         "content": "source values retained; no row-level cleaning or deduplication"
       },
-      "data/processed/teams.parquet": {
+      "data\\processed\\teams.parquet": {
         "rows": 353,
         "columns": 3,
         "bytes": 4424,
         "content": "source values retained; no row-level cleaning or deduplication"
       },
-      "data/processed/playing_eleven.parquet": {
+      "data\\processed\\playing_eleven.parquet": {
         "rows": 28381,
         "columns": 9,
         "bytes": 69191,
         "content": "source values retained; no row-level cleaning or deduplication"
       },
-      "data/processed/competition_team_player_mapping.parquet": {
+      "data\\processed\\competition_team_player_mapping.parquet": {
         "rows": 6413,
         "columns": 6,
         "bytes": 46917,
         "content": "source values retained; no row-level cleaning or deduplication"
       },
-      "data/curated/pressure_deliveries.parquet": {
+      "data\\curated\\pressure_deliveries.parquet": {
         "rows": 194014,
         "columns": 81,
-        "bytes": 12700296
+        "bytes": 12700388
       },
-      "data/curated/batter_match_metrics.parquet": {
+      "data\\curated\\batter_match_metrics.parquet": {
         "rows": 13235,
         "columns": 10,
         "bytes": 129554
       },
-      "data/curated/bowler_match_metrics.parquet": {
+      "data\\curated\\bowler_match_metrics.parquet": {
         "rows": 9730,
         "columns": 11,
         "bytes": 99986
       },
-      "data/curated/batter_metrics.parquet": {
+      "data\\curated\\batter_metrics.parquet": {
         "rows": 824,
         "columns": 34,
         "bytes": 114221
       },
-      "data/curated/bowler_metrics.parquet": {
+      "data\\curated\\bowler_metrics.parquet": {
         "rows": 596,
         "columns": 28,
         "bytes": 88051
@@ -1573,7 +1573,7 @@
     },
     "metadata_outputs": [
       "data/metadata/data_dictionary.csv",
-      "data/metadata/dataset_relationships.json"
+      "data\\metadata\\dataset_relationships.json"
     ]
   }
 }

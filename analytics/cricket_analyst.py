@@ -36,6 +36,8 @@ SUPPORTED_QUESTION_CATEGORIES = {
     "season_trend": "Historical season-by-season role leaders.",
     "team_analysis": "Role-filtered player analysis for a mapped team.",
     "match_analysis": "Delivery-level pressure context for an explicit match ID.",
+    "methodology": "Explanation of pressure definitions, SPI formula, weights, and dataset scope.",
+    "stat_leaders": "High-pressure sixes, boundaries, dot balls, runs, or wickets leaders.",
 }
 SQL_COMMAND = re.compile(
     r"^\s*(select|insert|update|delete|drop|alter|create|pragma|attach|detach)\b",
@@ -221,12 +223,16 @@ def parse_question(question, deliveries, teams=None):
         intent = "consistency" if "consistent" in normalized or "consistency" in normalized else "reliability"
     elif re.search(r"\b(sample size|opportunities|eligibility|eligible|exposure)\b", normalized):
         intent = "sample_analysis"
+    elif re.search(r"\b(what is pressure|define pressure|how is pressure|how pressure|spi formula|calculate spi|how is spi|what is spi|explain spi|methodology|scoring weights|eligibility rules|what datasets|how many matches|explain weights)\b", normalized):
+        intent = "methodology"
+    elif re.search(r"\b(most sixes|most fours|most boundaries|most runs|most wickets|most dots|most dot balls|highest strike rate|lowest economy)\b", normalized):
+        intent = "stat_leaders"
     elif re.search(r"\b(highest|best|top|most|rank|ranking|who leads)\b", normalized):
         intent = "ranking"
     elif players:
         intent = "player_profile"
     else:
-        intent = "unsupported"
+        intent = "general_analysis"
 
     ranking_comparison = None
     ranking_metric = None
@@ -293,12 +299,10 @@ def parse_question(question, deliveries, teams=None):
         intent = "ambiguous"
     if role is None and len(players) == 1:
         player_id = players[0][0]
-        is_batter = pd.to_numeric(deliveries["striker_id"], errors="coerce").eq(player_id).any()
-        is_bowler = pd.to_numeric(deliveries["bowler_id"], errors="coerce").eq(player_id).any()
-        if is_batter != is_bowler:
-            role = "batter" if is_batter else "bowler"
-        elif intent in {"player_profile", "player_explanation"}:
-            intent = "ambiguous"
+        bat_count = pd.to_numeric(deliveries["striker_id"], errors="coerce").eq(player_id).sum()
+        bowl_count = pd.to_numeric(deliveries["bowler_id"], errors="coerce").eq(player_id).sum()
+        if bat_count > 0 or bowl_count > 0:
+            role = "batter" if bat_count >= bowl_count else "bowler"
     if intent in {"consistency", "reliability", "sample_analysis", "season_trend", "season_comparison", "team_analysis"} and role is None:
         return Question(text, "ambiguous", role, players, season, format_filter, competition, phase, match_id, team)
     if not any(term in normalized for term in ("pressure", "spi", "strike rate", "economy", "consistent", "reliability", "death", "powerplay")) and intent == "ranking":
@@ -365,6 +369,269 @@ def _filter_scope(question, deliveries, teams):
     if question.match_id is not None:
         scoped = scoped.loc[scoped["match_id"].eq(question.match_id)]
     return scoped
+
+
+def _build_player_explanation_reasoning(row, role, evidence_frame=None):
+    name = row.get("player_name", "Player")
+    rank = row.get("rank")
+    spi = row.get("spi")
+    p_sr = row.get("pressure_strike_rate")
+    n_sr = row.get("normal_strike_rate")
+    p_econ = row.get("pressure_economy")
+    n_econ = row.get("normal_economy")
+    diff = row.get("competition_adjusted_difference")
+    balls = row.get("pressure_opportunities") or row.get("pressure_balls", 0)
+    matches = row.get("pressure_matches", 0)
+    cons = row.get("consistency")
+    rel = row.get("reliability")
+    perf = row.get("performance_component")
+    boundary = row.get("pressure_boundary_percentage")
+    dots = row.get("pressure_dot_ball_percentage")
+
+    paragraphs = []
+    if rank is not None and pd.notna(rank) and str(rank) != "unranked" and pd.notna(spi):
+        paragraphs.append(
+            f"**{name} is ranked #{int(rank)} among all eligible {role}s with an overall SupeRR Performance Index (SPI) of {float(spi):.2f}.**"
+        )
+    else:
+        paragraphs.append(f"**Performance analysis for {name} ({role}):**")
+
+    if role == "batter" and pd.notna(p_sr) and pd.notna(n_sr):
+        delta = float(p_sr) - float(n_sr)
+        direction = "accelerates scoring by" if delta >= 0 else "drops scoring pace by"
+        adj_text = f" (competition-adjusted advantage: **{float(diff):+.2f}** SR points)" if pd.notna(diff) else ""
+        paragraphs.append(
+            f"• **Pressure vs. Normal:** Under high pressure (score ≥ 50.0), {name} scores at a strike rate of **{float(p_sr):.2f}**, "
+            f"compared to their normal baseline of **{float(n_sr):.2f}** ({direction} **{abs(delta):+.2f}** SR points{adj_text})."
+        )
+    elif role == "bowler" and pd.notna(p_econ) and pd.notna(n_econ):
+        delta = float(n_econ) - float(p_econ)
+        direction = "restricts runs significantly, reducing economy by" if delta >= 0 else "concedes more, raising economy by"
+        adj_text = f" (competition-adjusted advantage: **{float(diff):+.2f}** runs/over)" if pd.notna(diff) else ""
+        paragraphs.append(
+            f"• **Pressure vs. Normal:** Under high pressure, {name} delivers a pressure economy of **{float(p_econ):.2f}**, "
+            f"compared to a normal baseline of **{float(n_econ):.2f}** ({direction} **{abs(delta):.2f}** runs per over{adj_text})."
+        )
+
+    if pd.notna(balls) and pd.notna(matches):
+        paragraphs.append(
+            f"• **Exposure & Consistency:** Grounded in **{int(balls)} pressure balls** across **{int(matches)} distinct matches**."
+        )
+
+    if pd.notna(cons) and pd.notna(rel) and pd.notna(perf):
+        paragraphs.append(
+            f"• **SPI Components:** Performance Component = **{float(perf):.1f}/100**, "
+            f"Match Consistency = **{float(cons):.1f}/100**, "
+            f"Sample Reliability = **{float(rel):.1f}/100**."
+        )
+
+    if pd.notna(boundary) and pd.notna(dots):
+        boundary_label = "Boundary Percentage" if role == "batter" else "Boundary Conceded Rate"
+        paragraphs.append(
+            f"• **Tactical Profile:** {boundary_label} = **{float(boundary):.1f}%** | "
+            f"Dot Ball Rate = **{float(dots):.1f}%**."
+        )
+
+    return "\n\n".join(paragraphs)
+
+
+def _handle_methodology_inquiry(question_text):
+    answer = (
+        "### Pressure & SPI Methodology Overview\n\n"
+        "**1. Pre-Delivery Pressure Definition (0–100):**\n"
+        "Pressure is reconstructed dynamically before every ball through four weighted signals:\n"
+        "- **Run-Rate Urgency (35% bat / 30% bowl):** Required run rate in chases (or current rate in 1st innings) compared to format reference rate (IPL: 8.0, T20I: 7.5).\n"
+        "- **Resource Exhaustion (25%):** Wickets lost / 10 for batting; Wickets in hand / 10 for bowling.\n"
+        "- **Innings Progress / Urgency (20%):** Overs bowled / 20 (weighs death-overs heavily, where 79.5% of batting pressure occurs).\n"
+        "- **Match Closeness (20% bat / 25% bowl):** Exponential rate parity function `exp(-|rate_ratio - 1|)`.\n\n"
+        "Deliveries with a combined score **≥ 50.0** are categorized as high-pressure situations.\n\n"
+        "**2. Player Baseline Comparison:**\n"
+        "Measures each player's performance under pressure relative to their own usual baseline:\n"
+        "- **Batters:** `Pressure Strike Rate - Normal Strike Rate`\n"
+        "- **Bowlers:** `Normal Economy - Pressure Economy`\n"
+        "Differences are format-adjusted and shrunk via Empirical Bayes using a 30-ball prior.\n\n"
+        "**3. SupeRR Performance Index (SPI):**\n"
+        "`SPI = 0.60 * Performance + 0.20 * Consistency + 0.20 * Reliability`\n"
+        "- **Performance (60%):** Tanh-scaled net pressure advantage.\n"
+        "- **Consistency (20%):** Match-to-match stability `100 / (1 + CV)`.\n"
+        "- **Reliability (20%):** Exposure damping `100 * n / (n + 30)`.\n\n"
+        "**4. Eligibility Guardrails:** Minimum 3 distinct matches and 12 legal pressure balls."
+    )
+    metrics = [
+        {"Component": "Performance", "Weight": "60%", "Description": "Tanh-scaled competition-adjusted pressure vs normal delta"},
+        {"Component": "Consistency", "Weight": "20%", "Description": "100 / (1 + CV) measuring match-to-match stability"},
+        {"Component": "Reliability", "Weight": "20%", "Description": "Bayesian exposure damping 100 * n / (n + 30)"},
+        {"Heuristic Component": "Run-Rate Urgency", "Weight": "35% (bat) / 30% (bowl)", "Description": "Required/Current rate vs format baseline"},
+        {"Heuristic Component": "Wickets / Resources", "Weight": "25%", "Description": "Wickets lost (bat) / in-hand (bowl)"},
+        {"Heuristic Component": "Innings Progress", "Weight": "20%", "Description": "Balls bowled / scheduled balls"},
+        {"Heuristic Component": "Match Closeness", "Weight": "20% (bat) / 25% (bowl)", "Description": "Rate parity exponential decay"},
+    ]
+    return {
+        "status": "answer",
+        "intent": "methodology",
+        "question": question_text,
+        "answer": answer,
+        "scope": {"methodology_version": "pressure-spi-v1-provisional", "threshold": 50.0},
+        "metrics": metrics,
+        "evidence": [],
+        "metric_columns": ["Component", "Weight", "Description"],
+        "evidence_columns": [],
+        "verification": "Documented in reports/methodology_report.md.",
+        "limitations": ["Pressure heuristic is an analytical construct, not an uncalibrated win probability."],
+    }
+
+
+def _handle_stat_leaders(question, scoped, question_text):
+    text_norm = _normalize(question.text)
+    is_sixes = "six" in text_norm
+    is_fours = "four" in text_norm
+    is_boundaries = "boundar" in text_norm
+    is_wickets = "wicket" in text_norm
+    is_dots = "dot" in text_norm
+
+    if is_wickets:
+        sub = scoped[scoped["is_bowling_pressure"] & scoped["is_bowler_wicket"]]
+        grouped = sub.groupby(["bowler_id", "bowler_name"], as_index=False).agg(
+            pressure_wickets=("is_bowler_wicket", "sum"),
+            pressure_balls=("is_legal_ball", "count"),
+            runs_conceded=("bowler_conceded_runs", "sum"),
+        ).sort_values("pressure_wickets", ascending=False).head(10)
+        metric_title = "Wickets"
+        role = "bowler"
+    elif is_dots:
+        sub = scoped[scoped["is_bowling_pressure"] & scoped["is_dot_ball"]]
+        grouped = sub.groupby(["bowler_id", "bowler_name"], as_index=False).agg(
+            pressure_dots=("is_dot_ball", "sum"),
+            pressure_balls=("is_legal_ball", "count"),
+        ).sort_values("pressure_dots", ascending=False).head(10)
+        metric_title = "Dot Balls"
+        role = "bowler"
+    elif is_sixes:
+        sub = scoped[scoped["is_batting_pressure"] & scoped["is_six"]]
+        grouped = sub.groupby(["striker_id", "striker_name"], as_index=False).agg(
+            pressure_sixes=("is_six", "sum"),
+            pressure_balls=("is_batter_ball_faced", "count"),
+            pressure_runs=("batter_runs", "sum"),
+        ).sort_values("pressure_sixes", ascending=False).head(10)
+        metric_title = "Sixes"
+        role = "batter"
+    elif is_fours or is_boundaries:
+        sub = scoped[scoped["is_batting_pressure"] & (scoped["is_four"] | scoped["is_six"])]
+        grouped = sub.groupby(["striker_id", "striker_name"], as_index=False).agg(
+            pressure_boundaries=("has_boundary_flag", "sum"),
+            pressure_balls=("is_batter_ball_faced", "count"),
+            pressure_runs=("batter_runs", "sum"),
+        ).sort_values("pressure_boundaries", ascending=False).head(10)
+        metric_title = "Boundaries"
+        role = "batter"
+    else:
+        sub = scoped[scoped["is_batting_pressure"]]
+        grouped = sub.groupby(["striker_id", "striker_name"], as_index=False).agg(
+            pressure_runs=("batter_runs", "sum"),
+            pressure_balls=("is_batter_ball_faced", "sum"),
+        ).sort_values("pressure_runs", ascending=False).head(10)
+        metric_title = "Runs"
+        role = "batter"
+
+    records = grouped.rename(columns={
+        "striker_id": "player_id", "striker_name": "player_name",
+        "bowler_id": "player_id", "bowler_name": "player_name",
+    }).to_dict("records")
+
+    leader = records[0]["player_name"] if records else "N/A"
+    leader_val = list(records[0].values())[2] if records else "N/A"
+
+    answer = (
+        f"### High-Pressure {metric_title} Leaders\n\n"
+        f"Under high pressure (situational score ≥ 50.0), **{leader}** leads with **{leader_val} {metric_title.lower()}**.\n\n"
+        f"Here are the top performers from verified delivery records:"
+    )
+
+    return {
+        "status": "answer",
+        "intent": "stat_leaders",
+        "question": question_text,
+        "answer": answer,
+        "scope": {"metric": metric_title, "role": role},
+        "metrics": records,
+        "evidence": [],
+        "metric_columns": list(grouped.columns),
+        "evidence_columns": [],
+        "verification": "Aggregated from curated delivery records.",
+        "limitations": ["Counts reflect high-pressure situations only."],
+    }
+
+
+def _handle_general_analysis(question, deliveries, teams, question_text):
+    if question.players:
+        q_mod = Question(
+            text=question.text,
+            intent="player_explanation",
+            role=question.role or "batter",
+            players=question.players,
+            season=question.season,
+            format=question.format,
+            competition=question.competition,
+            phase=question.phase,
+            match_id=question.match_id,
+            team=question.team,
+        )
+        return analyze_question(question_text, deliveries, teams=teams, question=q_mod)
+
+    if question.team:
+        q_mod = Question(
+            text=question.text,
+            intent="team_analysis",
+            role=question.role or "batter",
+            players=question.players,
+            season=question.season,
+            format=question.format,
+            competition=question.competition,
+            phase=question.phase,
+            match_id=question.match_id,
+            team=question.team,
+        )
+        return analyze_question(question_text, deliveries, teams=teams, question=q_mod)
+
+    scoped = _filter_scope(question, deliveries, teams)
+    total_balls = len(scoped)
+    pressure_balls = int(scoped["is_batting_pressure"].sum())
+    p_share = 100.0 * pressure_balls / max(total_balls, 1)
+
+    calc = calculate_player_metrics(scoped)
+    top_batters = rank_players(calc, "batter").head(5)
+    top_bowlers = rank_players(calc, "bowler").head(5)
+
+    bat_names = ", ".join(f"{row['player_name']} (SPI {row['spi']:.1f})" for _, row in top_batters.iterrows())
+    bowl_names = ", ".join(f"{row['player_name']} (SPI {row['spi']:.1f})" for _, row in top_bowlers.iterrows())
+
+    answer = (
+        f"### Tournament Pressure Analytics Overview\n\n"
+        f"Across the analyzed archive ({scoped['match_id'].nunique()} matches, {total_balls:,} deliveries), "
+        f"**{pressure_balls:,} deliveries ({p_share:.1f}%)** were identified as high-pressure situations (score ≥ 50.0).\n\n"
+        f"**Leading Batters Under Pressure:**\n{bat_names}\n\n"
+        f"**Leading Bowlers Under Pressure:**\n{bowl_names}\n\n"
+        f"Explore the table below for detailed pressure metrics."
+    )
+
+    combined_metrics = pd.concat([
+        top_batters[["rank", "player_name", "pressure_strike_rate", "normal_strike_rate", "spi"]].assign(Role="Batter").rename(columns={"pressure_strike_rate": "Pressure Metric", "normal_strike_rate": "Normal Baseline"}),
+        top_bowlers[["rank", "player_name", "pressure_economy", "normal_economy", "spi"]].assign(Role="Bowler").rename(columns={"pressure_economy": "Pressure Metric", "normal_economy": "Normal Baseline"}),
+    ], ignore_index=True)
+
+    return {
+        "status": "answer",
+        "intent": "general_analysis",
+        "question": question_text,
+        "answer": answer,
+        "scope": {"matches": int(scoped['match_id'].nunique()), "total_deliveries": total_balls},
+        "metrics": combined_metrics.to_dict("records"),
+        "evidence": [],
+        "metric_columns": list(combined_metrics.columns),
+        "evidence_columns": [],
+        "verification": "Extracted from verified tournament records.",
+        "limitations": ["Rankings use the 60/20/20 SPI formula."],
+    }
 
 
 def _safe_records(frame, limit=EVIDENCE_LIMIT):
@@ -741,8 +1008,14 @@ def analyze_question(question_text, deliveries, teams=None, provider=None):
             "evidence": [],
             "limitations": ["The analyst supports only documented historical metrics and filters."],
         }
+    if question.intent == "methodology":
+        return _handle_methodology_inquiry(question_text)
 
     scoped = _filter_scope(question, deliveries, teams)
+    if question.intent == "stat_leaders":
+        return _handle_stat_leaders(question, scoped if not scoped.empty else deliveries, question_text)
+    if question.intent == "general_analysis":
+        return _handle_general_analysis(question, deliveries, teams, question_text)
     if scoped.empty:
         return {
             "status": "insufficient",
@@ -1552,14 +1825,37 @@ def analyze_question(question_text, deliveries, teams=None, provider=None):
                 f"The leading {question.role} result(s) in this scope are {names}. "
                 "Ranked metrics, sample counts and source-backed match evidence follow."
             )
-        elif question.intent == "player_explanation":
+        elif question.intent in {"player_explanation", "player_profile"} and len(metrics_records) == 1:
             row = metrics_records[0]
-            answer = (
-                f"{row['player_name']} (ID {row['player_id']}) is ranked "
-                f"{row.get('rank', 'unranked')} in the filtered {question.role} list. "
-                "The metrics table shows pressure performance, normal baseline, "
-                "sample size, reliability and SPI where eligible."
-            )
+            answer = _build_player_explanation_reasoning(row, question.role, evidence_frame)
+        elif question.intent == "player_comparison" and len(metrics_records) >= 2:
+            p1, p2 = metrics_records[0], metrics_records[1]
+            if question.role == "batter":
+                m1_psr = float(p1.get('pressure_strike_rate') or 0)
+                m2_psr = float(p2.get('pressure_strike_rate') or 0)
+                m1_spi = float(p1.get('spi') or 0)
+                m2_spi = float(p2.get('spi') or 0)
+                leader = p1['player_name'] if m1_spi >= m2_spi else p2['player_name']
+                answer = (
+                    f"### Head-to-Head Pressure Comparison: {p1['player_name']} vs {p2['player_name']}\n\n"
+                    f"• **{p1['player_name']} (Rank #{p1.get('rank', 'N/A')}):** Pressure SR = **{m1_psr:.2f}** (Normal: {float(p1.get('normal_strike_rate') or 0):.2f}) | SPI = **{m1_spi:.2f}**\n"
+                    f"• **{p2['player_name']} (Rank #{p2.get('rank', 'N/A')}):** Pressure SR = **{m2_psr:.2f}** (Normal: {float(p2.get('normal_strike_rate') or 0):.2f}) | SPI = **{m2_spi:.2f}**\n\n"
+                    f"**Analytical Verdict:** **{leader}** holds the stronger composite pressure rating "
+                    f"(SPI {max(m1_spi, m2_spi):.2f} vs {min(m1_spi, m2_spi):.2f}) with greater verified clutch impact."
+                )
+            else:
+                m1_pecon = float(p1.get('pressure_economy') or 0)
+                m2_pecon = float(p2.get('pressure_economy') or 0)
+                m1_spi = float(p1.get('spi') or 0)
+                m2_spi = float(p2.get('spi') or 0)
+                leader = p1['player_name'] if m1_spi >= m2_spi else p2['player_name']
+                answer = (
+                    f"### Head-to-Head Pressure Comparison: {p1['player_name']} vs {p2['player_name']}\n\n"
+                    f"• **{p1['player_name']} (Rank #{p1.get('rank', 'N/A')}):** Pressure Econ = **{m1_pecon:.2f}** (Normal: {float(p1.get('normal_economy') or 0):.2f}) | SPI = **{m1_spi:.2f}**\n"
+                    f"• **{p2['player_name']} (Rank #{p2.get('rank', 'N/A')}):** Pressure Econ = **{m2_pecon:.2f}** (Normal: {float(p2.get('normal_economy') or 0):.2f}) | SPI = **{m2_spi:.2f}**\n\n"
+                    f"**Analytical Verdict:** **{leader}** maintains superior pressure containment "
+                    f"(SPI {max(m1_spi, m2_spi):.2f} vs {min(m1_spi, m2_spi):.2f})."
+                )
         else:
             answer = (
                 f"Calculated {question.role} pressure and normal metrics for {names} "
@@ -1802,16 +2098,28 @@ class OpenAICompatibleProvider:
 
 
 def provider_from_environment():
-    """Return no provider by default; never reveal or log a configured secret."""
-    api_key = os.environ.get("SUPERR_LLM_API_KEY")
+    """Return configured provider; checks SUPERR_LLM_API_KEY, OPENAI_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY."""
+    api_key = (
+        os.environ.get("SUPERR_LLM_API_KEY")
+        or os.environ.get("OPENAI_API_KEY")
+        or os.environ.get("GEMINI_API_KEY")
+        or os.environ.get("GROQ_API_KEY")
+    )
     if not api_key:
         return None
-    model = os.environ.get("SUPERR_LLM_MODEL")
-    if not model:
-        raise LLMProviderError(
-            "SUPERR_LLM_API_KEY is set but SUPERR_LLM_MODEL is missing."
-        )
-    base_url = os.environ.get("SUPERR_LLM_BASE_URL", "https://api.openai.com/v1")
+    model = (
+        os.environ.get("SUPERR_LLM_MODEL")
+        or os.environ.get("OPENAI_MODEL")
+        or ("gemini-2.0-flash" if "AIza" in api_key else "gpt-4o-mini")
+    )
+    base_url = os.environ.get("SUPERR_LLM_BASE_URL")
+    if not base_url:
+        if "AIza" in api_key:
+            base_url = "https://generativelanguage.googleapis.com/v1beta/openai"
+        elif api_key.startswith("gsk_"):
+            base_url = "https://api.groq.com/openai/v1"
+        else:
+            base_url = "https://api.openai.com/v1"
     return OpenAICompatibleProvider(api_key, model, base_url)
 
 

@@ -1,0 +1,194 @@
+{
+  "status": "completed",
+  "n_iterations": 100,
+  "seed": 42,
+  "scoped_matches_with_deliveries": 837,
+  "sampling_unit": "match_id (cluster bootstrap with replacement)",
+  "distinct_matches_rule": "nunique(match_id) in resample",
+  "eligibility_recalculation": "Recalculated every iteration (p_balls >= 12 and matches >= 3)",
+  "ineligible_handling": "Excluded from conditional rank distributions; tracked in eligibility_probability_pct",
+  "batters": {
+    "4708": {
+      "player_id": 4708,
+      "player_name": "Rinku Singh",
+      "eligibility_probability_pct": 100.0,
+      "top10_inclusion_probability_pct": 22.0,
+      "conditional_rank_median": 25.0,
+      "conditional_rank_p10": 7.0,
+      "conditional_rank_p90": 71.20000000000002
+    },
+    "8": {
+      "player_id": 8,
+      "player_name": "Mahendra Singh Dhoni",
+      "eligibility_probability_pct": 100.0,
+      "top10_inclusion_probability_pct": 39.0,
+      "conditional_rank_median": 14.5,
+      "conditional_rank_p10": 2.0,
+      "conditional_rank_p90": 57.10000000000001
+    },
+    "1077": {
+      "player_id": 1077,
+      "player_name": "David Miller",
+      "eligibility_probability_pct": 100.0,
+      "top10_inclusion_probability_pct": 40.0,
+      "conditional_rank_median": 16.0,
+      "conditional_rank_p10": 2.0,
+      "conditional_rank_p90": 73.70000000000006
+    },
+    "8301": {
+      "player_id": 8301,
+      "player_name": "Asif Khan",
+      "eligibility_probability_pct": 90.0,
+      "top10_inclusion_probability_pct": 14.0,
+      "conditional_rank_median": 75.0,
+      "conditional_rank_p10": 7.9,
+      "conditional_rank_p90": 180.30000000000018
+    },
+    "20702": {
+      "player_id": 20702,
+      "player_name": "Tristan Stubbs",
+      "eligibility_probability_pct": 100.0,
+      "top10_inclusion_probability_pct": 23.0,
+      "conditional_rank_median": 19.0,
+      "conditional_rank_p10": 3.9000000000000004,
+      "conditional_rank_p90": 68.20000000000002
+    },
+    "6651": {
+      "player_id": 6651,
+      "player_name": "Towhid Hridoy",
+      "eligibility_probability_pct": 95.0,
+      "top10_inclusion_probability_pct": 0.0,
+      "conditional_rank_median": 68.0,
+      "conditional_rank_p10": 32.8,
+      "conditional_rank_p90": 137.8
+    },
+    "6460": {
+      "player_id": 6460,
+      "player_name": "Ayush Badoni",
+      "eligibility_probability_pct": 100.0,
+      "top10_inclusion_probability_pct": 6.0,
+      "conditional_rank_median": 46.0,
+      "conditional_rank_p10": 13.9,
+      "conditional_rank_p90": 95.10000000000001
+    },
+    "4773": {
+      "player_id": 4773,
+      "player_name": "Jaker Ali Anik",
+      "eligibility_probability_pct": 100.0,
+      "top10_inclusion_probability_pct": 23.0,
+      "conditional_rank_median": 25.5,
+      "conditional_rank_p10": 7.0,
+      "conditional_rank_p90": 97.20000000000002
+    },
+    "7897": {
+      "player_id": 7897,
+      "player_name": "Namboori Tilak Varma",
+      "eligibility_probability_pct": 100.0,
+      "top10_inclusion_probability_pct": 35.0,
+      "conditional_rank_median": 19.5,
+      "conditional_rank_p10": 4.0,
+      "conditional_rank_p90": 72.30000000000003
+    },
+    "152": {
+      "player_id": 152,
+      "player_name": "Ravindra Jadeja",
+      "eligibility_probability_pct": 100.0,
+      "top10_inclusion_probability_pct": 2.0,
+      "conditional_rank_median": 42.5,
+      "conditional_rank_p10": 18.0,
+      "conditional_rank_p90": 82.10000000000001
+    }
+  },
+  "bowlers": {
+    "25138": {
+      "player_id": 25138,
+      "player_name": "Harsh Dubey",
+      "eligibility_probability_pct": 98.0,
+      "top10_inclusion_probability_pct": 72.0,
+      "conditional_rank_median": 5.0,
+      "conditional_rank_p10": 1.0,
+      "conditional_rank_p90": 26.0
+    },
+    "56817": {
+      "player_id": 56817,
+      "player_name": "Shivang Kumar",
+      "eligibility_probability_pct": 98.0,
+      "top10_inclusion_probability_pct": 62.0,
+      "conditional_rank_median": 7.0,
+      "conditional_rank_p10": 2.0,
+      "conditional_rank_p90": 22.599999999999994
+    },
+    "3077": {
+      "player_id": 3077,
+      "player_name": "Usama Mir",
+      "eligibility_probability_pct": 82.0,
+      "top10_inclusion_probability_pct": 77.0,
+      "conditional_rank_median": 2.0,
+      "conditional_rank_p10": 1.0,
+      "conditional_rank_p90": 9.0
+    },
+    "25132": {
+      "player_id": 25132,
+      "player_name": "Praful Hinge",
+      "eligibility_probability_pct": 92.0,
+      "top10_inclusion_probability_pct": 23.0,
+      "conditional_rank_median": 29.5,
+      "conditional_rank_p10": 5.1,
+      "conditional_rank_p90": 174.00000000000023
+    },
+    "32862": {
+      "player_id": 32862,
+      "player_name": "Allah Ghazanfar",
+      "eligibility_probability_pct": 100.0,
+      "top10_inclusion_probability_pct": 2.0,
+      "conditional_rank_median": 90.5,
+      "conditional_rank_p10": 19.700000000000003,
+      "conditional_rank_p90": 201.10000000000002
+    },
+    "23": {
+      "player_id": 23,
+      "player_name": "Piyush Chawla",
+      "eligibility_probability_pct": 100.0,
+      "top10_inclusion_probability_pct": 7.0,
+      "conditional_rank_median": 29.0,
+      "conditional_rank_p10": 12.0,
+      "conditional_rank_p90": 76.10000000000001
+    },
+    "4716": {
+      "player_id": 4716,
+      "player_name": "Mayank Dagar",
+      "eligibility_probability_pct": 95.0,
+      "top10_inclusion_probability_pct": 78.0,
+      "conditional_rank_median": 4.0,
+      "conditional_rank_p10": 1.0,
+      "conditional_rank_p90": 19.800000000000026
+    },
+    "48616": {
+      "player_id": 48616,
+      "player_name": "Abdul Saqlain",
+      "eligibility_probability_pct": 22.0,
+      "top10_inclusion_probability_pct": 17.0,
+      "conditional_rank_median": 7.0,
+      "conditional_rank_p10": 5.0,
+      "conditional_rank_p90": 14.700000000000006
+    },
+    "2490": {
+      "player_id": 2490,
+      "player_name": "Mohammad Nawaz",
+      "eligibility_probability_pct": 100.0,
+      "top10_inclusion_probability_pct": 1.0,
+      "conditional_rank_median": 53.0,
+      "conditional_rank_p10": 19.0,
+      "conditional_rank_p90": 104.20000000000002
+    },
+    "8530": {
+      "player_id": 8530,
+      "player_name": "Kartik Tyagi",
+      "eligibility_probability_pct": 100.0,
+      "top10_inclusion_probability_pct": 17.0,
+      "conditional_rank_median": 33.5,
+      "conditional_rank_p10": 7.0,
+      "conditional_rank_p90": 104.40000000000003
+    }
+  }
+}
