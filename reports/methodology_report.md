@@ -1,11 +1,12 @@
-# SupeRR Intelligence — Methodology and Ranking Evidence
+# SupeRR Intelligence — Round 1 Methodology and Ranking Evidence
 
-> **PROVISIONAL — NOT AN OFFICIAL FINAL SUBMISSION.** The official Rajasthan
-> Royals Round 1 Problem Statement and `MASTER_SPECIFICATION.md` are not in the
-> workspace, so official rules cannot be confirmed. This run applies the
-> current request's IPL and T20I archive from 2022-01-01. Pressure weights,
-> threshold, eligibility floors, and source-field interpretations remain
-> provisional and materially affect the selections.
+> **Round 1 problem statement:** “Identify the Most Reliable Players Under
+> Pressure.” The supplied brief asks for ordered top-10 batter and bowler
+> rankings and a reproducible methodology report, and explicitly leaves the
+> pressure definition to the team. This report addresses those requirements.
+> The pressure weights, threshold, eligibility floors, and source-field
+> interpretations are analytical choices, not values prescribed by the brief;
+> they remain provisional and can materially affect the selections.
 
 **Methodology version:** `pressure-spi-v1-provisional`  
 **Ranking run ID:** `9f00984a3cdd119a3b48`  
@@ -13,13 +14,16 @@
 
 ## 1. Objective and source scope
 
-The requested objective is to identify pressure-performing batters and
-bowlers from the supplied historical IPL and T20I archive dated on or after
-2022-01-01. The official brief is unavailable, so this is the scope stated in
-the current request, not a verified quotation of official rules. The selected
-scope contains 371 IPL matches and
+The objective is to compare each batter's and bowler's performance in
+high-pressure situations with their usual performance, then rank the most
+reliable performers. The dataset scope is IPL and T20I records from 2022
+onward. The selected archive contains 371 IPL matches and
 482 T20I matches, totalling
 194,014 deliveries.
+
+The brief does not prescribe a pressure formula, metric weights, eligibility
+floor, or a particular statistical model. These are stated explicitly below so
+reviewers can assess and reproduce the chosen approach.
 
 ## 2. Dataset inventory and validation
 
@@ -99,6 +103,24 @@ bowling pressure. These are validity concerns, not a basis for a preferred
 ranking. Keep the current formula only as a transparent provisional baseline;
 review the constructs with a cricket domain expert before adoption.
 
+The signal rationale is:
+
+- **Run-rate difficulty:** a required chase rate relative to the prior
+  same-format scoring reference represents the demand placed on a batter; the
+  inverse direction represents the challenge for a bowler to restrict scoring.
+  First-innings current run rate is compared with that same historical
+  reference.
+- **Wickets/resources:** wickets lost represent batting resources already
+  spent. For bowling, wickets remaining represents the batting side's
+  remaining resources and the pressure on the bowler to contain them; it is a
+  proxy, not a direct measure of the bowler's own pressure.
+- **Innings time:** later innings state can make a given scoring task more
+  urgent. Progress alone is not sufficient evidence of pressure, so it is only
+  one weighted component.
+- **Closeness:** scoring pace near the format reference marks a balanced-rate
+  state, not necessarily a close match. It is included as a heuristic and is
+  tested because it may overlap with run-rate difficulty.
+
 Weights, threshold, innings handling, and alternatives are measured below.
 Each actual event example gives normalized component values, weights, and
 weighted score-point contributions. Full samples and component diagnostics
@@ -123,6 +145,15 @@ are in `reports/final_rankings.json`.
 | wickets | 0.250 | 0.268 | 6.69 |
 | time | 0.200 | 0.472 | 9.45 |
 | closeness | 0.200 | 0.557 | 11.14 |
+
+Pressure versus ordinary delivery context (median [25th, 75th percentile]):
+
+| Group | Deliveries | Rate / reference | Wickets before | Balls remaining | Innings progress |
+|---|---:|---:|---:|---:|---:|
+| pressure | 23,870 | 1.55 [0.93, 2.15] | 6.00 [6.00, 8.00] | 16.00 [8.00, 27.00] | 0.87 [0.78, 0.93] |
+| ordinary | 170,144 | 0.99 [0.80, 1.18] | 2.00 [1.00, 3.00] | 71.00 [44.00, 97.00] | 0.41 [0.19, 0.63] |
+- **Batter pressure innings phase share:** death 79.5%, middle 20.5%, powerplay 0.0%.
+- **Batter ordinary innings phase share:** death 13.1%, middle 44.8%, powerplay 42.0%.
 ### Bowler pressure component correlation and contribution
 
 | Component pair | Spearman rho | High-overlap flag |
@@ -140,6 +171,15 @@ are in `reports/final_rankings.json`.
 | wickets | 0.250 | 0.732 | 18.31 |
 | time | 0.200 | 0.472 | 9.45 |
 | closeness | 0.250 | 0.557 | 13.92 |
+
+Pressure versus ordinary delivery context (median [25th, 75th percentile]):
+
+| Group | Deliveries | Rate / reference | Wickets before | Balls remaining | Innings progress |
+|---|---:|---:|---:|---:|---:|
+| pressure | 57,779 | 0.97 [0.79, 1.10] | 2.00 [1.00, 4.00] | 44.00 [21.00, 79.00] | 0.63 [0.34, 0.82] |
+| ordinary | 136,235 | 1.04 [0.83, 1.30] | 2.00 [1.00, 4.00] | 71.00 [43.00, 98.00] | 0.41 [0.18, 0.64] |
+- **Bowler pressure innings phase share:** death 35.5%, middle 40.1%, powerplay 24.4%.
+- **Bowler ordinary innings phase share:** death 15.2%, middle 42.6%, powerplay 42.2%.
 
 ### Actual pressure-event calculations
 
@@ -192,41 +232,64 @@ and supporting player-metric tables in `reports/`.
 
 ### Top 10 batters
 
-| Rank | Player ID | Player | SPI | Pressure SR | Normal baseline | Pressure balls | Pressure matches | Reliability | Evidence |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 4708 | Rinku Singh | 90.24 | 204.21 | 142.39 | 214 | 19 | 87.70 | Pressure performance 204.21 versus normal 142.39; competition-adjusted change +50.89; 214 pressure opportunities across 83 matches. |
-| 2 | 8 | Mahendra Singh Dhoni | 88.49 | 182.66 | 111.63 | 248 | 31 | 89.21 | Pressure performance 182.66 versus normal 111.63; competition-adjusted change +39.45; 248 pressure opportunities across 48 matches. |
-| 3 | 1077 | David Miller | 88.37 | 213.41 | 138.87 | 179 | 27 | 85.65 | Pressure performance 213.41 versus normal 138.87; competition-adjusted change +45.14; 179 pressure opportunities across 81 matches. |
-| 4 | 8301 | Asif Khan | 87.50 | 223.08 | 126.35 | 52 | 3 | 63.41 | Pressure performance 223.08 versus normal 126.35; competition-adjusted change +77.94; 52 pressure opportunities across 13 matches. |
-| 5 | 20702 | Tristan Stubbs | 87.28 | 206.91 | 137.92 | 188 | 19 | 86.24 | Pressure performance 206.91 versus normal 137.92; competition-adjusted change +33.29; 188 pressure opportunities across 69 matches. |
-| 6 | 6651 | Towhid Hridoy | 86.99 | 177.78 | 120.31 | 90 | 4 | 75.00 | Pressure performance 177.78 versus normal 120.31; competition-adjusted change +33.18; 90 pressure opportunities across 50 matches. |
-| 7 | 6460 | Ayush Badoni | 86.95 | 187.01 | 130.50 | 154 | 22 | 83.70 | Pressure performance 187.01 versus normal 130.50; competition-adjusted change +42.34; 154 pressure opportunities across 56 matches. |
-| 8 | 4773 | Jaker Ali Anik | 86.89 | 184.92 | 112.18 | 126 | 13 | 80.77 | Pressure performance 184.92 versus normal 112.18; competition-adjusted change +41.00; 126 pressure opportunities across 34 matches. |
-| 9 | 7897 | Namboori Tilak Varma | 86.69 | 200.00 | 138.65 | 206 | 23 | 87.29 | Pressure performance 200.00 versus normal 138.65; competition-adjusted change +31.64; 206 pressure opportunities across 123 matches. |
-| 10 | 152 | Ravindra Jadeja | 86.27 | 173.02 | 121.53 | 252 | 32 | 89.36 | Pressure performance 173.02 versus normal 121.53; competition-adjusted change +33.77; 252 pressure opportunities across 65 matches. |
+| Rank | Player | SPI | Pressure SR | Normal baseline | Adjusted pressure advantage | Pressure balls | Pressure matches | Performance | Consistency | Reliability | Top-10 scenario rate | SPI gap to next | Matches above normal | Largest match exposure share |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | Rinku Singh | 90.24 | 204.21 | 142.39 | 50.89 | 214 | 19 | 98.49 | 68.03 | 87.70 | 100% | 1.75 | 13 | 12.6% |
+| 2 | Mahendra Singh Dhoni | 88.49 | 182.66 | 111.63 | 39.45 | 248 | 31 | 96.42 | 64.00 | 89.21 | 100% | 0.12 | 11 | 7.3% |
+| 3 | David Miller | 88.37 | 213.41 | 138.87 | 45.14 | 179 | 27 | 97.38 | 64.07 | 85.65 | 100% | 0.87 | 19 | 17.3% |
+| 4 | Asif Khan | 87.50 | 223.08 | 126.35 | 77.94 | 52 | 3 | 99.03 | 77.00 | 63.41 | 92% | 0.22 | 2 | 50.0% |
+| 5 | Tristan Stubbs | 87.28 | 206.91 | 137.92 | 33.29 | 188 | 19 | 93.62 | 69.29 | 86.24 | 100% | 0.29 | 13 | 10.1% |
+| 6 | Towhid Hridoy | 86.99 | 177.78 | 120.31 | 33.18 | 90 | 4 | 91.12 | 86.58 | 75.00 | 92% | 0.04 | 4 | 34.4% |
+| 7 | Ayush Badoni | 86.95 | 187.01 | 130.50 | 42.34 | 154 | 22 | 96.50 | 61.59 | 83.70 | 100% | 0.06 | 11 | 16.9% |
+| 8 | Jaker Ali Anik | 86.89 | 184.92 | 112.18 | 41.00 | 126 | 13 | 95.68 | 66.66 | 80.77 | 100% | 0.20 | 8 | 19.0% |
+| 9 | Namboori Tilak Varma | 86.69 | 200.00 | 138.65 | 31.64 | 206 | 23 | 92.98 | 67.22 | 87.29 | 100% | 0.42 | 15 | 16.0% |
+| 10 | Ravindra Jadeja | 86.27 | 173.02 | 121.53 | 33.77 | 252 | 32 | 94.39 | 58.82 | 89.36 | 100% | 0.30 | 17 | 7.5% |
 
 ### Top 10 bowlers
 
-| Rank | Player ID | Player | SPI | Pressure econ. | Normal baseline | Pressure balls | Pressure matches | Reliability | Evidence |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 25138 | Harsh Dubey | 82.17 | 7.22 | 11.62 | 64 | 4 | 68.09 | Pressure performance 7.22 versus normal 11.62; competition-adjusted change +2.85; 64 pressure opportunities across 11 matches. |
-| 2 | 56817 | Shivang Kumar | 80.02 | 7.36 | 10.88 | 84 | 6 | 73.68 | Pressure performance 7.36 versus normal 10.88; competition-adjusted change +2.48; 84 pressure opportunities across 13 matches. |
-| 3 | 3077 | Usama Mir | 77.64 | 5.69 | 11.61 | 58 | 5 | 65.91 | Pressure performance 5.69 versus normal 11.61; competition-adjusted change +2.62; 58 pressure opportunities across 5 matches. |
-| 4 | 25132 | Praful Hinge | 72.76 | 10.24 | 12.24 | 58 | 6 | 65.91 | Pressure performance 10.24 versus normal 12.24; competition-adjusted change +1.30; 58 pressure opportunities across 7 matches. |
-| 5 | 32862 | Allah Ghazanfar | 71.69 | 9.09 | 9.50 | 103 | 8 | 77.44 | Pressure performance 9.09 versus normal 9.50; competition-adjusted change +0.97; 103 pressure opportunities across 15 matches. |
-| 6 | 23 | Piyush Chawla | 70.72 | 7.53 | 8.77 | 169 | 12 | 84.92 | Pressure performance 7.53 versus normal 8.77; competition-adjusted change +0.70; 169 pressure opportunities across 27 matches. |
-| 7 | 4716 | Mayank Dagar | 69.82 | 7.82 | 11.68 | 99 | 6 | 76.74 | Pressure performance 7.82 versus normal 11.68; competition-adjusted change +0.84; 99 pressure opportunities across 8 matches. |
-| 8 | 48616 | Abdul Saqlain | 67.99 | 7.40 | 12.47 | 30 | 3 | 50.00 | Pressure performance 7.40 versus normal 12.47; competition-adjusted change +2.01; 30 pressure opportunities across 3 matches. |
-| 9 | 2490 | Mohammad Nawaz | 66.78 | 7.03 | 7.17 | 321 | 24 | 91.45 | Pressure performance 7.03 versus normal 7.17; competition-adjusted change +0.30; 321 pressure opportunities across 52 matches. |
-| 10 | 8530 | Kartik Tyagi | 66.20 | 9.69 | 10.66 | 174 | 13 | 85.29 | Pressure performance 9.69 versus normal 10.66; competition-adjusted change +0.30; 174 pressure opportunities across 19 matches. |
+| Rank | Player | SPI | Pressure econ. | Normal baseline | Adjusted pressure advantage | Pressure balls | Pressure matches | Performance | Consistency | Reliability | Top-10 scenario rate | SPI gap to next | Matches above normal | Largest match exposure share |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | Harsh Dubey | 82.17 | 7.22 | 11.62 | 2.85 | 64 | 4 | 91.42 | 68.48 | 68.09 | 75% | 2.15 | 2 | 32.8% |
+| 2 | Shivang Kumar | 80.02 | 7.36 | 10.88 | 2.48 | 84 | 6 | 90.29 | 55.54 | 73.68 | 92% | 2.38 | 3 | 28.6% |
+| 3 | Usama Mir | 77.64 | 5.69 | 11.61 | 2.62 | 58 | 5 | 89.17 | 54.81 | 65.91 | 75% | 4.89 | 5 | 31.0% |
+| 4 | Praful Hinge | 72.76 | 10.24 | 12.24 | 1.30 | 58 | 6 | 73.99 | 75.91 | 65.91 | 92% | 1.07 | 4 | 31.0% |
+| 5 | Allah Ghazanfar | 71.69 | 9.09 | 9.50 | 0.97 | 103 | 8 | 71.39 | 66.82 | 77.44 | 83% | 0.97 | 3 | 23.3% |
+| 6 | Piyush Chawla | 70.72 | 7.53 | 8.77 | 0.70 | 169 | 12 | 67.27 | 66.85 | 84.92 | 92% | 0.90 | 2 | 14.2% |
+| 7 | Mayank Dagar | 69.82 | 7.82 | 11.68 | 0.84 | 99 | 6 | 68.73 | 66.16 | 76.74 | 100% | 1.83 | 1 | 24.2% |
+| 8 | Abdul Saqlain | 67.99 | 7.40 | 12.47 | 2.01 | 30 | 3 | 77.29 | 58.08 | 50.00 | 67% | 1.21 | 2 | 66.7% |
+| 9 | Mohammad Nawaz | 66.78 | 7.03 | 7.17 | 0.30 | 321 | 24 | 58.35 | 67.39 | 91.45 | 92% | 0.58 | 13 | 7.5% |
+| 10 | Kartik Tyagi | 66.20 | 9.69 | 10.66 | 0.30 | 174 | 13 | 57.73 | 72.51 | 85.29 | 100% | 0.93 | 9 | 14.4% |
 
 The CSV outputs contain the per-player competition scope, full metric values,
 reliability, and generated evidence summary. Their recorded SHA-256 digests are:
 
-- Batters: `6992f80d3d2737c95b26a405c8f70e9717d6cd9925da74ea8e15354ba8b1c630`
-- Bowlers: `bf7a3dd80dca6ede5a71a094b606923842893971b4ec68885b1347a187c7ad14`
+- Batters: `47d674ed601df82473f1524178a217069599f9ebf87d070be0f3777e1c1881b9`
+- Bowlers: `3d252f5782699bcd823117f0a127eeea89a6d931beb8daee73394df8cd59293d`
+
+The tables also show SPI component values, improvement relative to the
+competition-adjusted pressure-versus-normal comparison, the SPI gap to the
+next rank, match counts beating the player's normal rate, and the share of
+pressure opportunities concentrated in their largest pressure match. Scenario
+rate is the fraction of tested alternative specifications placing the player
+in the top ten; it is a robustness summary, not a probability.
+
+### Match-by-match top-ten evidence
+
+`reports/top_10_match_evidence.csv` contains one row per top-ten player and
+match with pressure opportunities, pressure performance, normal performance
+where that match has ordinary opportunities, the pressure advantage, and
+pressure-opportunity share. This lets a reviewer inspect whether the aggregate
+rating is consistent across matches or driven by a small number of high-volume
+matches. `matches_above_normal` counts only matches with a measurable ordinary
+baseline; zero ordinary opportunities are not treated as a loss.
 
 ## 6. Sensitivity, fairness, and limitations
+
+The pressure-versus-ordinary context tables above show whether the chosen
+threshold selects deliveries that differ in rate demand, wickets remaining,
+time left, and phase from the non-pressure group. These are descriptive
+comparisons, not independent validation that the selected events are
+psychologically or objectively high-pressure.
 
 The ranking generator evaluates performance/consistency/reliability weight
 changes, including removing the reliability component; eligibility thresholds;
@@ -256,6 +319,7 @@ unconfirmed official scope limit fairness claims.
 | pressure_threshold_60 | 9360 | 8842 | 186 | 0.176 |
 | equal_pressure_component_weights | 23870 | 22645 | 310 | 0.333 |
 | closeness_removed | 16915 | 16063 | 237 | 0.429 |
+| wickets_component_removed | 21938 | 20757 | 301 | 0.538 |
 
 Top-ten membership and rank movement from baseline:
 - **performance_heavy:** ID 8: rank 2 → 3; SPI 88.49 → 90.47 (Δ +1.98); ID 152: rank 10 → 8; SPI 86.27 → 88.30 (Δ +2.03); ID 1077: rank 3 → 2; SPI 88.37 → 90.63 (Δ +2.25); ID 4708: rank 1 → 1; SPI 90.24 → 92.30 (Δ +2.06); ID 4773: rank 8 → 6; SPI 86.89 → 89.09 (Δ +2.20); ID 6460: rank 7 → 5; SPI 86.95 → 89.34 (Δ +2.39); ID 6651: rank 6 → 11; SPI 86.99 → 88.02 (Δ +1.03); ID 7897: rank 9 → 9; SPI 86.69 → 88.27 (Δ +1.57); ID 8301: rank 4 → 4; SPI 87.50 → 90.38 (Δ +2.88); ID 20702: rank 5 → 7; SPI 87.28 → 88.87 (Δ +1.59); ID 45749: rank 16 → 10; SPI 85.59 → 88.12 (Δ +2.53)
@@ -269,6 +333,7 @@ Top-ten membership and rank movement from baseline:
 - **pressure_threshold_60:** ID 8: rank 2 → 1; SPI 88.49 → 88.69 (Δ +0.19); ID 152: rank 10 → 14; SPI 86.27 → 83.56 (Δ -2.71); ID 1077: rank 3 → 28; SPI 88.37 → 79.19 (Δ -9.18); ID 2436: rank 29 → 6; SPI 82.28 → 86.02 (Δ +3.75); ID 2984: rank 27 → 4; SPI 83.13 → 86.40 (Δ +3.26); ID 3605: rank 33 → 5; SPI 81.61 → 86.25 (Δ +4.64); ID 4101: rank 107 → 7; SPI 70.98 → 85.49 (Δ +14.51); ID 4708: rank 1 → 2; SPI 90.24 → 87.99 (Δ -2.25); ID 4722: rank 12 → 10; SPI 85.96 → 84.66 (Δ -1.30); ID 4773: rank 8 → 48; SPI 86.89 → 71.29 (Δ -15.61); ID 4986: rank 18 → 9; SPI 84.46 → 84.74 (Δ +0.28); ID 6460: rank 7 → 29; SPI 86.95 → 78.14 (Δ -8.82); ID 6651: rank 6 → 3; SPI 86.99 → 86.45 (Δ -0.54); ID 6726: rank 20 → 8; SPI 84.00 → 85.05 (Δ +1.05); ID 7897: rank 9 → 167; SPI 86.69 → 34.59 (Δ -52.10); ID 8301: rank 4 → 87; SPI 87.50 → 58.47 (Δ -29.03); ID 20702: rank 5 → 130; SPI 87.28 → 46.22 (Δ -41.06)
 - **equal_pressure_component_weights:** ID 8: rank 2 → 18; SPI 88.49 → 86.55 (Δ -1.94); ID 143: rank 15 → 5; SPI 85.68 → 88.66 (Δ +2.99); ID 152: rank 10 → 42; SPI 86.27 → 83.43 (Δ -2.85); ID 1077: rank 3 → 2; SPI 88.37 → 89.35 (Δ +0.98); ID 2436: rank 29 → 6; SPI 82.28 → 88.36 (Δ +6.08); ID 3125: rank 63 → 10; SPI 76.93 → 87.55 (Δ +10.62); ID 3926: rank 38 → 7; SPI 80.38 → 87.66 (Δ +7.27); ID 4708: rank 1 → 3; SPI 90.24 → 89.29 (Δ -0.95); ID 4773: rank 8 → 11; SPI 86.89 → 87.54 (Δ +0.64); ID 6460: rank 7 → 9; SPI 86.95 → 87.64 (Δ +0.69); ID 6651: rank 6 → 86; SPI 86.99 → 77.10 (Δ -9.89); ID 7897: rank 9 → 8; SPI 86.69 → 87.65 (Δ +0.96); ID 8101: rank 11 → 1; SPI 85.98 → 89.45 (Δ +3.47); ID 8301: rank 4 → 56; SPI 87.50 → 80.76 (Δ -6.74); ID 20702: rank 5 → 4; SPI 87.28 → 88.86 (Δ +1.58)
 - **closeness_removed:** ID 8: rank 2 → 3; SPI 88.49 → 89.24 (Δ +0.75); ID 152: rank 10 → 5; SPI 86.27 → 88.58 (Δ +2.31); ID 796: rank 26 → 10; SPI 83.35 → 85.79 (Δ +2.44); ID 1077: rank 3 → 6; SPI 88.37 → 87.91 (Δ -0.46); ID 4708: rank 1 → 1; SPI 90.24 → 90.46 (Δ +0.22); ID 4773: rank 8 → 11; SPI 86.89 → 85.43 (Δ -1.46); ID 6396: rank 13 → 7; SPI 85.81 → 87.91 (Δ +2.09); ID 6460: rank 7 → 15; SPI 86.95 → 84.36 (Δ -2.59); ID 6651: rank 6 → 4; SPI 86.99 → 89.10 (Δ +2.11); ID 6726: rank 20 → 9; SPI 84.00 → 86.46 (Δ +2.46); ID 7897: rank 9 → 32; SPI 86.69 → 81.92 (Δ -4.77); ID 8101: rank 11 → 8; SPI 85.98 → 87.43 (Δ +1.46); ID 8301: rank 4 → 21; SPI 87.50 → 83.61 (Δ -3.89); ID 20702: rank 5 → 2; SPI 87.28 → 89.25 (Δ +1.97)
+- **wickets_component_removed:** ID 8: rank 2 → 8; SPI 88.49 → 86.54 (Δ -1.96); ID 152: rank 10 → 2; SPI 86.27 → 88.46 (Δ +2.19); ID 1077: rank 3 → 3; SPI 88.37 → 88.21 (Δ -0.17); ID 2436: rank 29 → 5; SPI 82.28 → 87.12 (Δ +4.84); ID 4708: rank 1 → 1; SPI 90.24 → 89.45 (Δ -0.78); ID 4722: rank 12 → 4; SPI 85.96 → 87.92 (Δ +1.95); ID 4773: rank 8 → 14; SPI 86.89 → 85.53 (Δ -1.36); ID 4986: rank 18 → 10; SPI 84.46 → 86.17 (Δ +1.71); ID 6460: rank 7 → 15; SPI 86.95 → 85.35 (Δ -1.61); ID 6651: rank 6 → 7; SPI 86.99 → 86.62 (Δ -0.37); ID 7897: rank 9 → 9; SPI 86.69 → 86.51 (Δ -0.18); ID 8301: rank 4 → 23; SPI 87.50 → 83.25 (Δ -4.25); ID 20702: rank 5 → 6; SPI 87.28 → 86.79 (Δ -0.49)
 ### Bowler ranking sensitivity
 
 | Scenario | Pressure deliveries | Pressure opportunities | Eligible | Top-10 Jaccard |
@@ -284,6 +349,7 @@ Top-ten membership and rank movement from baseline:
 | pressure_threshold_60 | 4646 | 4392 | 109 | 0.053 |
 | equal_pressure_component_weights | 57779 | 55179 | 366 | 0.429 |
 | closeness_removed | 17896 | 16994 | 227 | 0.000 |
+| wickets_component_removed | 24526 | 23104 | 265 | 0.111 |
 
 Top-ten membership and rank movement from baseline:
 - **performance_heavy:** ID 23: rank 6 → 7; SPI 70.72 → 69.86 (Δ -0.86); ID 286: rank 11 → 9; SPI 65.28 → 64.92 (Δ -0.36); ID 2490: rank 9 → 10; SPI 66.78 → 64.67 (Δ -2.11); ID 3077: rank 3 → 3; SPI 77.64 → 80.53 (Δ +2.88); ID 4716: rank 7 → 8; SPI 69.82 → 69.55 (Δ -0.27); ID 8530: rank 10 → 13; SPI 66.20 → 64.09 (Δ -2.12); ID 25132: rank 4 → 4; SPI 72.76 → 73.06 (Δ +0.31); ID 25138: rank 1 → 1; SPI 82.17 → 84.48 (Δ +2.31); ID 32862: rank 5 → 5; SPI 71.69 → 71.61 (Δ -0.07); ID 48616: rank 8 → 6; SPI 67.99 → 70.32 (Δ +2.33); ID 56817: rank 2 → 2; SPI 80.02 → 82.59 (Δ +2.57)
@@ -297,6 +363,7 @@ Top-ten membership and rank movement from baseline:
 - **pressure_threshold_60:** ID 23: rank 6 → None; enters or leaves the top ten; ID 786: rank 251 → 8; SPI 39.27 → 48.31 (Δ +9.04); ID 1107: rank 135 → 5; SPI 46.74 → 52.53 (Δ +5.79); ID 2304: rank 72 → 1; SPI 52.43 → 59.09 (Δ +6.65); ID 2490: rank 9 → None; enters or leaves the top ten; ID 2526: rank 227 → 6; SPI 40.68 → 51.11 (Δ +10.43); ID 3077: rank 3 → None; enters or leaves the top ten; ID 4229: rank 47 → 2; SPI 56.00 → 56.73 (Δ +0.73); ID 4716: rank 7 → 45; SPI 69.82 → 40.22 (Δ -29.60); ID 8049: rank 237 → 3; SPI 40.41 → 56.30 (Δ +15.89); ID 8530: rank 10 → 9; SPI 66.20 → 47.90 (Δ -18.31); ID 25132: rank 4 → None; enters or leaves the top ten; ID 25138: rank 1 → None; enters or leaves the top ten; ID 26663: rank 182 → 4; SPI 43.70 → 55.99 (Δ +12.29); ID 32862: rank 5 → None; enters or leaves the top ten; ID 35318: rank 148 → 10; SPI 46.10 → 47.78 (Δ +1.69); ID 48616: rank 8 → None; enters or leaves the top ten; ID 56817: rank 2 → None; enters or leaves the top ten; ID 58246: rank 94 → 7; SPI 50.50 → 49.92 (Δ -0.59)
 - **equal_pressure_component_weights:** ID 23: rank 6 → 12; SPI 70.72 → 64.61 (Δ -6.11); ID 2490: rank 9 → 28; SPI 66.78 → 59.13 (Δ -7.65); ID 3077: rank 3 → 1; SPI 77.64 → 80.59 (Δ +2.94); ID 3623: rank 100 → 7; SPI 49.68 → 68.58 (Δ +18.90); ID 4716: rank 7 → 32; SPI 69.82 → 57.97 (Δ -11.85); ID 8530: rank 10 → 8; SPI 66.20 → 67.84 (Δ +1.64); ID 25048: rank 116 → 10; SPI 48.09 → 66.43 (Δ +18.34); ID 25132: rank 4 → 5; SPI 72.76 → 69.10 (Δ -3.66); ID 25138: rank 1 → 3; SPI 82.17 → 77.32 (Δ -4.85); ID 32862: rank 5 → 70; SPI 71.69 → 53.23 (Δ -18.46); ID 36553: rank 13 → 6; SPI 64.67 → 68.99 (Δ +4.32); ID 41503: rank 81 → 4; SPI 51.31 → 69.75 (Δ +18.44); ID 48616: rank 8 → 9; SPI 67.99 → 67.20 (Δ -0.79); ID 56817: rank 2 → 2; SPI 80.02 → 78.94 (Δ -1.08)
 - **closeness_removed:** ID 23: rank 6 → 24; SPI 70.72 → 52.70 (Δ -18.02); ID 1107: rank 135 → 4; SPI 46.74 → 61.80 (Δ +15.06); ID 2399: rank 74 → 7; SPI 52.35 → 58.24 (Δ +5.89); ID 2490: rank 9 → 39; SPI 66.78 → 49.50 (Δ -17.28); ID 3077: rank 3 → None; enters or leaves the top ten; ID 3686: rank 29 → 9; SPI 58.68 → 57.87 (Δ -0.81); ID 4229: rank 47 → 8; SPI 56.00 → 57.97 (Δ +1.97); ID 4460: rank 147 → 1; SPI 46.13 → 71.57 (Δ +25.43); ID 4716: rank 7 → 56; SPI 69.82 → 47.02 (Δ -22.80); ID 4823: rank 95 → 10; SPI 50.33 → 57.75 (Δ +7.41); ID 6676: rank 114 → 2; SPI 48.34 → 67.35 (Δ +19.00); ID 8530: rank 10 → 90; SPI 66.20 → 44.30 (Δ -21.90); ID 17424: rank 102 → 3; SPI 49.45 → 62.95 (Δ +13.50); ID 21784: rank 273 → 6; SPI 37.94 → 58.54 (Δ +20.60); ID 25048: rank 116 → 5; SPI 48.09 → 58.65 (Δ +10.56); ID 25132: rank 4 → 63; SPI 72.76 → 46.20 (Δ -26.56); ID 25138: rank 1 → 82; SPI 82.17 → 44.79 (Δ -37.38); ID 32862: rank 5 → None; enters or leaves the top ten; ID 48616: rank 8 → None; enters or leaves the top ten; ID 56817: rank 2 → 27; SPI 80.02 → 52.08 (Δ -27.94)
+- **wickets_component_removed:** ID 23: rank 6 → 131; SPI 70.72 → 41.34 (Δ -29.38); ID 2483: rank 62 → 7; SPI 53.35 → 62.76 (Δ +9.42); ID 2490: rank 9 → 76; SPI 66.78 → 45.10 (Δ -21.68); ID 3077: rank 3 → None; enters or leaves the top ten; ID 3686: rank 29 → 5; SPI 58.68 → 63.04 (Δ +4.36); ID 4716: rank 7 → 64; SPI 69.82 → 46.85 (Δ -22.97); ID 4895: rank 240 → 4; SPI 40.25 → 63.32 (Δ +23.07); ID 5738: rank 46 → 9; SPI 56.02 → 59.59 (Δ +3.57); ID 6932: rank 71 → 1; SPI 52.64 → 69.42 (Δ +16.79); ID 7327: rank 144 → 6; SPI 46.33 → 62.85 (Δ +16.52); ID 8530: rank 10 → 8; SPI 66.20 → 62.72 (Δ -3.48); ID 8746: rank 34 → 10; SPI 57.94 → 58.99 (Δ +1.05); ID 25132: rank 4 → 3; SPI 72.76 → 63.91 (Δ -8.85); ID 25138: rank 1 → None; enters or leaves the top ten; ID 26663: rank 182 → 2; SPI 43.70 → 64.45 (Δ +20.75); ID 32862: rank 5 → 122; SPI 71.69 → 41.92 (Δ -29.77); ID 48616: rank 8 → None; enters or leaves the top ten; ID 56817: rank 2 → 68; SPI 80.02 → 46.47 (Δ -33.55)
 
 ### Correlation diagnostics
 
@@ -380,8 +447,8 @@ targets match innings 3 total plus one in the tested rows; revised target
 semantics have no independent official documentation.
 
 Raw input hashes and validation results are in `reports/final_validation.json`.
-Ranking output SHA-256 values are `6992f80d3d2737c95b26a405c8f70e9717d6cd9925da74ea8e15354ba8b1c630`
-(batters) and `bf7a3dd80dca6ede5a71a094b606923842893971b4ec68885b1347a187c7ad14` (bowlers).
+Ranking output SHA-256 values are `47d674ed601df82473f1524178a217069599f9ebf87d070be0f3777e1c1881b9`
+(batters) and `3d252f5782699bcd823117f0a127eeea89a6d931beb8daee73394df8cd59293d` (bowlers).
 Ranking run ID: `9f00984a3cdd119a3b48`.
 
 An exploratory decision tree and random forest classify
@@ -423,6 +490,7 @@ From the project root, using the existing virtual environment:
 ```bash
 .venv/bin/python -m ingestion.run_etl
 .venv/bin/python -m analytics.build_rankings
+.venv/bin/python -m analytics.final_validation
 .venv/bin/python -m machine_learning.run_models
 .venv/bin/python -m streaming.replay
 .venv/bin/python -m graph_analytics.run_graph
@@ -431,7 +499,10 @@ From the project root, using the existing virtual environment:
 .venv/bin/python -m spark.run_spark
 ```
 
-These commands produce local Parquet/CSV/JSON outputs. The MapReduce runner
+For the two required Round 1 deliverables, the core sequence is ETL,
+rankings, final validation, and methodology report; the ML, replay, graph,
+MapReduce, and Spark commands generate supplementary demonstrations. These
+commands produce local Parquet/CSV/JSON outputs. The MapReduce runner
 uses local Python subprocesses, not a Hadoop cluster. Spark uses
 `local[2]`, not a multi-node deployment. Rankings and this report must be
 regenerated together after any methodology or data change.

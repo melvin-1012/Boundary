@@ -2,7 +2,7 @@
   "status": "provisional",
   "methodology_version": "pressure-spi-v1-provisional",
   "ranking_run_id": "9f00984a3cdd119a3b48",
-  "created_at_utc": "2026-11-13T10:09:37.217157+00:00",
+  "created_at_utc": "2026-11-14T00:15:23.057252+00:00",
   "input_sha256": {
     "ball_by_ball.csv": "01e2b4379edfbab6a6e456d304cb3c70f554cb312ef93d9588f3f32a82cb396e",
     "competition_team_player_mapping.csv": "1ded4e42a933618572d6e2c3a521c3257eb1844fab4456d567d77cbb2d3bbb12",
@@ -12,13 +12,14 @@
     "teams.csv": "a65e5922a9b3bf49247b24fc9471782e700efb31f8dcc5042923238b87c50a5d"
   },
   "ranking_file_sha256": {
-    "batters": "6992f80d3d2737c95b26a405c8f70e9717d6cd9925da74ea8e15354ba8b1c630",
-    "bowlers": "bf7a3dd80dca6ede5a71a094b606923842893971b4ec68885b1347a187c7ad14"
+    "batters": "47d674ed601df82473f1524178a217069599f9ebf87d070be0f3777e1c1881b9",
+    "bowlers": "3d252f5782699bcd823117f0a127eeea89a6d931beb8daee73394df8cd59293d"
   },
   "methodology_note": "Exploratory rankings based on a transparent, unvalidated pressure heuristic. Do not treat as official/final until the pressure model, weights, eligibility, and source-field semantics are reviewed.",
   "source_outputs": {
     "batters": "reports/top_10_batters.csv",
     "bowlers": "reports/top_10_bowlers.csv",
+    "top_10_match_evidence": "reports/top_10_match_evidence.csv",
     "full_batters": "reports/full_batter_ranking.csv",
     "full_bowlers": "reports/full_bowler_ranking.csv",
     "batter_metrics": "reports/all_batter_metrics.csv",
@@ -1674,6 +1675,158 @@
             "closeness": 0.0
           }
         }
+      },
+      {
+        "scenario": "wickets_component_removed",
+        "eligible_players": 301,
+        "top_10_overlap_jaccard": 0.5384615384615384,
+        "top_10_player_ids": [
+          4708,
+          152,
+          1077,
+          4722,
+          2436,
+          20702,
+          6651,
+          8,
+          7897,
+          4986
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 8,
+            "baseline_rank": 2,
+            "scenario_rank": 8,
+            "baseline_spi": 88.49244794116582,
+            "scenario_spi": 86.53614506810656,
+            "spi_delta": -1.9563028730592578,
+            "rank_delta": -6
+          },
+          {
+            "player_id": 152,
+            "baseline_rank": 10,
+            "scenario_rank": 2,
+            "baseline_spi": 86.27261415140498,
+            "scenario_spi": 88.46279312544861,
+            "spi_delta": 2.190178974043633,
+            "rank_delta": 8
+          },
+          {
+            "player_id": 1077,
+            "baseline_rank": 3,
+            "scenario_rank": 3,
+            "baseline_spi": 88.37362365844972,
+            "scenario_spi": 88.20522787733191,
+            "spi_delta": -0.16839578111780895,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 2436,
+            "baseline_rank": 29,
+            "scenario_rank": 5,
+            "baseline_spi": 82.27695121568247,
+            "scenario_spi": 87.11965245717049,
+            "spi_delta": 4.842701241488015,
+            "rank_delta": 24
+          },
+          {
+            "player_id": 4708,
+            "baseline_rank": 1,
+            "scenario_rank": 1,
+            "baseline_spi": 90.23848293823126,
+            "scenario_spi": 89.45489625249465,
+            "spi_delta": -0.7835866857366085,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 4722,
+            "baseline_rank": 12,
+            "scenario_rank": 4,
+            "baseline_spi": 85.96360994953622,
+            "scenario_spi": 87.91514946959903,
+            "spi_delta": 1.9515395200628092,
+            "rank_delta": 8
+          },
+          {
+            "player_id": 4773,
+            "baseline_rank": 8,
+            "scenario_rank": 14,
+            "baseline_spi": 86.89490811494643,
+            "scenario_spi": 85.53041731251624,
+            "spi_delta": -1.364490802430197,
+            "rank_delta": -6
+          },
+          {
+            "player_id": 4986,
+            "baseline_rank": 18,
+            "scenario_rank": 10,
+            "baseline_spi": 84.45921220231814,
+            "scenario_spi": 86.17252765289558,
+            "spi_delta": 1.71331545057744,
+            "rank_delta": 8
+          },
+          {
+            "player_id": 6460,
+            "baseline_rank": 7,
+            "scenario_rank": 15,
+            "baseline_spi": 86.95480137432789,
+            "scenario_spi": 85.34967117041458,
+            "spi_delta": -1.6051302039133049,
+            "rank_delta": -8
+          },
+          {
+            "player_id": 6651,
+            "baseline_rank": 6,
+            "scenario_rank": 7,
+            "baseline_spi": 86.99022592217042,
+            "scenario_spi": 86.6217201020981,
+            "spi_delta": -0.368505820072329,
+            "rank_delta": -1
+          },
+          {
+            "player_id": 7897,
+            "baseline_rank": 9,
+            "scenario_rank": 9,
+            "baseline_spi": 86.69248804712196,
+            "scenario_spi": 86.51364048338094,
+            "spi_delta": -0.17884756374101585,
+            "rank_delta": 0
+          },
+          {
+            "player_id": 8301,
+            "baseline_rank": 4,
+            "scenario_rank": 23,
+            "baseline_spi": 87.49971014565797,
+            "scenario_spi": 83.25020449724497,
+            "spi_delta": -4.249505648413006,
+            "rank_delta": -19
+          },
+          {
+            "player_id": 20702,
+            "baseline_rank": 5,
+            "scenario_rank": 6,
+            "baseline_spi": 87.27922977488055,
+            "scenario_spi": 86.79267240910119,
+            "spi_delta": -0.4865573657793618,
+            "rank_delta": -1
+          }
+        ],
+        "pressure_event_count": 21938,
+        "pressure_opportunity_count": 20757,
+        "pressure_weights": {
+          "batting": {
+            "run_rate": 0.4666666666666666,
+            "time": 0.26666666666666666,
+            "closeness": 0.26666666666666666,
+            "wickets": 0.0
+          },
+          "bowling": {
+            "run_rate": 0.39999999999999997,
+            "time": 0.26666666666666666,
+            "closeness": 0.3333333333333333,
+            "wickets": 0.0
+          }
+        }
       }
     ],
     "bowler": [
@@ -3316,9 +3469,207 @@
             "closeness": 0.0
           }
         }
+      },
+      {
+        "scenario": "wickets_component_removed",
+        "eligible_players": 265,
+        "top_10_overlap_jaccard": 0.1111111111111111,
+        "top_10_player_ids": [
+          6932,
+          26663,
+          25132,
+          4895,
+          3686,
+          7327,
+          2483,
+          8530,
+          5738,
+          8746
+        ],
+        "top_10_rank_changes": [
+          {
+            "player_id": 23,
+            "baseline_rank": 6,
+            "scenario_rank": 131,
+            "baseline_spi": 70.71945609743129,
+            "scenario_spi": 41.341438225824334,
+            "spi_delta": -29.378017871606957,
+            "rank_delta": -125
+          },
+          {
+            "player_id": 2483,
+            "baseline_rank": 62,
+            "scenario_rank": 7,
+            "baseline_spi": 53.346493390131336,
+            "scenario_spi": 62.76225704295188,
+            "spi_delta": 9.415763652820544,
+            "rank_delta": 55
+          },
+          {
+            "player_id": 2490,
+            "baseline_rank": 9,
+            "scenario_rank": 76,
+            "baseline_spi": 66.77774747470094,
+            "scenario_spi": 45.09574043068953,
+            "spi_delta": -21.682007044011414,
+            "rank_delta": -67
+          },
+          {
+            "player_id": 3077,
+            "baseline_rank": 3,
+            "scenario_rank": null,
+            "baseline_spi": 77.64452183770703,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 3686,
+            "baseline_rank": 29,
+            "scenario_rank": 5,
+            "baseline_spi": 58.67866513117387,
+            "scenario_spi": 63.03635450333075,
+            "spi_delta": 4.357689372156877,
+            "rank_delta": 24
+          },
+          {
+            "player_id": 4716,
+            "baseline_rank": 7,
+            "scenario_rank": 64,
+            "baseline_spi": 69.8192909698171,
+            "scenario_spi": 46.850968721365305,
+            "spi_delta": -22.9683222484518,
+            "rank_delta": -57
+          },
+          {
+            "player_id": 4895,
+            "baseline_rank": 240,
+            "scenario_rank": 4,
+            "baseline_spi": 40.253103039679345,
+            "scenario_spi": 63.321926622872944,
+            "spi_delta": 23.0688235831936,
+            "rank_delta": 236
+          },
+          {
+            "player_id": 5738,
+            "baseline_rank": 46,
+            "scenario_rank": 9,
+            "baseline_spi": 56.01747118141722,
+            "scenario_spi": 59.5915392676033,
+            "spi_delta": 3.574068086186081,
+            "rank_delta": 37
+          },
+          {
+            "player_id": 6932,
+            "baseline_rank": 71,
+            "scenario_rank": 1,
+            "baseline_spi": 52.635021644281515,
+            "scenario_spi": 69.42206325147495,
+            "spi_delta": 16.787041607193437,
+            "rank_delta": 70
+          },
+          {
+            "player_id": 7327,
+            "baseline_rank": 144,
+            "scenario_rank": 6,
+            "baseline_spi": 46.32660584959829,
+            "scenario_spi": 62.84879912153353,
+            "spi_delta": 16.522193271935244,
+            "rank_delta": 138
+          },
+          {
+            "player_id": 8530,
+            "baseline_rank": 10,
+            "scenario_rank": 8,
+            "baseline_spi": 66.2021624839939,
+            "scenario_spi": 62.71802253904574,
+            "spi_delta": -3.4841399449481614,
+            "rank_delta": 2
+          },
+          {
+            "player_id": 8746,
+            "baseline_rank": 34,
+            "scenario_rank": 10,
+            "baseline_spi": 57.936768489490774,
+            "scenario_spi": 58.98803748433836,
+            "spi_delta": 1.0512689948475895,
+            "rank_delta": 24
+          },
+          {
+            "player_id": 25132,
+            "baseline_rank": 4,
+            "scenario_rank": 3,
+            "baseline_spi": 72.75627359669299,
+            "scenario_spi": 63.9052826749136,
+            "spi_delta": -8.850990921779392,
+            "rank_delta": 1
+          },
+          {
+            "player_id": 25138,
+            "baseline_rank": 1,
+            "scenario_rank": null,
+            "baseline_spi": 82.16641566981151,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 26663,
+            "baseline_rank": 182,
+            "scenario_rank": 2,
+            "baseline_spi": 43.69675780828331,
+            "scenario_spi": 64.44575060398495,
+            "spi_delta": 20.74899279570164,
+            "rank_delta": 180
+          },
+          {
+            "player_id": 32862,
+            "baseline_rank": 5,
+            "scenario_rank": 122,
+            "baseline_spi": 71.6877029986523,
+            "scenario_spi": 41.915074213716395,
+            "spi_delta": -29.772628784935904,
+            "rank_delta": -117
+          },
+          {
+            "player_id": 48616,
+            "baseline_rank": 8,
+            "scenario_rank": null,
+            "baseline_spi": 67.99161832658355,
+            "scenario_spi": null,
+            "spi_delta": null,
+            "rank_delta": null
+          },
+          {
+            "player_id": 56817,
+            "baseline_rank": 2,
+            "scenario_rank": 68,
+            "baseline_spi": 80.02140154276933,
+            "scenario_spi": 46.47111090952304,
+            "spi_delta": -33.550290633246284,
+            "rank_delta": -66
+          }
+        ],
+        "pressure_event_count": 24526,
+        "pressure_opportunity_count": 23104,
+        "pressure_weights": {
+          "batting": {
+            "run_rate": 0.4666666666666666,
+            "time": 0.26666666666666666,
+            "closeness": 0.26666666666666666,
+            "wickets": 0.0
+          },
+          "bowling": {
+            "run_rate": 0.39999999999999997,
+            "time": 0.26666666666666666,
+            "closeness": 0.3333333333333333,
+            "wickets": 0.0
+          }
+        }
       }
     ]
   },
+  "scenario_robustness_note": "Top-ten scenario rate is the fraction of tested alternative specifications in which a player appears in the top ten; it is not a probability or confidence interval.",
   "correlation_diagnostics": {
     "batter": {
       "eligible_players": 272,
@@ -3378,6 +3729,68 @@
       "pressure_delivery_count": 23870,
       "pressure_opportunity_count": 22645,
       "scored_delivery_count": 194014,
+      "pressure_vs_ordinary": {
+        "pressure": {
+          "delivery_count": 23870,
+          "feature_distributions": {
+            "rate_vs_reference": {
+              "median": 1.5485348786720194,
+              "q25": 0.9323233185608324,
+              "q75": 2.154820999261216
+            },
+            "wickets_before": {
+              "median": 6.0,
+              "q25": 6.0,
+              "q75": 8.0
+            },
+            "balls_remaining": {
+              "median": 16.0,
+              "q25": 8.0,
+              "q75": 27.0
+            },
+            "innings_progress": {
+              "median": 0.8666666666666667,
+              "q25": 0.775,
+              "q75": 0.9333333333333333
+            }
+          },
+          "innings_phase_share": {
+            "death": 0.7948051948051948,
+            "middle": 0.2051529116045245,
+            "powerplay": 4.1893590280687055e-05
+          }
+        },
+        "ordinary": {
+          "delivery_count": 170144,
+          "feature_distributions": {
+            "rate_vs_reference": {
+              "median": 0.9894433200323003,
+              "q25": 0.8035153797865662,
+              "q75": 1.1776591138692454
+            },
+            "wickets_before": {
+              "median": 2.0,
+              "q25": 1.0,
+              "q75": 3.0
+            },
+            "balls_remaining": {
+              "median": 71.0,
+              "q25": 44.0,
+              "q75": 97.0
+            },
+            "innings_progress": {
+              "median": 0.4083333333333333,
+              "q25": 0.19166666666666668,
+              "q75": 0.6333333333333333
+            }
+          },
+          "innings_phase_share": {
+            "middle": 0.4484260391198044,
+            "powerplay": 0.42034394395335717,
+            "death": 0.13123001692683844
+          }
+        }
+      },
       "mean_normalized_contributions": {
         "run_rate": {
           "weight": 0.35,
@@ -3484,6 +3897,68 @@
       "pressure_delivery_count": 57779,
       "pressure_opportunity_count": 55179,
       "scored_delivery_count": 194014,
+      "pressure_vs_ordinary": {
+        "pressure": {
+          "delivery_count": 57779,
+          "feature_distributions": {
+            "rate_vs_reference": {
+              "median": 0.9676950642356587,
+              "q25": 0.7868497109826589,
+              "q75": 1.0993058864380125
+            },
+            "wickets_before": {
+              "median": 2.0,
+              "q25": 1.0,
+              "q75": 4.0
+            },
+            "balls_remaining": {
+              "median": 44.0,
+              "q25": 21.0,
+              "q75": 79.0
+            },
+            "innings_progress": {
+              "median": 0.6333333333333333,
+              "q25": 0.3416666666666667,
+              "q75": 0.825
+            }
+          },
+          "innings_phase_share": {
+            "middle": 0.40094151854480004,
+            "death": 0.35547517264057876,
+            "powerplay": 0.24358330881462123
+          }
+        },
+        "ordinary": {
+          "delivery_count": 136235,
+          "feature_distributions": {
+            "rate_vs_reference": {
+              "median": 1.0433162552398698,
+              "q25": 0.826352140272469,
+              "q75": 1.3036544785725397
+            },
+            "wickets_before": {
+              "median": 2.0,
+              "q25": 1.0,
+              "q75": 4.0
+            },
+            "balls_remaining": {
+              "median": 71.0,
+              "q25": 43.0,
+              "q75": 98.0
+            },
+            "innings_progress": {
+              "median": 0.4083333333333333,
+              "q25": 0.18333333333333332,
+              "q75": 0.6416666666666667
+            }
+          },
+          "innings_phase_share": {
+            "middle": 0.4259404705105149,
+            "powerplay": 0.4216684405622637,
+            "death": 0.15239108892722134
+          }
+        }
+      },
       "mean_normalized_contributions": {
         "run_rate": {
           "weight": 0.3,

@@ -30,6 +30,43 @@ class RankingExportTests(unittest.TestCase):
             )
             self.assertTrue(top["evidence_summary"].notna().all())
             self.assertTrue(top["competition_scope"].notna().all())
+            self.assertTrue(top["top_10_scenario_rate"].between(0, 1).all())
+            self.assertTrue(top["spi_gap_to_next"].notna().all())
+            self.assertTrue(top["matches_above_normal"].ge(0).all())
+
+    def test_round_one_report_and_match_evidence_cover_ranked_players(self):
+        manifest = json.loads((REPORTS / "final_rankings.json").read_text())
+        report = (REPORTS / "methodology_report.md").read_text()
+        evidence = pd.read_csv(REPORTS / "top_10_match_evidence.csv")
+
+        self.assertIn("The signal rationale is:", report)
+        self.assertIn("Pressure versus ordinary delivery context", report)
+        self.assertIn("Match-by-match top-ten evidence", report)
+        self.assertIn("does not prescribe a pressure formula", report)
+        self.assertIn("wickets_component_removed", {
+            scenario["scenario"]
+            for scenarios in manifest["sensitivity"].values()
+            for scenario in scenarios
+        })
+        self.assertEqual(
+            set(evidence["role"]),
+            {"batter", "bowler"},
+        )
+        self.assertTrue(evidence["pressure_opportunities"].gt(0).all())
+        for role, filename in [
+            ("batter", "top_10_batters.csv"),
+            ("bowler", "top_10_bowlers.csv"),
+        ]:
+            top = pd.read_csv(REPORTS / filename)
+            role_evidence = evidence.loc[evidence["role"].eq(role)]
+            self.assertEqual(
+                set(role_evidence["player_id"]),
+                set(top["player_id"]),
+            )
+            diagnostics = manifest["pressure_diagnostics"][role]["pressure_vs_ordinary"]
+            self.assertGreater(diagnostics["pressure"]["delivery_count"], 0)
+            self.assertGreater(diagnostics["ordinary"]["delivery_count"], 0)
+            self.assertIn("rate_vs_reference", diagnostics["pressure"]["feature_distributions"])
 
     def test_top_ranked_examples_reconcile_to_delivery_rows(self):
         batter = pd.read_csv(REPORTS / "top_10_batters.csv").iloc[0]

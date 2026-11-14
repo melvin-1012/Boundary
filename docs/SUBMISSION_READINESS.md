@@ -1,41 +1,62 @@
-# Submission readiness
+# Round 1 Submission Readiness
 
-**Assessment: not ready for official submission.** The workspace contains
-reproducible code and outputs, but the official problem statement and approval
-of the provisional pressure/SPI methodology are missing.
+## Required deliverables
 
-## Completed and verified locally
+The supplied Round 1 brief requires:
 
-- Six-source ETL, validation, provenance, and curated match/player analytics.
-- Top-ten batter and bowler CSVs, full ranked lists, and supporting metric CSVs.
-- Decision-tree/random-forest boundary classification with grouped
-  match-held-out evaluation, plus K-means clustering and visualizations.
-- Full-history deterministic event replay: 194,014 deliveries, 1,660 innings,
-  zero ordering, state, or pressure mismatches against batch output.
-- Player-match PageRank graph: 1,728 nodes and 36,318 directed edges, with CSV
-  and HTML visualization.
-- Streamlit integration, theme switching, and seven views verified in
-  AppTest and the browser on port 8501.
-- 18 automated unit/integration checks pass; raw CSV SHA-256 values match the
-  ETL manifest.
+1. A distinct, ordered top-10 batter list and top-10 bowler list, selected on
+   Unstop.
+2. A methodology report explaining the pressure definition, performance
+   measures and baselines, fair comparisons, supporting evidence, reliability,
+   limitations, and enough detail to reproduce the approach.
 
-## Blockers to official completion
+The brief explicitly leaves pressure definition to the team. It does not
+require a particular dashboard, machine-learning model, distributed service,
+or external domain approval.
 
-1. Obtain the official Rajasthan Royals problem statement and confirm scope,
-   definitions, eligibility, and required deliverable format.
-2. Obtain domain review for pressure components/weights/threshold, source run
-   and extras semantics, super-over handling, reliability, consistency, and
-   SPI weights. Current top-ten outputs are exploratory and provisional.
-3. If operational demonstrations are mandatory, provide Hadoop/HDFS,
-   Cassandra, HBase, and Kafka runtimes. Only local simulations/designs are
-   currently available.
-4. The project-created specification does not identify 14 dashboard page
-   names. This implementation preserves the four original tabs and adds
-   three integrated views; acceptance for fourteen separate pages cannot be
-   inferred.
-5. Capture approved final-dashboard screenshots after official scope and
-   methodology review; no screenshot files are committed by this increment.
+## Current project outputs
 
-The optional video was not produced. Do not treat installed software,
-conceptual schema files, or provisional rankings as proof of a live production
-deployment or official hackathon acceptance.
+- `reports/top_10_batters.csv` and `reports/top_10_bowlers.csv` contain ten
+  unique player IDs each, sequential ranks 1–10, and names to reconcile with
+  the Unstop dropdown choices.
+- `reports/methodology_report.md` explains the selected pressure model,
+  role-specific metrics, baselines, eligibility, SPI, pressure-versus-ordinary
+  context distributions, sensitivity, limitations, and reproduction commands.
+- `reports/top_10_match_evidence.csv` provides match-level pressure and
+  ordinary performance for top-ten players.
+- `reports/final_rankings.json` contains run provenance, top-ten validation,
+  sensitivity scenarios, and the pressure-context diagnostics.
+- Raw-to-curated validation and source hashes are in
+  `reports/final_validation.json`.
+
+The ranking method remains provisional because its weights, threshold,
+eligibility policy, and some source-field interpretations are analyst choices.
+The Round 1 brief permits the team to define pressure; this project does not
+claim that its chosen score is an objectively validated pressure probability.
+Sensitivity results are included so the impact of those choices is visible.
+
+## Before selecting the Unstop rankings
+
+1. Compare each exported player name with the available Unstop choice and
+   select the same ten players in the same order. Do not rely on reputation or
+   abbreviated names; use player IDs in the CSVs to distinguish names where
+   needed.
+2. Confirm that the report's batter and bowler lists exactly match the
+   selections.
+3. Review the report's data caveats and sensitivity findings. Do not describe
+   scenario inclusion rates or uncertainty proxies as probabilities or
+   confidence intervals.
+4. Regenerate rankings, validation, and report together after any methodology
+   or data change.
+
+Core regeneration sequence from the project root:
+
+```bash
+.venv/bin/python -m ingestion.run_etl
+.venv/bin/python -m analytics.build_rankings
+.venv/bin/python -m analytics.final_validation
+.venv/bin/python -m analytics.build_methodology_report
+```
+
+Screenshots, a video, live Hadoop/Kafka/database services, and extra dashboard
+pages are not listed as required deliverables in the supplied Round 1 brief.

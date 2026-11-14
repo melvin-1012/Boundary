@@ -48,10 +48,16 @@ def _format_player_table(frame, role):
         ("spi", "SPI"),
         (pressure_metric, metric_title),
         (baseline_metric, "Normal baseline"),
+        ("competition_adjusted_difference", "Adjusted pressure advantage"),
         ("pressure_opportunities", "Pressure balls"),
         ("pressure_matches", "Pressure matches"),
+        ("performance_component", "Performance"),
+        ("consistency", "Consistency"),
         ("reliability", "Reliability"),
-        ("evidence_summary", "Evidence"),
+        ("top_10_scenario_rate", "Top-10 scenario rate"),
+        ("spi_gap_to_next", "SPI gap to next"),
+        ("matches_above_normal", "Matches above normal"),
+        ("max_single_match_opportunity_share", "Largest match exposure share"),
     ]
     lines = ["| " + " | ".join(title for _, title in columns) + " |"]
     lines.append("| " + " | ".join("---" for _ in columns) + " |")
@@ -59,8 +65,31 @@ def _format_player_table(frame, role):
         cells = []
         for field, _ in columns:
             value = row[field]
-            if field in {"spi", "reliability", pressure_metric, baseline_metric}:
+            if pd.isna(value):
+                value = "n/a"
+            elif field in {
+                "spi",
+                "reliability",
+                "consistency",
+                "performance_component",
+                pressure_metric,
+                baseline_metric,
+                "competition_adjusted_difference",
+                "spi_gap_to_next",
+            }:
                 value = f"{float(value):.2f}"
+            elif field == "top_10_scenario_rate":
+                value = f"{100 * float(value):.0f}%"
+            elif field == "max_single_match_opportunity_share":
+                value = f"{100 * float(value):.1f}%"
+            elif field in {
+                "rank",
+                "player_id",
+                "pressure_opportunities",
+                "pressure_matches",
+                "matches_above_normal",
+            }:
+                value = str(int(value))
             else:
                 value = str(value).replace("|", "\\|").replace("\n", " ")
             cells.append(value)
@@ -192,6 +221,41 @@ def build_methodology_report(
             f"{item['mean_normalized_component']:.3f} | {item['mean_score_points']:.2f} |"
             for component, item in diagnostics["mean_normalized_contributions"].items()
         )
+        lines.extend(
+            [
+                "",
+                "Pressure versus ordinary delivery context (median [25th, 75th percentile]):",
+                "",
+                "| Group | Deliveries | Rate / reference | Wickets before | Balls remaining | Innings progress |",
+                "|---|---:|---:|---:|---:|---:|",
+            ]
+        )
+        for group in ("pressure", "ordinary"):
+            comparison = diagnostics["pressure_vs_ordinary"][group]
+            feature_values = comparison["feature_distributions"]
+
+            def distribution_text(name):
+                item = feature_values[name]
+                if item["median"] is None:
+                    return "n/a"
+                return f"{item['median']:.2f} [{item['q25']:.2f}, {item['q75']:.2f}]"
+
+            lines.append(
+                f"| {group} | {comparison['delivery_count']:,} | "
+                f"{distribution_text('rate_vs_reference')} | "
+                f"{distribution_text('wickets_before')} | "
+                f"{distribution_text('balls_remaining')} | "
+                f"{distribution_text('innings_progress')} |"
+            )
+        for group in ("pressure", "ordinary"):
+            phases = diagnostics["pressure_vs_ordinary"][group]["innings_phase_share"]
+            lines.append(
+                f"- **{role.title()} {group} innings phase share:** "
+                + ", ".join(
+                    f"{phase} {share:.1%}" for phase, share in sorted(phases.items())
+                )
+                + "."
+            )
         pressure_sections.append("\n".join(lines))
     independent_spi_lines = [
         f"- **{role.title()}:** {check['sample_player_count']} recalculated, "
@@ -238,14 +302,15 @@ def build_methodology_report(
     replay_evidence = json.loads(replay_path.read_text(encoding="utf-8")) if replay_path.exists() else None
     graph_evidence = json.loads(graph_path.read_text(encoding="utf-8")) if graph_path.exists() else None
 
-    report = f"""# SupeRR Intelligence — Methodology and Ranking Evidence
+    report = f"""# SupeRR Intelligence — Round 1 Methodology and Ranking Evidence
 
-> **PROVISIONAL — NOT AN OFFICIAL FINAL SUBMISSION.** The official Rajasthan
-> Royals Round 1 Problem Statement and `MASTER_SPECIFICATION.md` are not in the
-> workspace, so official rules cannot be confirmed. This run applies the
-> current request's IPL and T20I archive from 2022-01-01. Pressure weights,
-> threshold, eligibility floors, and source-field interpretations remain
-> provisional and materially affect the selections.
+> **Round 1 problem statement:** “Identify the Most Reliable Players Under
+> Pressure.” The supplied brief asks for ordered top-10 batter and bowler
+> rankings and a reproducible methodology report, and explicitly leaves the
+> pressure definition to the team. This report addresses those requirements.
+> The pressure weights, threshold, eligibility floors, and source-field
+> interpretations are analytical choices, not values prescribed by the brief;
+> they remain provisional and can materially affect the selections.
 
 **Methodology version:** `{ranking_run['methodology_version']}`  
 **Ranking run ID:** `{ranking_run['ranking_run_id']}`  
@@ -253,13 +318,16 @@ def build_methodology_report(
 
 ## 1. Objective and source scope
 
-The requested objective is to identify pressure-performing batters and
-bowlers from the supplied historical IPL and T20I archive dated on or after
-2022-01-01. The official brief is unavailable, so this is the scope stated in
-the current request, not a verified quotation of official rules. The selected
-scope contains {final_validation['scope']['ipl_matches']} IPL matches and
+The objective is to compare each batter's and bowler's performance in
+high-pressure situations with their usual performance, then rank the most
+reliable performers. The dataset scope is IPL and T20I records from 2022
+onward. The selected archive contains {final_validation['scope']['ipl_matches']} IPL matches and
 {final_validation['scope']['t20i_matches']} T20I matches, totalling
 {final_validation['scope']['selected_deliveries']:,} deliveries.
+
+The brief does not prescribe a pressure formula, metric weights, eligibility
+floor, or a particular statistical model. These are stated explicitly below so
+reviewers can assess and reproduce the chosen approach.
 
 ## 2. Dataset inventory and validation
 
@@ -330,6 +398,24 @@ bowling pressure. These are validity concerns, not a basis for a preferred
 ranking. Keep the current formula only as a transparent provisional baseline;
 review the constructs with a cricket domain expert before adoption.
 
+The signal rationale is:
+
+- **Run-rate difficulty:** a required chase rate relative to the prior
+  same-format scoring reference represents the demand placed on a batter; the
+  inverse direction represents the challenge for a bowler to restrict scoring.
+  First-innings current run rate is compared with that same historical
+  reference.
+- **Wickets/resources:** wickets lost represent batting resources already
+  spent. For bowling, wickets remaining represents the batting side's
+  remaining resources and the pressure on the bowler to contain them; it is a
+  proxy, not a direct measure of the bowler's own pressure.
+- **Innings time:** later innings state can make a given scoring task more
+  urgent. Progress alone is not sufficient evidence of pressure, so it is only
+  one weighted component.
+- **Closeness:** scoring pace near the format reference marks a balanced-rate
+  state, not necessarily a close match. It is included as a heuristic and is
+  tested because it may overlap with run-rate difficulty.
+
 Weights, threshold, innings handling, and alternatives are measured below.
 Each actual event example gives normalized component values, weights, and
 weighted score-point contributions. Full samples and component diagnostics
@@ -399,7 +485,30 @@ reliability, and generated evidence summary. Their recorded SHA-256 digests are:
 - Batters: `{output_hashes['batter']}`
 - Bowlers: `{output_hashes['bowler']}`
 
+The tables also show SPI component values, improvement relative to the
+competition-adjusted pressure-versus-normal comparison, the SPI gap to the
+next rank, match counts beating the player's normal rate, and the share of
+pressure opportunities concentrated in their largest pressure match. Scenario
+rate is the fraction of tested alternative specifications placing the player
+in the top ten; it is a robustness summary, not a probability.
+
+### Match-by-match top-ten evidence
+
+`reports/top_10_match_evidence.csv` contains one row per top-ten player and
+match with pressure opportunities, pressure performance, normal performance
+where that match has ordinary opportunities, the pressure advantage, and
+pressure-opportunity share. This lets a reviewer inspect whether the aggregate
+rating is consistent across matches or driven by a small number of high-volume
+matches. `matches_above_normal` counts only matches with a measurable ordinary
+baseline; zero ordinary opportunities are not treated as a loss.
+
 ## 6. Sensitivity, fairness, and limitations
+
+The pressure-versus-ordinary context tables above show whether the chosen
+threshold selects deliveries that differ in rate demand, wickets remaining,
+time left, and phase from the non-pressure group. These are descriptive
+comparisons, not independent validation that the selected events are
+psychologically or objectively high-pressure.
 
 The ranking generator evaluates performance/consistency/reliability weight
 changes, including removing the reliability component; eligibility thresholds;
@@ -533,6 +642,7 @@ From the project root, using the existing virtual environment:
 ```bash
 .venv/bin/python -m ingestion.run_etl
 .venv/bin/python -m analytics.build_rankings
+.venv/bin/python -m analytics.final_validation
 .venv/bin/python -m machine_learning.run_models
 .venv/bin/python -m streaming.replay
 .venv/bin/python -m graph_analytics.run_graph
@@ -541,7 +651,10 @@ From the project root, using the existing virtual environment:
 .venv/bin/python -m spark.run_spark
 ```
 
-These commands produce local Parquet/CSV/JSON outputs. The MapReduce runner
+For the two required Round 1 deliverables, the core sequence is ETL,
+rankings, final validation, and methodology report; the ML, replay, graph,
+MapReduce, and Spark commands generate supplementary demonstrations. These
+commands produce local Parquet/CSV/JSON outputs. The MapReduce runner
 uses local Python subprocesses, not a Hadoop cluster. Spark uses
 `local[2]`, not a multi-node deployment. Rankings and this report must be
 regenerated together after any methodology or data change.

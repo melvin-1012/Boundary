@@ -102,6 +102,58 @@ def _pressure_diagnostics(deliveries, role):
         for component in components
     }
     valid = deliveries[pressure_column].notna()
+    scored_deliveries = deliveries.loc[valid].copy()
+    pressure_flags = scored_deliveries[pressure_column].astype(bool)
+    rate = scored_deliveries["required_run_rate"].where(
+        scored_deliveries["target"].notna(),
+        scored_deliveries["current_run_rate"],
+    )
+    scored_deliveries["rate_vs_reference"] = (
+        rate / scored_deliveries["reference_run_rate"]
+    )
+    comparison_features = [
+        "rate_vs_reference",
+        "wickets_before",
+        "balls_remaining",
+        "innings_progress",
+    ]
+    pressure_vs_ordinary = {}
+    for label, selection in (
+        ("pressure", pressure_flags),
+        ("ordinary", ~pressure_flags),
+    ):
+        selected = scored_deliveries.loc[selection]
+        pressure_vs_ordinary[label] = {
+            "delivery_count": int(len(selected)),
+            "feature_distributions": {
+                feature: {
+                    "median": (
+                        float(selected[feature].median())
+                        if selected[feature].notna().any()
+                        else None
+                    ),
+                    "q25": (
+                        float(selected[feature].quantile(0.25))
+                        if selected[feature].notna().any()
+                        else None
+                    ),
+                    "q75": (
+                        float(selected[feature].quantile(0.75))
+                        if selected[feature].notna().any()
+                        else None
+                    ),
+                }
+                for feature in comparison_features
+            },
+            "innings_phase_share": {
+                str(phase): float(share)
+                for phase, share in (
+                    selected["innings_phase"]
+                    .value_counts(normalize=True, dropna=False)
+                    .items()
+                )
+            },
+        }
     scored = deliveries.loc[valid].sort_values(
         f"{pressure_side}_pressure", ascending=False, kind="stable"
     )
@@ -144,6 +196,7 @@ def _pressure_diagnostics(deliveries, role):
             deliveries.loc[valid, opportunity_column].sum()
         ),
         "scored_delivery_count": int(valid.sum()),
+        "pressure_vs_ordinary": pressure_vs_ordinary,
         "mean_normalized_contributions": contributions,
         "component_spearman_pairs": pairs,
         "sample_event": sample_event,
@@ -240,11 +293,157 @@ def _competition_evidence(delivery_path, rankings, role):
             f"{row['normal_performance']:.2f}; competition-adjusted change "
             f"{row['competition_adjusted_difference']:+.2f}; "
             f"{int(row['pressure_opportunities'])} pressure opportunities "
-            f"across {int(row['matches'])} matches."
+            f"across {int(row['pressure_matches'])} pressure matches."
         ),
         axis=1,
     )
     return rankings
+
+
+def _top_ten_match_evidence(metrics, top_frames, reports_dir):
+    match_frames = {
+        "batter": metrics["batter_matches"],
+        "bowler": metrics["bowler_matches"],
+    }
+    columns = {
+        "batter": {
+            "id": "striker_id",
+            "name": "striker_name",
+            "performance": "pressure_strike_rate",
+            "baseline": "normal_strike_rate",
+            "exposure": "pressure_balls",
+            "all_exposure": "balls_faced",
+            "pressure_numerator": "pressure_runs",
+            "all_numerator": "batter_runs",
+            "multiplier": 100.0,
+            "advantage": "pressure_minus_normal",
+        },
+        "bowler": {
+            "id": "bowler_id",
+            "name": "bowler_name",
+            "performance": "pressure_economy",
+            "baseline": "normal_economy",
+            "exposure": "pressure_balls",
+            "all_exposure": "legal_balls",
+            "pressure_numerator": "pressure_runs",
+            "all_numerator": "runs_conceded",
+            "multiplier": 6.0,
+            "advantage": "normal_minus_pressure",
+        },
+    }
+    evidence_frames = []
+    summary_frames = {}
+    for role, top in top_frames.items():
+        spec = columns[role]
+        top_players = top[["rank", "player_id", "player_name"]].rename(
+            columns={"player_id": spec["id"], "player_name": spec["name"]}
+        )
+        matches = match_frames[role].merge(
+            top_players,
+            on=[spec["id"], spec["name"]],
+            how="inner",
+            validate="many_to_one",
+        )
+        matches = matches.loc[matches[spec["exposure"]].gt(0)].copy()
+        matches["normal_exposure"] = (
+            matches[spec["all_exposure"]] - matches[spec["exposure"]]
+        ).clip(lower=0)
+        matches["normal_numerator"] = (
+            matches[spec["all_numerator"]] - matches[spec["pressure_numerator"]]
+        )
+        matches["pressure_performance"] = (
+            spec["multiplier"]
+            * matches[spec["pressure_numerator"]]
+            / matches[spec["exposure"]]
+        )
+        matches["normal_performance"] = (
+            spec["multiplier"]
+            * matches["normal_numerator"]
+            / matches["normal_exposure"].replace(0, pd.NA)
+        )
+        matches[spec["advantage"]] = (
+            matches["pressure_performance"] - matches["normal_performance"]
+            if role == "batter"
+            else matches["normal_performance"] - matches["pressure_performance"]
+        )
+        total_exposure = matches.groupby(spec["id"])[spec["exposure"]].transform("sum")
+        matches["pressure_opportunity_share"] = matches[spec["exposure"]] / total_exposure
+        summary = (
+            matches.groupby([spec["id"], spec["name"]], as_index=False)
+            .agg(
+                pressure_matches_with_comparison=(spec["advantage"], "count"),
+                matches_above_normal=(spec["advantage"], lambda values: int(values.gt(0).sum())),
+                max_single_match_opportunity_share=("pressure_opportunity_share", "max"),
+                best_pressure_match_id=(
+                    "pressure_performance",
+                    lambda values: int(matches.loc[values.idxmax(), "match_id"]),
+                ),
+                worst_pressure_match_id=(
+                    "pressure_performance",
+                    lambda values: int(matches.loc[values.idxmin(), "match_id"]),
+                ),
+            )
+            .rename(columns={spec["id"]: "player_id", spec["name"]: "player_name"})
+        )
+        summary_frames[role] = summary
+        matches["role"] = role
+        matches = matches.rename(
+            columns={
+                spec["id"]: "player_id",
+                spec["name"]: "player_name",
+                spec["exposure"]: "pressure_opportunities",
+                spec["advantage"]: "pressure_advantage",
+            }
+        )
+        evidence_frames.append(
+            matches[
+                [
+                    "role",
+                    "rank",
+                    "player_id",
+                    "player_name",
+                    "match_id",
+                    "comp_name",
+                    "pressure_opportunities",
+                    "pressure_performance",
+                    "normal_exposure",
+                    "normal_performance",
+                    "pressure_advantage",
+                    "pressure_opportunity_share",
+                ]
+            ]
+        )
+    evidence = pd.concat(evidence_frames, ignore_index=True)
+    evidence = evidence.sort_values(
+        ["role", "rank", "match_id"], kind="stable"
+    )
+    evidence.to_csv(reports_dir / "top_10_match_evidence.csv", index=False)
+    return summary_frames
+
+
+def _add_scenario_robustness(ranked, scenarios):
+    scenario_ranks = {}
+    for scenario in scenarios:
+        for item in scenario["top_10_rank_changes"]:
+            if item["scenario_rank"] is not None:
+                scenario_ranks.setdefault(item["player_id"], []).append(
+                    int(item["scenario_rank"])
+                )
+    scenario_count = len(scenarios)
+    ranked["top_10_scenario_count"] = ranked["player_id"].map(
+        lambda player_id: len(scenario_ranks.get(int(player_id), []))
+    )
+    ranked["tested_scenario_count"] = scenario_count
+    ranked["top_10_scenario_rate"] = (
+        ranked["top_10_scenario_count"] / scenario_count if scenario_count else 0.0
+    )
+    ranked["scenario_rank_min"] = ranked["player_id"].map(
+        lambda player_id: min(scenario_ranks.get(int(player_id), []), default=pd.NA)
+    )
+    ranked["scenario_rank_max"] = ranked["player_id"].map(
+        lambda player_id: max(scenario_ranks.get(int(player_id), []), default=pd.NA)
+    )
+    return ranked
 
 
 def _sensitivity(metrics, role, baseline, pressure_deliveries):
@@ -428,6 +627,42 @@ def _sensitivity(metrics, role, baseline, pressure_deliveries):
             ].sum()
         ),
     )
+    no_wickets_pressure_weights = {}
+    for role_name, component_weights in PRESSURE_WEIGHTS.items():
+        retained = {
+            component: weight
+            for component, weight in component_weights.items()
+            if component != "wickets"
+        }
+        total = sum(retained.values())
+        no_wickets_pressure_weights[role_name] = {
+            **{component: weight / total for component, weight in retained.items()},
+            "wickets": 0.0,
+        }
+    no_wickets_state = apply_pressure_model(
+        pressure_deliveries, weights=no_wickets_pressure_weights
+    )
+    no_wickets_metrics = calculate_player_metrics(no_wickets_state)
+    candidate = rank_players(
+        no_wickets_metrics,
+        role,
+        min_matches=DEFAULT_MIN_MATCHES,
+        min_pressure_opportunities=DEFAULT_MIN_OPPORTUNITIES,
+        weights=DEFAULT_WEIGHTS,
+    )
+    add_scenario(
+        "wickets_component_removed",
+        candidate,
+        pressure_weights=no_wickets_pressure_weights,
+        pressure_event_count=int(
+            no_wickets_state[f"is_{pressure_side}_pressure"].sum()
+        ),
+        pressure_opportunity_count=int(
+            no_wickets_state[
+                "pressure_batter_ball" if role == "batter" else "pressure_bowler_ball"
+            ].sum()
+        ),
+    )
     return scenarios
 
 
@@ -448,6 +683,7 @@ def generate_rankings(
     all_deliveries = curated_dir / "pressure_deliveries.parquet"
     pressure_deliveries = pd.read_parquet(all_deliveries)
     defaults = {"batter": None, "bowler": None}
+    top_frames = {"batter": None, "bowler": None}
     ranking_validation = {}
     for role, legacy_filename, full_filename, top_filename in [
         (
@@ -472,6 +708,7 @@ def generate_rankings(
         )
         defaults[role] = ranked
         ranked = _competition_evidence(all_deliveries, ranked, role)
+        ranked["spi_gap_to_next"] = ranked["spi"] - ranked["spi"].shift(-1)
         ranked.to_csv(reports_dir / full_filename, index=False)
         selected = ranked.head(10).copy()
         exactly_ten = len(selected) == 10
@@ -493,11 +730,30 @@ def generate_rankings(
             raise AssertionError(f"Invalid {role} top-ten ranking output.")
         selected.to_csv(reports_dir / top_filename, index=False)
         selected.to_csv(reports_dir / legacy_filename, index=False)
+        top_frames[role] = selected
 
     sensitivity = {
         role: _sensitivity(metrics, role, frame, pressure_deliveries)
         for role, frame in defaults.items()
     }
+    match_evidence_summaries = _top_ten_match_evidence(
+        calculate_player_metrics(pressure_deliveries), top_frames, reports_dir
+    )
+    for role, full_filename, top_filename, legacy_filename in [
+        ("batter", "full_batter_ranking.csv", "top_10_batters.csv", "final_top10_batters.csv"),
+        ("bowler", "full_bowler_ranking.csv", "top_10_bowlers.csv", "final_top10_bowlers.csv"),
+    ]:
+        ranked = pd.read_csv(reports_dir / full_filename)
+        ranked = _add_scenario_robustness(ranked, sensitivity[role])
+        ranked.to_csv(reports_dir / full_filename, index=False)
+        selected = ranked.head(10).merge(
+            match_evidence_summaries[role],
+            on=["player_id", "player_name"],
+            how="left",
+            validate="one_to_one",
+        )
+        selected.to_csv(reports_dir / top_filename, index=False)
+        selected.to_csv(reports_dir / legacy_filename, index=False)
     input_hashes = {
         path.name: _sha256(path)
         for path in sorted((ROOT / "data" / "raw").glob("*.csv"))
@@ -534,6 +790,7 @@ def generate_rankings(
         "source_outputs": {
             "batters": "reports/top_10_batters.csv",
             "bowlers": "reports/top_10_bowlers.csv",
+            "top_10_match_evidence": "reports/top_10_match_evidence.csv",
             "full_batters": "reports/full_batter_ranking.csv",
             "full_bowlers": "reports/full_bowler_ranking.csv",
             "batter_metrics": "reports/all_batter_metrics.csv",
@@ -557,6 +814,11 @@ def generate_rankings(
         },
         "ranking_validation": ranking_validation,
         "sensitivity": sensitivity,
+        "scenario_robustness_note": (
+            "Top-ten scenario rate is the fraction of tested alternative "
+            "specifications in which a player appears in the top ten; it is "
+            "not a probability or confidence interval."
+        ),
         "correlation_diagnostics": {
             role: _correlation_diagnostics(frame) for role, frame in defaults.items()
         },

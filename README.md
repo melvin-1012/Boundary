@@ -12,8 +12,9 @@ Cassandra/HBase design examples.
 
 > **Important:** Pressure definitions, SPI weights, eligibility thresholds,
 > and player rankings are exploratory and provisional. They are not official
-> Rajasthan Royals selection criteria. The official hackathon brief and
-> domain approval are not present in this workspace. Review
+> selection criteria beyond this analysis. The Round 1 brief explicitly asks
+> teams to define and justify pressure; it does not prescribe a formula.
+> Review
 > [submission readiness](./docs/SUBMISSION_READINESS.md) and the
 > [implementation status](./docs/MASTER_IMPLEMENTATION_STATUS.md) before
 > using results as an official submission.
@@ -289,6 +290,7 @@ include:
 | `reports/final_top10_batters.csv`, `reports/final_top10_bowlers.csv` | Final-validation ranking snapshots. |
 | `reports/full_batter_ranking.csv`, `reports/full_bowler_ranking.csv` | Full eligible ranking tables. |
 | `reports/all_batter_metrics.csv`, `reports/all_bowler_metrics.csv` | Supporting role metrics. |
+| `reports/top_10_match_evidence.csv` | Match-by-match pressure and ordinary performance evidence for every top-ten player. |
 | `reports/methodology_report.md` | Generated methodology, validation, ranking, and limitation report. |
 | `reports/mapreduce/`, `reports/spark/`, `reports/streaming/` | Local computation/replay outputs and validation. |
 | `reports/machine_learning/` | Model metrics, cluster outputs, plots, and saved model files. |
@@ -451,10 +453,12 @@ cricket methodology is officially approved.
 ## Limitations and responsible interpretation
 
 - The official Rajasthan Royals problem statement was not available in this
-  workspace; official scope and requirements are unverified.
+- The supplied Round 1 brief defines IPL and T20I data from 2022 onward and
+  requires two top-ten rankings plus a methodology report. Confirm the final
+  player names against the Unstop dropdowns before submission.
 - Pressure labels are heuristic. SPI, weights, opportunity thresholds,
-  comparisons, and rankings remain provisional and need cricket-domain
-  approval.
+  comparisons, and rankings are analyst choices and remain provisional; the
+  brief leaves pressure definition to the team.
 - IPL/T20I analysis is limited to the supplied historical archive; it is not
   a live feed or complete player-career record.
 - Source anomalies are retained and reported. The methodology report lists
